@@ -6,10 +6,12 @@
   // ═══════════════════════════════════════════════════════════════════════════
 
   "name": "smile-savers-site-main",
+  "main": "src/entrypoint.js",
   "compatibility_date": "2025-01-01",
   "compatibility_flags": ["nodejs_compat"],
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
+    "binding": "ASSETS"
   },
 
   // ── Observability ──────────────────────────────────────────────────────────
