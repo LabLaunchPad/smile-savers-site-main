@@ -42,7 +42,4 @@ Thumbs.db
 # Cloudflare
 .wrangler/
 
-# TinaCMS — auto-generated types (regenerated on dev/build)
-tina/__generated__/
-
 node_modules
