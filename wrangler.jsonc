@@ -5,7 +5,7 @@
   // NOTE: Pages only supports "preview" and "production" named environments
   // ═══════════════════════════════════════════════════════════════════════════
 
-  "name": "smile-savers",
+  "name": "smile-savers-site-main",
   "compatibility_date": "2025-01-01",
   "compatibility_flags": ["nodejs_compat"],
   "assets": {
