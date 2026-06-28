@@ -131,8 +131,13 @@ export async function onRequestPost(context) {
         role: m.role === 'user' ? 'user' : 'assistant',
         content: sanitise(String(m.content)),
       })),
-      { role: 'user', content: rawMessage },
     ];
+
+    // Only append the current user message if the history does not already end with a user message
+    const lastMsg = messages[messages.length - 1];
+    if (!lastMsg || lastMsg.role !== 'user') {
+      messages.push({ role: 'user', content: rawMessage });
+    }
 
     // Check AI binding exists
     if (!env.AI) {
