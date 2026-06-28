@@ -147,8 +147,8 @@ export async function onRequestPost(context) {
       }, 200, origin);
     }
 
-    // Call Workers AI — llama-3.1-8b-instruct is active, faster and smarter than llama-3-8b
-    const response = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
+    // Call Workers AI — llama-3.1-8b-instruct-fast is active and optimized
+    const response = await env.AI.run('@cf/meta/llama-3.1-8b-instruct-fast', {
       messages,
       max_tokens: 200,
       temperature: 0.5, // lower = more consistent, less hallucination
