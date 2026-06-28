@@ -2,8 +2,8 @@
 # Cloudflare Pages — Redirects
 # ═══════════════════════════════════════════════════════════
 
-# www → non-www canonical
-https://www.smilesavers.dental/*  https://smilesavers.dental/:splat  301
+# www → non-www canonical redirection should be set up via Cloudflare Dashboard Redirect Rules
+# since Workers Assets only supports relative paths for source URLs.
 
 # Legacy / common misspellings
 /services/cerec               /services/cerec-crowns          301
