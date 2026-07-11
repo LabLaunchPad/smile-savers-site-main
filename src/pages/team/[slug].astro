@@ -13,12 +13,12 @@ export async function getStaticPaths() {
 
 const { member } = Astro.props;
 const { Content } = await render(member);
-const { name, role, credentials, specialties, education, image } = member.data;
+const { name, credentials, specialties, education, image } = member.data;
 ---
 
 <PageLayout
   title={name}
-  description={`${name} - ${role} at Smile Savers. Expert in ${specialties.slice(0, 3).join(", ")}.`}
+  description={`${name}, ${credentials.join(", ")} at Smile Savers. Expert in ${specialties.slice(0, 3).join(", ")}.`}
 >
   <div class="min-h-screen bg-gray-50 py-12 md:py-20">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -68,10 +68,6 @@ const { name, role, credentials, specialties, education, image } = member.data;
             <div class="p-8">
               <h1 class="font-display text-3xl font-bold tracking-tight text-gray-900">
                 {name}
-              </h1>
-              <p class="mt-2 text-lg font-medium text-primary">
-                {role}
-              </p>
               
               {credentials && credentials.length > 0 && (
                 <div class="mt-4 flex flex-wrap gap-2">

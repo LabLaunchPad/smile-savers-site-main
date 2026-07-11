@@ -35,7 +35,7 @@ const doctorMeta: Record<string, { img: string; accent: string; badge?: string }
             <div class="tg-photo">
               <img
                 src={meta.img}
-                alt={`${member.data.name} — ${member.data.role}`}
+                alt={member.data.name}
                 width="400" height="500"
                 loading="lazy"
                 class="tg-img"
@@ -59,7 +59,7 @@ const doctorMeta: Record<string, { img: string; accent: string; badge?: string }
                   <span class="tg-cred">{cred}</span>
                 </div>
               </div>
-              <p class="tg-role">{member.data.role}</p>
+              {/* <p class="tg-role">{member.data.role}</p> */}
               {member.data.specialties?.[0] && (
                 <p class="tg-spec">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>

@@ -80,7 +80,7 @@ const doctors = [
           <div class="doc-photo">
             <img
               src={doc.image}
-              alt={`${doc.name}, ${doc.credentials} — ${doc.title}`}
+              alt={`${doc.name}, ${doc.credentials}`}
               width="400" height="500"
               loading="lazy"
               class="doc-img"
@@ -104,7 +104,7 @@ const doctors = [
                 </h3>
                 <div class="doc-cred-row">
                   <span class="doc-cred">{doc.credentials}</span>
-                  {doc.isLead && <span class="doc-lead-tag">Lead</span>}
+                  {/* {doc.isLead && <span class="doc-lead-tag">Lead</span>} */}
                 </div>
               </div>
               <div class="doc-rating" aria-label={`${doc.rating} stars, ${doc.reviews} reviews`}>
@@ -115,7 +115,7 @@ const doctors = [
             </div>
 
             <!-- Role -->
-            <p class="doc-role">{doc.title}</p>
+            {/* <p class="doc-role">{doc.title}</p> */}
 
             <!-- Specialty chip -->
             <p class="doc-spec">
