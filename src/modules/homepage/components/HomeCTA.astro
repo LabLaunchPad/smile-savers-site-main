@@ -1,8 +1,5 @@
 ---
-/**
- * HomeCTA — dark navy, high contrast, urgency signals, strong conversion
- */
-import Button from '@/components/ui/Button.astro';
+import { siteConfig } from '@/config/site';
 ---
 
 <section class="hcta" aria-labelledby="cta-heading">
@@ -75,10 +72,22 @@ import Button from '@/components/ui/Button.astro';
         <div>
           <h3 class="info-card-title">Office Hours</h3>
           <dl class="hours-list">
-            <div class="hours-row"><dt>Mon – Thu</dt><dd>10 AM – 6 PM</dd></div>
-            <div class="hours-row"><dt>Friday</dt><dd>Closed</dd></div>
-            <div class="hours-row hours-row-highlight"><dt>Saturday</dt><dd>8 AM – 1 PM</dd></div>
-            <div class="hours-row hours-row-muted"><dt>Sunday</dt><dd>Closed</dd></div>
+            {
+              siteConfig.hours.map((h) => {
+                const daysLabel = h.days.length > 1
+                  ? `${h.days[0].slice(0, 3)} – ${h.days[h.days.length - 1].slice(0, 3)}`
+                  : h.days[0];
+                const isClosed = h.open === 'Closed';
+                const isSaturday = (h.days as readonly string[]).includes('Saturday');
+                const isSunday = (h.days as readonly string[]).includes('Sunday');
+                return (
+                  <div class={`hours-row ${isSaturday ? 'hours-row-highlight' : ''} ${isClosed || isSunday ? 'hours-row-muted' : ''}`}>
+                    <dt>{daysLabel}</dt>
+                    <dd>{h.display}</dd>
+                  </div>
+                );
+              })
+            }
           </dl>
         </div>
       </div>

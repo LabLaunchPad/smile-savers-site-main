@@ -5,6 +5,7 @@
 import PageLayout from "../layouts/PageLayout.astro";
 import PageHeader from "../components/common/PageHeader.astro";
 import BookingWizard from "../modules/appointments/components/BookingWizard.astro";
+import { siteConfig } from "@/config/site";
 
 const title = "Book an Appointment";
 const description = "Schedule your dental visit in a few simple steps. We'll confirm within 24 hours.";
@@ -47,9 +48,21 @@ const description = "Schedule your dental visit in a few simple steps. We'll con
           <div>
             <h3 class="hc-title">Office Hours</h3>
             <ul class="hc-hours">
-              <li><span>Mon – Thu</span><span>10 AM – 6 PM</span></li>
-              <li class="hc-hours-highlight"><span>Saturday</span><span>9 AM – 1 PM</span></li>
-              <li class="hc-hours-muted"><span>Friday & Sunday</span><span>Closed</span></li>
+              {
+                siteConfig.hours.map((h) => {
+                  const daysLabel = h.days.length > 1
+                    ? `${h.days[0].slice(0, 3)} – ${h.days[h.days.length - 1].slice(0, 3)}`
+                    : h.days[0];
+                  const isClosed = h.open === 'Closed';
+                  const isSaturday = (h.days as readonly string[]).includes('Saturday');
+                  return (
+                    <li class={`${isSaturday ? 'hc-hours-highlight' : ''} ${isClosed ? 'hc-hours-muted' : ''}`}>
+                      <span>{daysLabel}</span>
+                      <span>{h.display}</span>
+                    </li>
+                  );
+                })
+              }
             </ul>
           </div>
         </div>

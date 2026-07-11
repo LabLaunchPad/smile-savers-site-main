@@ -11,7 +11,7 @@
  * - Connection to main service pages
  * - Internal linking to nearby areas
  */
-
+import { siteConfig } from '@/config/site';
 import PageLayout from '../../../layouts/PageLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import LocalHero from '../components/LocalHero.astro';
@@ -128,22 +128,19 @@ const breadcrumbs = [
           <div class="sidebar-card">
             <h3 class="sidebar-title">Office Hours</h3>
             <dl class="hours-list">
-              <div class="hours-row">
-                <dt>Mon - Thu</dt>
-                <dd>10:00 AM - 6:00 PM</dd>
-              </div>
-              <div class="hours-row">
-                <dt>Friday</dt>
-                <dd>9:00 AM - 6:00 PM</dd>
-              </div>
-              <div class="hours-row">
-                <dt>Saturday</dt>
-                <dd>9:00 AM – 1:00 PM</dd>
-              </div>
-              <div class="hours-row">
-                <dt>Sunday</dt>
-                <dd>Closed</dd>
-              </div>
+              {
+                siteConfig.hours.map((h) => {
+                  const daysLabel = h.days.length > 1
+                    ? `${h.days[0].slice(0, 3)} - ${h.days[h.days.length - 1].slice(0, 3)}`
+                    : h.days[0];
+                  return (
+                    <div class="hours-row">
+                      <dt>{daysLabel}</dt>
+                      <dd>{h.display}</dd>
+                    </div>
+                  );
+                })
+              }
             </dl>
           </div>
         </aside>

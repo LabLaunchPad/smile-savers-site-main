@@ -27,10 +27,21 @@ export const siteConfig = {
 
   // Business Hours
   hours: [
-    { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday'], open: '10:00', close: '18:00' },
-    { days: ['Friday'], open: 'Closed', close: 'Closed' },
-    { days: ['Saturday'], open: '09:00', close: '13:00' },
-    { days: ['Sunday'], open: 'Closed', close: 'Closed' },
+    { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday'], open: '10:00', close: '18:00', display: '10:00 AM – 6:00 PM' },
+    { days: ['Friday'], open: '09:00', close: '17:00', display: '9:00 AM – 5:00 PM' },
+    { days: ['Saturday'], open: '09:00', close: '13:00', display: '9:00 AM – 1:00 PM' },
+    { days: ['Sunday'], open: 'Closed', close: 'Closed', display: 'Closed' },
+  ],
+
+  // Flat daily hours for components like OfficeHours table
+  businessHours: [
+    { day: 'Monday', open: '10:00 AM', close: '6:00 PM' },
+    { day: 'Tuesday', open: '10:00 AM', close: '6:00 PM' },
+    { day: 'Wednesday', open: '10:00 AM', close: '6:00 PM' },
+    { day: 'Thursday', open: '10:00 AM', close: '6:00 PM' },
+    { day: 'Friday', open: '9:00 AM', close: '5:00 PM' },
+    { day: 'Saturday', open: '9:00 AM', close: '1:00 PM' },
+    { day: 'Sunday', open: null, close: null },
   ],
 
   // Social Media

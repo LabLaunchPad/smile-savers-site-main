@@ -2,15 +2,9 @@
 /**
  * OfficeHours — Enhanced · today highlighted · open/closed status · clean table
  */
-const hours = [
-  { day: 'Monday', open: '10:00 AM', close: '6:00 PM' },
-  { day: 'Tuesday', open: '10:00 AM', close: '6:00 PM' },
-  { day: 'Wednesday', open: '10:00 AM', close: '6:00 PM' },
-  { day: 'Thursday', open: '10:00 AM', close: '6:00 PM' },
-  { day: 'Friday', open: '9:00 AM', close: '1:00 PM' },
-  { day: 'Saturday', open: '9:00 AM', close: '1:00 PM' },
-  { day: 'Sunday', open: null, close: null },
-];
+import { siteConfig } from '@/config/site';
+
+const hours = siteConfig.businessHours;
 
 const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
 const todayRow = hours.find((h) => h.day === today);
