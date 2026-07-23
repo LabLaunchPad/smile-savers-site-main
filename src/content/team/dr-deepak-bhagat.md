@@ -6,8 +6,10 @@ image: "../../assets/team/dr-deepak-bhagat.jpg"
 credentials:
   - "DDS"
   - "ICOI Diplomate"
+  - "Certified Implant Specialist"
 shortBio: "Founded Smile Savers in 1987 with a vision to provide compassionate, high-quality dental care to the Woodside community."
 specialties:
+  - "Certified Implant Specialist"
   - "Dental Implants"
   - "Restorative Dentistry"
   - "Full Mouth Rehabilitation"

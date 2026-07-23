@@ -2,7 +2,7 @@
 authorName: "James K."
 authorInitials: "JK"
 rating: 5
-quote: "I used to cancel dentist appointments out of pure fear. Dr. Lee changed that completely — he explained every step, checked in constantly, and I left feeling proud of myself."
+quote: "I used to cancel dentist appointments out of pure fear. Dr Dorothy Li changed that completely — he explained every step, checked in constantly, and I left feeling proud of myself."
 service: "Dental Anxiety"
 location: "Sunnyside, NY"
 source: "Google"

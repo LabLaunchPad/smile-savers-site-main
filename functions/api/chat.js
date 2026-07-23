@@ -22,7 +22,7 @@ CLINIC DETAILS:
 TEAM:
 - Dr. Deepak Bhagat DDS —  Lead Dentist, ICOI Diplomate (implant specialist)
 - Dr. Julie Islam DMD — Co-Dentist, gentle care specialist
-- Dr. Lee DDS — Associate, emergency and restorative focus
+- Dr Dorothy Li DDS — Associate, emergency and restorative focus
 
 SERVICES (all available):
 - General Dentistry: cleanings, exams, fillings, X-rays

@@ -5,8 +5,10 @@ image: "../../assets/team/dr.jpg"
 role: "Co-Dentist"
 credentials:
   - "DMD"
+  - "Certified Implant Specialist"
 shortBio: "Dedicated to providing gentle, patient-centered care with a focus on preventive dentistry and cosmetic treatments."
 specialties:
+  - "Certified Implant Specialist"
   - "General Dentistry"
   - "Preventive Care"
   - "Cosmetic Dentistry"
