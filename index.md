@@ -15,7 +15,7 @@
 | `src/pages/index.astro` | Homepage (canonical) | yes — copy/sections |
 | `src/pages/about|contact|booking.astro` | Prefilled brand pages | yes — copy/NAP |
 | `src/pages/services[6]|dentists|testimonials|faq|gallery|blog*.astro` | Template copy, fictional content | only if asked |
-| `src/pages/homepage-6.astro` | Orphaned variant, unlinked | no |
+| `src/pages/homepage-6.astro` | Deleted variant (see AGENTS.md §2); `index.astro` is the only homepage | no |
 | `src/components/Header|Footer|Preloader.astro` | Chrome (NAP lives here) | yes — text only |
 | `src/components/BookingForm|ContactForm|GalleryGrid.tsx` | React islands | forms: labels/roles only; gallery: owner-asked only |
 | `src/styles/globals.css` | Light-only base tokens + menu fixes | tokens: no dark mode ever |

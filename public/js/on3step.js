@@ -1,5 +1,5 @@
  /* --------------------------------------------------
- * © Copyright 2024 - Dentia by on3step
+ * © Copyright 2024 - Smile Savers Dental by on3step
   * --------------------------------------------------*/
 (function($) {
 	'use strict';
@@ -1082,13 +1082,9 @@
          });
      }
 
-     jQuery("#dark-mode").on("click", function() {
-        if(jQuery('body').hasClass('dark-scheme')){
-           window.location.href = 'https://www.on3step.com/themes/gospace/index.html';
-        }else{
-           window.location.href = 'https://www.on3step.com/themes/gospace/02_dark-index.html';
-        }
-     });
+      jQuery("#dark-mode").on("click", function() {
+         // Inert: no #dark-mode element exists; foreign demo redirect removed.
+      });
 
 	 function grid_gallery() {
             jQuery('.grid-item').each(function () {
