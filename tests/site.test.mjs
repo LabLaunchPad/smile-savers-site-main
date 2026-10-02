@@ -87,12 +87,12 @@ test('forms share FormStatus UI (no duplicated status markup)', () => {
 });
 
 test('component a11y: controls, links, names (motion untouched)', () => {
-  const header = src('src/components/Header.astro').replace(/\s+/g, ' ');
+  const actions = src('src/components/site/HeaderActions.astro').replace(/\s+/g, ' ');
   assert.ok(
-    header.includes('<button type="button" id="menu-btn"'),
+    actions.includes('<button type="button" id="menu-btn"'),
     'menu-btn must be a native button'
   );
-  assert.ok(header.includes('aria-controls="mainmenu"'), 'menu-btn needs aria-controls');
+  assert.ok(actions.includes('aria-controls="mainmenu"'), 'menu-btn needs aria-controls');
   const footer = src('src/components/Footer.astro');
   assert.ok(
     footer.includes('href="tel:+17189568400"') || footer.includes('{practice.phone.href}'),
@@ -462,18 +462,18 @@ test('hygiene: no secrets in tracked source', () => {
 
 test('nav: structural hooks frozen (legacy contracts)', () => {
   const header = src('src/components/Header.astro');
-  for (const s of [
-    'data-base-class',
-    'id="logo"',
-    'id="mainmenu"',
-    'id="menu-btn"',
-    'aria-controls="mainmenu"',
-    'id="btn-extra"',
-    'href="/booking"',
-  ]) {
+  for (const s of ['data-base-class', 'id="logo"', '<MainNav', '<HeaderActions']) {
     assert.ok(header.includes(s), `Header.astro must keep ${s}`);
   }
-  assert.ok(header.includes('<button') && header.includes('type="button"'), '#menu-btn must stay a native button');
+  const nav = src('src/components/site/MainNav.astro');
+  for (const s of ['id="mainmenu"', 'href="/booking"']) {
+    assert.ok(nav.includes(s) || src('src/components/site/HeaderActions.astro').includes(s), `nav boundary must keep ${s}`);
+  }
+  const actions = src('src/components/site/HeaderActions.astro');
+  for (const s of ['id="menu-btn"', 'aria-controls="mainmenu"', 'id="btn-extra"']) {
+    assert.ok(actions.includes(s), `HeaderActions.astro must keep ${s}`);
+  }
+  assert.ok(actions.includes('<button') && actions.includes('type="button"'), '#menu-btn must stay a native button');
   const layout = src('src/layouts/Layout.astro');
   for (const s of ['id="extra-wrap"', 'role="dialog"', 'id="btn-close"', 'id="extra-content"']) {
     assert.ok(layout.includes(s), `Layout.astro must keep ${s}`);
@@ -499,7 +499,7 @@ test('nav: twin runtime ownership hooks present (no silent single-owner drift)',
 });
 
 test('nav: every header href resolves to a real route', () => {
-  const header = src('src/components/Header.astro');
+  const header = src('src/components/site/MainNav.astro') + src('src/components/site/HeaderActions.astro');
   const hrefs = [...header.matchAll(/href="(\/[^"]*)"/g)].map((m) => m[1]);
   assert.ok(hrefs.length >= 15, `expected 15+ nav hrefs, found ${hrefs.length}`);
   for (const h of new Set(hrefs)) {

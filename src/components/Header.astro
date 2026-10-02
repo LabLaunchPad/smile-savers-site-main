@@ -1,4 +1,7 @@
 ---
+import MainNav from './site/MainNav.astro';
+import HeaderActions from './site/HeaderActions.astro';
+
 interface Props {
   headerClass?: string;
   useHeaderInner?: boolean;
@@ -33,103 +36,8 @@ const rowClassName = useHeaderInner ? 'de-flex sm-pt10 header-inner' : 'de-flex 
             </div>
             {/* logo end */}
           </div>
-          <div class="de-flex-col header-col-mid">
-            {/* mainemenu begin */}
-            <ul id="mainmenu">
-              <li>
-                <a class="menu-item" href="/">
-                  Home
-                </a>
-              </li>
-              <li>
-                <a class="menu-item" href="/services" aria-haspopup="true">
-                  Services
-                </a>
-                <ul>
-                  <li>
-                    <a href="/services/general-dentistry">General Dentistry</a>
-                  </li>
-                  <li>
-                    <a href="/services/cosmetic-dentistry">Cosmetic Dentistry</a>
-                  </li>
-                  <li>
-                    <a href="/services/pediatric-dentistry">Pediatric Dentistry</a>
-                  </li>
-                  <li>
-                    <a href="/services/restorative-dentistry">Restorative Dentistry</a>
-                  </li>
-                  <li>
-                    <a href="/services/preventive-dentistry">Preventive Dentistry</a>
-                  </li>
-                  <li>
-                    <a href="/services/orthodontics">Orthodontics</a>
-                  </li>
-                  <li>
-                    <a href="/services">All Services</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a class="menu-item" href="/dentists">
-                  Dentists
-                </a>
-              </li>
-              <li>
-                <a class="menu-item" href="/about" aria-haspopup="true">
-                  Pages
-                </a>
-                <ul>
-                  <li>
-                    <a href="/about">About Us</a>
-                  </li>
-                  <li>
-                    <a href="/faq">FAQ</a>
-                  </li>
-                  <li>
-                    <a href="/gallery">Gallery</a>
-                  </li>
-                  <li>
-                    <a href="/testimonials">Testimonials</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a class="menu-item" href="/blog">
-                  Blog
-                </a>
-              </li>
-              <li>
-                <a class="menu-item" href="/contact">
-                  Contact
-                </a>
-              </li>
-            </ul>
-            {/* mainmenu end */}
-          </div>
-          <div class="de-flex-col">
-            <div class="menu_side_area">
-              <a href="/booking" class="btn-main fx-slide">
-                <span>Book Appointment</span>
-              </a>
-              <button
-                type="button"
-                id="menu-btn"
-                aria-label="Menu"
-                aria-expanded="false"
-                aria-controls="mainmenu"
-              ></button>
-            </div>
-
-            <div
-              id="btn-extra"
-              role="button"
-              tabindex="0"
-              aria-label="Open site menu and contact details"
-            >
-              <span></span>
-              <span></span>
-            </div>
-          </div>
+          <MainNav />
+          <HeaderActions />
         </div>
       </div>
     </div>

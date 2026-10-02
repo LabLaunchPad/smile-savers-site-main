@@ -1,0 +1,28 @@
+---
+// Iteration 1: markup isolation — HeaderActions OWNS the CTA + menu controls verbatim.
+// Byte-identical move from Header.astro; behavior/contracts unchanged.
+---
+<div class="de-flex-col">
+  <div class="menu_side_area">
+    <a href="/booking" class="btn-main fx-slide">
+      <span>Book Appointment</span>
+    </a>
+    <button
+      type="button"
+      id="menu-btn"
+      aria-label="Menu"
+      aria-expanded="false"
+      aria-controls="mainmenu"
+    ></button>
+  </div>
+
+  <div
+    id="btn-extra"
+    role="button"
+    tabindex="0"
+    aria-label="Open site menu and contact details"
+  >
+    <span></span>
+    <span></span>
+  </div>
+</div>
