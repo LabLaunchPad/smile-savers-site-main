@@ -341,3 +341,103 @@ test('brand assets: every file under public/images is referenced', () => {
   });
   assert.deepEqual(unreferenced, [], `public/images files unreferenced in src/css/js: ${unreferenced.join(', ')}`);
 });
+
+test('hygiene: no dead docs or editor dirs', () => {
+  const dead = [
+    ' .vscode',
+    '.vscode',
+    '.cursor',
+    'ATLAS_TOKENS.md',
+    'FINAL_ENHANCEMENT_REPORT.md',
+    'TASK-TRACKER.md',
+    'check_results.txt',
+    'frontend_design_audit.md',
+  ];
+  for (const p of dead) {
+    assert.ok(!existsSync(p), `${p} is dead and must stay deleted`);
+  }
+});
+
+test('seo: canonical domain everywhere user-facing', () => {
+  for (const f of ['public/sitemap.xml', 'public/robots.txt', 'astro.config.mjs']) {
+    const t = src(f);
+    assert.ok(t.includes('https://dentalsmilesavers.com'), `${f} must use the canonical domain`);
+    assert.ok(!t.includes('smilesavers.dental'), `${f} must not reference the stale domain`);
+  }
+  const headers = src('public/_headers');
+  assert.ok(
+    headers.includes('https://dentalsmilesavers.com'),
+    'public/_headers must use the canonical domain'
+  );
+  assert.ok(
+    !headers.includes('smilesavers.dental'),
+    'public/_headers must not reference the stale domain'
+  );
+});
+
+test('redirects: destinations resolve to routes', () => {
+  const lines = src('public/_redirects')
+    .split('\n')
+    .map((l) => l.trim())
+    .filter((l) => l && !l.startsWith('#'));
+  assert.ok(lines.length > 0, '_redirects must define at least one redirect');
+  for (const line of lines) {
+    const tokens = line.split(/\s+/);
+    const dest = tokens[1];
+    assert.ok(dest, `redirect line missing destination: ${line}`);
+    if (/^https?:\/\//.test(dest)) continue;
+    assert.ok(dest.startsWith('/'), `destination must be a local path: ${line}`);
+    const route = dest === '/' ? 'src/pages/index.astro' : `src/pages/${dest.slice(1)}.astro`;
+    const alt = dest === '/' ? null : `src/pages/${dest.slice(1)}/index.astro`;
+    assert.ok(
+      existsSync(route) || (alt && existsSync(alt)),
+      `${dest} must resolve to a src/pages route`
+    );
+  }
+});
+
+test('discipline: dev-server rules documented', () => {
+  const agents = src('AGENTS.md');
+  assert.ok(
+    agents.includes('ONE') && agents.includes('npm run dev'),
+    'AGENTS.md must document the one-instance rule'
+  );
+  assert.ok(agents.includes('STOP dev'), 'AGENTS.md must document the stop-before-build rule');
+  const catalog = src('ERROR-CATALOG.md');
+  assert.ok(
+    catalog.includes('Pre-merge build gate'),
+    'ERROR-CATALOG.md must document the pre-merge build gate'
+  );
+});
+
+test('hygiene: no secrets in tracked source', () => {
+  const secretRe = /sk-live|sk-test|ghp_|xoxb-|BEGIN PRIVATE KEY/;
+  const files = [];
+  const walkAll = (dir) => {
+    if (!existsSync(dir)) return;
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      const p = `${dir}/${e.name}`;
+      if (e.isDirectory()) walkAll(p);
+      else files.push(p);
+    }
+  };
+  walkAll('src');
+  walkAll('functions');
+  if (existsSync('.github')) {
+    const walkGh = (dir) => {
+      for (const e of readdirSync(dir, { withFileTypes: true })) {
+        const p = `${dir}/${e.name}`;
+        if (e.isDirectory()) walkGh(p);
+        else if (/\.(yml|yaml|md)$/.test(e.name)) files.push(p);
+      }
+    };
+    walkGh('.github');
+  }
+  for (const e of readdirSync('.', { withFileTypes: true })) {
+    if (e.isFile() && /\.(json|jsonc|mjs|ts)$/.test(e.name)) files.push(e.name);
+  }
+  assert.ok(files.length > 0, 'expected source files to scan');
+  for (const f of files) {
+    assert.ok(!secretRe.test(src(f)), `${f} must not contain secrets`);
+  }
+});
