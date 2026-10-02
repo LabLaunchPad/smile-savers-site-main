@@ -4,6 +4,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
+import { execSync } from 'node:child_process';
 import { practice, fullAddress, mailtoWith, hoursSentence } from '../src/data/practice.ts';
 
 const src = (p) => readFileSync(p, 'utf8');
@@ -630,6 +631,14 @@ test('no dead font-vendor weight ships (demo/sources/dups)', () => {
   }
   const layout = src('src/layouts/Layout.astro');
   assert.ok(!layout.includes('fontawesome4'), 'no FA4 references may remain');
+});
+
+test('image payload budget (10.6MB baseline)', () => {
+  const kb = Number(execSync('powershell -NoProfile -Command "(Get-ChildItem public/images -Recurse -File | Measure-Object Length -Sum).Sum / 1KB"').toString().trim());
+  assert.ok(kb < 6500, `images must stay under 6.5MB, now ${Math.round(kb)}KB`);
+  for (const big of ['public/images/slider/1.jpg', 'public/images/background/4.webp', 'public/images/misc/l4.webp', 'public/images/slider/2.jpg']) {
+    assert.ok(existsSync(big), `${big} path must survive compression`);
+  }
 });
 
 test('nav: every header href resolves to a real route', () => {
