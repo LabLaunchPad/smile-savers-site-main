@@ -300,3 +300,43 @@ button#menu-btn {
   font-display: swap;
   src: url('/fonts/elegant_font/HTML_CSS/fonts/ElegantIcons.woff') format('woff');
 }
+
+/* task-9 (a11y): heading-order retags keep their exact visual size.
+   Sizes replicate public/css/style.css :root vars (h4 20px/1.6, h5 18px/1.6);
+   theme + vendor css untouched, hover/nav selectors byte-identical. */
+.h4-size {
+  font-size: var(--h4-font-size);
+  font-weight: var(--h4-font-weight);
+  letter-spacing: var(--h4-letter-spacing);
+  line-height: var(--h4-line-height);
+  margin-bottom: var(--h4-margin-bottom);
+}
+.h5-size {
+  font-size: var(--h5-font-size);
+  font-weight: var(--h5-font-weight);
+  letter-spacing: var(--h5-letter-spacing);
+  line-height: var(--h5-line-height);
+  margin-bottom: var(--h5-margin-bottom);
+}
+/* footer widgets give h5 a 20px bottom margin (style.css) — carry it over to
+   the retagged h2s so footer height is byte-identical. */
+footer .widget h2.h5-size {
+  margin-bottom: 20px;
+}
+
+/* task-9 (a11y): btn contrast 4.11 -> 4.83 (white on #4471BE, needs 4.5:1).
+   Solid buttons only; .btn-line keeps its transparent outline look except on
+   brand-blue panels (section.bg-color) where white text needs a solid face.
+   :hover keeps var(--btn-hover-bg); theme + vendor css untouched. */
+a.btn-main:not(.btn-line),
+.btn-main:not(.btn-line) {
+  background-color: #4471BE;
+}
+section.bg-color a.btn-main.btn-line {
+  background-color: #4471BE;
+}
+a.btn-main:not(.btn-line):hover,
+.btn-main:not(.btn-line):hover,
+section.bg-color a.btn-main.btn-line:hover {
+  background-color: var(--btn-hover-bg);
+}

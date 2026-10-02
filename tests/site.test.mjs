@@ -486,13 +486,13 @@ test('nav: structural hooks frozen (legacy contracts)', () => {
   assert.deepEqual([...idx].sort((a, b) => a - b), idx, 'legacy script load order must not change');
 });
 
-test('nav: item order Home Services Dentists Blog Contact More (dropdown last)', () => {
+test('nav: item order Home Services Dentists Blog Contact About (dropdown last)', () => {
   const nav = src('src/components/site/MainNav.astro');
-  const labels = ['Home', 'Services', 'Dentists', 'Blog', 'Contact', 'More'];
+  const labels = ['Home', 'Services', 'Dentists', 'Blog', 'Contact', 'About'];
   const idx = labels.map((l) => nav.indexOf(l));
   assert.ok(idx.every((i) => i >= 0), `all top-level labels must exist, missing: ${labels.filter((_, i) => idx[i] < 0)}`);
-  assert.deepEqual([...idx].sort((a, b) => a - b), idx, 'top-level nav order must be Home Services Dentists Blog Contact More');
-  assert.ok(!nav.includes('Pages'), 'Pages label must be renamed to More');
+  assert.deepEqual([...idx].sort((a, b) => a - b), idx, 'top-level nav order must be Home Services Dentists Blog Contact About');
+  assert.ok(!nav.includes('Pages'), 'Pages label must be renamed to About');
 });
 
 test('gallery: lightbox survives React filter remounts', () => {
@@ -696,4 +696,24 @@ test('every route has unique SEO title + description (no stale pain-free default
     titles.add(m[1]);
     assert.ok(m[1].length <= 60, `${f} title >60 chars`);
   }
+});
+
+test('lighthouse naming/order/contrast gates (task 9: exact prod items)', () => {
+  const nav = src('src/components/site/MainNav.astro');
+  assert.ok(!nav.includes('>More<'), 'nav: generic "More" link text fails link-text');
+  const home = src('src/pages/index.astro');
+  assert.ok(!home.includes('<h4 class="mb-0">'), 'home: strip/dentist h4s skip levels (heading-order)');
+  assert.ok(!home.match(/<h4>[A-Z]/), 'home: card h4s skip h3 (heading-order)');
+  assert.ok(!home.includes('<h5>'), 'home: why-point h5s skip levels (heading-order)');
+  assert.ok(!src('src/components/Footer.astro').includes('<h5>'), 'footer: widget h5s skip levels (heading-order)');
+  assert.ok(!src('src/layouts/Layout.astro').includes('<h5>'), 'extra-wrap: h5s skip levels (heading-order)');
+  const badgeOpen = home.match(/<a[^>]*class="google-badge"[^>]*>/s)[0];
+  assert.ok(!badgeOpen.includes('aria-label'), 'google-badge: name must derive from visible text (label-content-name-mismatch)');
+  assert.ok(
+    home.includes('Based on {practice.stats.reviews} Google Reviews'),
+    'google-badge: visible rating text must survive',
+  );
+  assert.ok(src('src/styles/globals.css').includes('#4471BE'), 'globals: btn-main needs the 4.5:1 bg override');
+  assert.ok(src('src/styles/globals.css').includes(':not(.btn-line)'), 'globals: btn-line keeps its outline look');
+  assert.ok(src('src/styles/globals.css').includes('footer .widget h2.h5-size'), 'globals: footer widget margin must survive the h5 retag');
 });

@@ -75,7 +75,6 @@ const logos = [
                 href="https://share.google/tZftkQc4AVNwEkHfn"
                 target="_blank"
                 rel="noopener"
-                aria-label={`Smile Savers Dental on Google: rated ${practice.stats.rating} out of 5 from ${practice.stats.reviews} reviews`}
               >
                 <span class="google-badge-main">
                 <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
@@ -152,7 +151,7 @@ const logos = [
           <div class="d-flex justify-content-center">
             <i class="fs-60 id-color icon_phone"></i>
             <div class="ms-3">
-              <h4 class="mb-0">Need Dental Services?</h4>
+              <h2 class="mb-0 h4-size">Need Dental Services?</h2>
               <p>Call: {practice.phone.display}</p>
             </div>
           </div>
@@ -162,7 +161,7 @@ const logos = [
           <div class="d-flex justify-content-center">
             <i class="fs-60 id-color icon_clock"></i>
             <div class="ms-3">
-              <h4 class="mb-0">Opening Hours</h4>
+              <h2 class="mb-0 h4-size">Opening Hours</h2>
               <p>{practice.hours.short}</p>
             </div>
           </div>
@@ -172,7 +171,7 @@ const logos = [
           <div class="d-flex justify-content-center">
             <i class="fs-60 id-color icon_mail"></i>
             <div class="ms-3">
-              <h4 class="mb-0">Email Us</h4>
+              <h2 class="mb-0 h4-size">Email Us</h2>
               <p>{practice.email.address}</p>
             </div>
           </div>
@@ -274,7 +273,7 @@ const logos = [
             <div class="bg-white h-100 p-40 rounded-1">
               <img src="/images/icons/tooth-1.png" class="w-70px mb-3 wow scaleIn" width="512" height="512" loading="lazy" decoding="async" alt="" />
               <div class="relative mt-4 wow fadeInUp">
-                <h4>General Dentistry</h4>
+                <h3 class="h4-size">General Dentistry</h3>
                 <p>
                   Comprehensive exams, cleanings, fillings, and preventive care to keep your whole
                   family healthy for life.
@@ -293,7 +292,7 @@ const logos = [
             <div class="bg-white h-100 p-40 rounded-1">
               <img src="/images/icons/tooth-2.png" class="w-70px mb-3 wow scaleIn" width="512" height="512" loading="lazy" decoding="async" alt="" />
               <div class="relative mt-4 wow fadeInUp">
-                <h4>Cosmetic Dentistry</h4>
+                <h3 class="h4-size">Cosmetic Dentistry</h3>
                 <p>
                   Teeth whitening, porcelain veneers, Invisalign, and full smile makeovers tailored
                   to your unique goals.
@@ -312,7 +311,7 @@ const logos = [
             <div class="bg-white h-100 p-40 rounded-1">
               <img src="/images/icons/tooth-3.png" class="w-70px mb-3 wow scaleIn" width="512" height="512" loading="lazy" decoding="async" alt="" />
               <div class="relative mt-4 wow fadeInUp">
-                <h4>Pediatric Dentistry</h4>
+                <h3 class="h4-size">Pediatric Dentistry</h3>
                 <p>
                   Gentle, kid-friendly dental care designed to build healthy habits and positive
                   experiences from the first tooth.
@@ -331,7 +330,7 @@ const logos = [
             <div class="bg-white h-100 p-40 rounded-1">
               <img src="/images/icons/tooth-4.png" class="w-70px mb-3 wow scaleIn" width="512" height="512" loading="lazy" decoding="async" alt="" />
               <div class="relative mt-4 wow fadeInUp">
-                <h4>Restorative Dentistry</h4>
+                <h3 class="h4-size">Restorative Dentistry</h3>
                 <p>
                   Dental implants, CEREC same-day crowns and root canals that repair and restore
                   your teeth.
@@ -426,7 +425,7 @@ const logos = [
             <div class="col-sm-6">
               <div class="h-100">
                 <div class="relative wow fadeInUp">
-                  <h5>Clinical Excellence</h5>
+                  <h3 class="h5-size">Clinical Excellence</h3>
                   <p class="mb-0">State-of-the-art dentistry with trusted, lasting results.</p>
                 </div>
               </div>
@@ -435,7 +434,7 @@ const logos = [
             <div class="col-sm-6">
               <div class="h-100">
                 <div class="relative wow fadeInUp">
-                  <h5>Patient Comfort</h5>
+                  <h3 class="h5-size">Patient Comfort</h3>
                   <p class="mb-0">Gentle care with zero judgment, ever.</p>
                 </div>
               </div>
@@ -444,7 +443,7 @@ const logos = [
             <div class="col-sm-6">
               <div class="h-100">
                 <div class="relative wow fadeInUp">
-                  <h5>Advanced Technology</h5>
+                  <h3 class="h5-size">Advanced Technology</h3>
                   <p class="mb-0">Digital X-rays, CEREC same-day crowns and 3D imaging.</p>
                 </div>
               </div>
@@ -453,7 +452,7 @@ const logos = [
             <div class="col-sm-6">
               <div class="h-100">
                 <div class="relative wow fadeInUp">
-                  <h5>Community Trust</h5>
+                  <h3 class="h5-size">Community Trust</h3>
                   <p class="mb-0">Serving Queens families since 1987, across generations.</p>
                 </div>
               </div>
@@ -538,9 +537,9 @@ const logos = [
             </div>
             <div class="abs w-100 start-0 bottom-0 z-3">
               <div class="p-2 rounded-10 m-3 text-center bg-white wow fadeInDown">
-                <h4 class="mb-0">
+                <h3 class="mb-0 h4-size">
                   {lead.name} {lead.suffix}
-                </h4>
+                </h3>
                 <p class="mb-2">{lead.role}</p>
               </div>
             </div>
@@ -562,9 +561,9 @@ const logos = [
             </div>
             <div class="abs w-100 start-0 bottom-0 z-3">
               <div class="p-2 rounded-10 m-3 text-center bg-white wow fadeInDown">
-                <h4 class="mb-0">
+                <h3 class="mb-0 h4-size">
                   {islam.name} {islam.suffix}
-                </h4>
+                </h3>
                 <p class="mb-2">{islam.role}</p>
               </div>
             </div>
@@ -586,9 +585,9 @@ const logos = [
             </div>
             <div class="abs w-100 start-0 bottom-0 z-3">
               <div class="p-2 rounded-10 m-3 text-center bg-white wow fadeInDown">
-                <h4 class="mb-0">
+                <h3 class="mb-0 h4-size">
                   {li.name} {li.suffix}
-                </h4>
+                </h3>
                 <p class="mb-2">{li.role}</p>
               </div>
             </div>
@@ -610,9 +609,9 @@ const logos = [
             </div>
             <div class="abs w-100 start-0 bottom-0 z-3">
               <div class="p-2 rounded-10 m-3 text-center bg-white wow fadeInDown">
-                <h4 class="mb-0">
+                <h3 class="mb-0 h4-size">
                   {avendano.name} {avendano.suffix}
-                </h4>
+                </h3>
                 <p class="mb-2">{avendano.role}</p>
               </div>
             </div>
