@@ -6,7 +6,7 @@ export const prerender = true;
 
 const [lead, islam, li, avendano] = practice.roster;
 
-const logos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
 ---
 
 <Layout
@@ -110,11 +110,11 @@ const logos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   </section>
 
   <section class="pt-5 pb-0 text-center relative">
-    <p class="text-dark mb-4 wow fadeInUp">Connected by 100+ Companies</p>
+    <p class="text-dark mb-4 wow fadeInUp">Credentials That Speak for Themselves</p>
     <div class="d-flex">
       <div class="de-marquee-list wow fadeInUp" data-wow-delay=".3s">
         {logos.map((n) => (
-          <img src={`/images/logo/${n}.png`} class="w-200px mx-5" alt="" aria-hidden="true" />
+          <img src={`/images/logo/${n}.png`} class="mx-5" style="height:64px;width:auto" alt="" aria-hidden="true" />
         ))}
       </div>
     </div>

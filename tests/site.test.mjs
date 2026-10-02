@@ -50,6 +50,17 @@ test('layout + footer + pages consume practice (no hardcode drift)', () => {
   }
 });
 
+test('trust-bar eyebrow reads Credentials That Speak for Themselves', () => {
+  const home = src('src/pages/index.astro');
+  assert.ok(home.includes('Credentials That Speak for Themselves'));
+  assert.ok(!home.includes('Connected by 100+ Companies'));
+  for (const logo of ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu']) {
+    assert.ok(home.includes(`'${logo}'`), `trust bar must render ${logo}`);
+    assert.ok(existsSync(`public/images/logo/${logo}.png`), `${logo}.png must exist`);
+  }
+  assert.ok(!home.includes('/images/logo/1.png'), 'no logoipsum slots may remain');
+});
+
 test('forms consume practice for mailto + fallback phone', () => {
   for (const f of ['src/components/BookingForm.tsx', 'src/components/ContactForm.tsx']) {
     const t = src(f);
@@ -232,12 +243,18 @@ test('cleanup: no dead public weight, no PWA corpse', () => {
     'public/images/team/Dr. Deepak Bhagat.png',
     'src/assets/team/dr.jpg',
     'src/entrypoint.js',
-    'public/images/background/1.webp',
-    'public/images/blog-thumbnail/5.webp',
-    'public/images/misc/c1.webp',
+    'public/images/blog-thumbnail/6.webp',
+    'public/images/misc/c1-ori.webp',
+    'public/images/misc/c2.webp',
+    'public/images/misc/c3.webp',
     'public/images/icon.webp',
     'public/images/icons/tooth-5.png',
+    'public/images/icons/tooth-6.png',
+    'public/images/icons/tooth-7.png',
     'public/images/testimonial/6.webp',
+    'public/images/testimonial/7.webp',
+    'public/images/testimonial/8.webp',
+    'public/images/testimonial/user.webp',
     'public/css/bootstrap.rtl.min.css',
     'public/css/datepicker.css',
     'public/images/logo/1.png',
@@ -268,7 +285,8 @@ test('branding: no Dentia/template strings in shipped code', () => {
   );
   for (const f of files) {
     const t = src(f);
-    assert.ok(!/dentia/i.test(t), `${f} must not contain Dentia branding`);
+    // \b: "Credentials" (trust-bar heading) must not trip the Dentia ban.
+    assert.ok(!/\bdentia\b/i.test(t), `${f} must not contain Dentia branding`);
     assert.ok(!/on3step/i.test(t), `${f} must not contain on3step (Lab LaunchPad instead)`);
   }
   // Owner decision 2026-10-02: the homepage logo marquee (index.astro) is an

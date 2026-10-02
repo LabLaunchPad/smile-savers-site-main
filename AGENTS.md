@@ -42,7 +42,7 @@ New/edited markup MUST: real `<label for>` on every field (never placeholder-onl
 ## 6. Brand canonical (Smile Savers Dental — use VERBATIM, never reintroduce placeholders)
 - `32-02 53rd Pl, Woodside, NY 11377` · `(718) 956-8400` / `tel:+17189568400` · `dentalsmilesavers@gmail.com`
 - Hours: `Mon–Thu 10AM–6PM · Fri 9AM–5PM · Sat 9AM–1PM · Sun Closed` (Fri 9–5 wins over any blurb)
-- Rating: `4.5` / `153 Google reviews` (GBP wins; NEVER ship 5.0/200+, 23k, 98%, "100+ Companies" (exempt: homepage logo-marquee prefill slot, owner-approved 2026-10-02))
+- Rating: `4.5` / `153 Google reviews` (GBP wins; NEVER ship 5.0/200+, 23k, 98%, "100+ Companies" — trust bar now holds 6 verified logos: aaid/agd/ao/ada/icoi/nyu)
 - Roster: Bhagat DDS (Lead Dentist, NOT founder) · Islam DMD · Li DDS · Avendaño DDS (photos pending except Bhagat)
 - Stats allowed: `35+ years`, `10,000+ patients`. EmailJS keys stay EMPTY (forms inert by design; Worker+Turnstile route pending owner approval).
 - Prefill status: DONE homepage, about, contact, booking (NAP/copy). STILL FICTIONAL: services×6 bodies, dentists page, testimonials, faq, gallery items, blog. `dentists.astro`/team photos pending shoot.
