@@ -1,74 +1,78 @@
 ---
 // Iteration 1: markup isolation — MainNav OWNS the #mainmenu list verbatim.
-// Byte-identical move from Header.astro; behavior/contracts unchanged.
+// Iteration 2: aria-current marks the current page (additive attribute only;
+// all legacy selectors/classes/URLs byte-identical).
+const path = Astro.url.pathname;
+const cur = (h: string): 'page' | undefined =>
+  h === path || (h !== '/' && (path === h || path.startsWith(h + '/'))) ? 'page' : undefined;
 ---
 <div class="de-flex-col header-col-mid">
   {/* mainemenu begin */}
   <ul id="mainmenu">
     <li>
-      <a class="menu-item" href="/">
+      <a class="menu-item" href="/" aria-current={cur('/')}>
         Home
       </a>
     </li>
     <li>
-      <a class="menu-item" href="/services" aria-haspopup="true">
+      <a class="menu-item" href="/services" aria-haspopup="true" aria-current={cur('/services')}>
         Services
       </a>
       <ul>
         <li>
-          <a href="/services/general-dentistry">General Dentistry</a>
+          <a href="/services/general-dentistry" aria-current={cur('/services/general-dentistry')}>General Dentistry</a>
         </li>
         <li>
-          <a href="/services/cosmetic-dentistry">Cosmetic Dentistry</a>
+          <a href="/services/cosmetic-dentistry" aria-current={cur('/services/cosmetic-dentistry')}>Cosmetic Dentistry</a>
         </li>
         <li>
-          <a href="/services/pediatric-dentistry">Pediatric Dentistry</a>
+          <a href="/services/pediatric-dentistry" aria-current={cur('/services/pediatric-dentistry')}>Pediatric Dentistry</a>
         </li>
         <li>
-          <a href="/services/restorative-dentistry">Restorative Dentistry</a>
+          <a href="/services/restorative-dentistry" aria-current={cur('/services/restorative-dentistry')}>Restorative Dentistry</a>
         </li>
         <li>
-          <a href="/services/preventive-dentistry">Preventive Dentistry</a>
+          <a href="/services/preventive-dentistry" aria-current={cur('/services/preventive-dentistry')}>Preventive Dentistry</a>
         </li>
         <li>
-          <a href="/services/orthodontics">Orthodontics</a>
+          <a href="/services/orthodontics" aria-current={cur('/services/orthodontics')}>Orthodontics</a>
         </li>
         <li>
-          <a href="/services">All Services</a>
+          <a href="/services" aria-current={cur('/services')}>All Services</a>
         </li>
       </ul>
     </li>
     <li>
-      <a class="menu-item" href="/dentists">
+      <a class="menu-item" href="/dentists" aria-current={cur('/dentists')}>
         Dentists
       </a>
     </li>
     <li>
-      <a class="menu-item" href="/about" aria-haspopup="true">
+      <a class="menu-item" href="/about" aria-haspopup="true" aria-current={cur('/about')}>
         Pages
       </a>
       <ul>
         <li>
-          <a href="/about">About Us</a>
+          <a href="/about" aria-current={cur('/about')}>About Us</a>
         </li>
         <li>
-          <a href="/faq">FAQ</a>
+          <a href="/faq" aria-current={cur('/faq')}>FAQ</a>
         </li>
         <li>
-          <a href="/gallery">Gallery</a>
+          <a href="/gallery" aria-current={cur('/gallery')}>Gallery</a>
         </li>
         <li>
-          <a href="/testimonials">Testimonials</a>
+          <a href="/testimonials" aria-current={cur('/testimonials')}>Testimonials</a>
         </li>
       </ul>
     </li>
     <li>
-      <a class="menu-item" href="/blog">
+      <a class="menu-item" href="/blog" aria-current={cur('/blog')}>
         Blog
       </a>
     </li>
     <li>
-      <a class="menu-item" href="/contact">
+      <a class="menu-item" href="/contact" aria-current={cur('/contact')}>
         Contact
       </a>
     </li>

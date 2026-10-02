@@ -447,10 +447,21 @@ function boot(): void {
   if (btnClose) btnClose.addEventListener('click', handleCloseClick);
 
   // ponytail: keyboard + Esc for the side panel — additive only, open path untouched
+  // Iteration 2: Esc also closes the mobile menu; closing returns focus to the
+  // control that opened it (panel -> #btn-extra, menu -> #menu-btn).
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      document.getElementById('extra-wrap')?.classList.remove('open');
+      const panel = document.getElementById('extra-wrap');
+      const wasPanel = panel?.classList.contains('open') ?? false;
+      const wasMenu = document.querySelector('header.menu-open') !== null;
+      panel?.classList.remove('open');
+      if (wasMenu && window.innerWidth <= 992) {
+        document.querySelector('header')?.classList.remove('menu-open');
+        resetMobileHeaderState();
+      }
       document.body.classList.remove('no-scroll');
+      if (wasPanel) (document.getElementById('btn-extra') as HTMLElement | null)?.focus?.();
+      else if (wasMenu) (document.getElementById('menu-btn') as HTMLElement | null)?.focus?.();
       return;
     }
     const target = e.target as HTMLElement | null;

@@ -137,6 +137,12 @@ button#menu-btn {
   outline: 3px solid #1a56db;
   outline-offset: 2px;
 }
+/* ponytail: a11y — keyboard users get the same dropdowns as hover users.
+   Mirrors the legacy :hover rule (style.css) without touching it. */
+#mainmenu li:focus-within > ul {
+  visibility: visible;
+  opacity: 1;
+}
 .skip-link {
   position: absolute;
   left: -9999px;

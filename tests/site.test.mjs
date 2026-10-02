@@ -498,6 +498,16 @@ test('nav: twin runtime ownership hooks present (no silent single-owner drift)',
   }
 });
 
+test('nav a11y: current page, keyboard-open dropdowns, escape + focus return', () => {
+  const nav = src('src/components/site/MainNav.astro');
+  assert.ok(nav.includes('aria-current'), 'MainNav must mark the current page');
+  assert.ok(nav.includes('Astro.url.pathname'), 'current page must derive from the URL');
+  const css = src('src/styles/globals.css');
+  assert.ok(css.includes(':focus-within'), 'dropdowns must open on keyboard focus, not hover alone');
+  const init = src('src/scripts/site-init.ts');
+  assert.ok(init.includes('focus?.()'), 'Escape/panel close must return focus to its invoker');
+});
+
 test('nav: every header href resolves to a real route', () => {
   const header = src('src/components/site/MainNav.astro') + src('src/components/site/HeaderActions.astro');
   const hrefs = [...header.matchAll(/href="(\/[^"]*)"/g)].map((m) => m[1]);
