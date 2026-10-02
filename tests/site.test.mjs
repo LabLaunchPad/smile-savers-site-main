@@ -485,6 +485,15 @@ test('nav: structural hooks frozen (legacy contracts)', () => {
   assert.deepEqual([...idx].sort((a, b) => a - b), idx, 'legacy script load order must not change');
 });
 
+test('nav: item order Home Services Dentists Blog Contact More (dropdown last)', () => {
+  const nav = src('src/components/site/MainNav.astro');
+  const labels = ['Home', 'Services', 'Dentists', 'Blog', 'Contact', 'More'];
+  const idx = labels.map((l) => nav.indexOf(l));
+  assert.ok(idx.every((i) => i >= 0), `all top-level labels must exist, missing: ${labels.filter((_, i) => idx[i] < 0)}`);
+  assert.deepEqual([...idx].sort((a, b) => a - b), idx, 'top-level nav order must be Home Services Dentists Blog Contact More');
+  assert.ok(!nav.includes('Pages'), 'Pages label must be renamed to More');
+});
+
 test('gallery: lightbox survives React filter remounts', () => {
   const grid = src('src/components/GalleryGrid.tsx');
   assert.ok(grid.includes('rebindGalleryPopup'), 'GalleryGrid must rebind the lightbox after filter remounts');

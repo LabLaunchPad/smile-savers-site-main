@@ -48,8 +48,18 @@ const cur = (h: string): 'page' | undefined =>
       </a>
     </li>
     <li>
+      <a class="menu-item" href="/blog" aria-current={cur('/blog')}>
+        Blog
+      </a>
+    </li>
+    <li>
+      <a class="menu-item" href="/contact" aria-current={cur('/contact')}>
+        Contact
+      </a>
+    </li>
+    <li>
       <a class="menu-item" href="/about" aria-current={cur('/about')}>
-        Pages
+        More
       </a>
       <ul>
         <li>
@@ -65,16 +75,6 @@ const cur = (h: string): 'page' | undefined =>
           <a href="/testimonials" aria-current={cur('/testimonials')}>Testimonials</a>
         </li>
       </ul>
-    </li>
-    <li>
-      <a class="menu-item" href="/blog" aria-current={cur('/blog')}>
-        Blog
-      </a>
-    </li>
-    <li>
-      <a class="menu-item" href="/contact" aria-current={cur('/contact')}>
-        Contact
-      </a>
     </li>
   </ul>
   {/* mainmenu end */}
