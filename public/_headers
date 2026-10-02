@@ -1,6 +1,6 @@
 # ═══════════════════════════════════════════════════════════
 # Cloudflare Pages — Security + Performance Headers
-# Smile Savers Dental | smilesavers.dental
+# Smile Savers Dental | dentalsmilesavers.com
 # ═══════════════════════════════════════════════════════════
 
 /*
@@ -47,7 +47,7 @@
 # ── API: no caching ─────────────────────────────────────────
 /api/*
   Cache-Control: no-store, no-cache
-  Access-Control-Allow-Origin: https://smilesavers.dental
+  Access-Control-Allow-Origin: https://dentalsmilesavers.com
   Access-Control-Allow-Methods: POST, OPTIONS
   Access-Control-Allow-Headers: Content-Type
 
