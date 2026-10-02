@@ -3,8 +3,7 @@
 // What it proves: brand copy lives in exactly one module and every consumer imports it.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync, existsSync } from 'node:fs';
-import { execSync } from 'node:child_process';
+import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { practice, fullAddress, mailtoWith, hoursSentence } from '../src/data/practice.ts';
 
 const src = (p) => readFileSync(p, 'utf8');
@@ -636,8 +635,19 @@ test('no dead font-vendor weight ships (demo/sources/dups)', () => {
 });
 
 test('image payload budget (10.6MB baseline)', () => {
-  const kb = Number(execSync('powershell -NoProfile -Command "(Get-ChildItem public/images -Recurse -File | Measure-Object Length -Sum).Sum / 1KB"').toString().trim());
-  assert.ok(kb < 6500, `images must stay under 6.5MB, now ${Math.round(kb)}KB`);
+  // Portable: node:fs walk + integer byte compare. No shell, no locale parsing.
+  const BUDGET_BYTES = 6500 * 1024; // 6,656,000
+  let total = 0;
+  const walk = (dir) => {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      const p = `${dir}/${e.name}`;
+      if (e.isDirectory()) walk(p);
+      else total += statSync(p).size;
+    }
+  };
+  walk('public/images');
+  assert.ok(Number.isInteger(total), 'byte total must be an integer');
+  assert.ok(total < BUDGET_BYTES, `images must stay under 6.5MB, now ${Math.round(total / 1024)}KB`);
   for (const big of ['public/images/slider/1.jpg', 'public/images/background/4.webp', 'public/images/misc/l4.webp', 'public/images/slider/2.jpg']) {
     assert.ok(existsSync(big), `${big} path must survive compression`);
   }
@@ -706,6 +716,39 @@ test('sitemap lists every canonical route, nothing else', () => {
   for (const r of routes) assert.ok(sm.includes(`<loc>https://dentalsmilesavers.com${r}</loc>`), `sitemap missing ${r}`);
   assert.ok(!sm.includes('404'), 'sitemap must not list 404');
   assert.ok(!sm.includes('/blog/single'), 'non-canonical single must stay out unless routed');
+});
+
+test('css: every local url(...) ref resolves to a file on disk (dead-src guard)', () => {
+  // Pre-existing dead refs in frozen vendor style.css — grandfathered by exact
+  // URL string (never fix the CSS; vendor frozen). Discovery lines: ui/arrow-down-form.png:2506,
+  // ui/arrow-down-form-hover.png:2510, ui/arrow-top-right-white.svg:3336+3346 (same URL),
+  // NEW finds this pass: images_02/dotted.webp:6151, images_02/list-arrow.png:6622+6685,
+  // ui/arrow-right.svg:7182, ui/arrow-right-white.svg:7192.
+  const GRANDFATHERED = new Set([
+    '../images/ui/arrow-down-form.png',
+    '../images/ui/arrow-down-form-hover.png',
+    '../images/ui/arrow-top-right-white.svg',
+    '../images_02/dotted.webp',
+    '../images_02/list-arrow.png',
+    '../images/ui/arrow-right.svg',
+    '../images/ui/arrow-right-white.svg',
+  ]);
+  const missing = [];
+  for (const name of readdirSync('public/css')) {
+    if (!name.endsWith('.css')) continue;
+    for (const m of src(`public/css/${name}`).matchAll(/url\(\s*['"]?([^'")]+)['"]?\s*\)/g)) {
+      const u = m[1].trim().split(/[?#]/)[0];
+      if (/^(data:|https?:|\/\/)/i.test(u) || GRANDFATHERED.has(u)) continue;
+      const disk = u.startsWith('/') ? `public${u}` : `public/css/${u}`;
+      const parts = [];
+      for (const seg of disk.split('/')) {
+        if (seg === '..') parts.pop();
+        else if (seg !== '.') parts.push(seg);
+      }
+      if (!existsSync(parts.join('/'))) missing.push(`${name}: ${u}`);
+    }
+  }
+  assert.deepEqual(missing, [], `new dead css url(...) refs (grow GRANDFATHERED, keep css frozen): ${missing.join(', ')}`);
 });
 
 test('404 is noindex + canonical self-reference holds everywhere', () => {

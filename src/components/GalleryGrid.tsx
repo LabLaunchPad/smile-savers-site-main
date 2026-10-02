@@ -18,7 +18,7 @@ const galleryItems: GalleryItem[] = [
     id: 2,
     category: 'facilities',
     image: '/images/gallery/l2.webp',
-    alt: 'Monitor showing dental X-rays beside an exam light',
+    alt: 'Monitor showing dental scans beside an exam light',
   },
   {
     id: 3,
