@@ -624,6 +624,14 @@ test('hero LCP image is preloaded (lcp-discovery)', () => {
   assert.ok(layout.includes('as="image"') && layout.includes('slider/1.jpg'), 'slide 1 must be preloaded as image');
 });
 
+test('no dead font-vendor weight ships (demo/sources/dups)', () => {
+  for (const dead of ['public/fonts/icofont/demo.html', 'public/fonts/elegant_font/index.html']) {
+    assert.ok(!existsSync(dead), `${dead} must not ship`);
+  }
+  const layout = src('src/layouts/Layout.astro');
+  assert.ok(!layout.includes('fontawesome4'), 'no FA4 references may remain');
+});
+
 test('nav: every header href resolves to a real route', () => {
   const header = src('src/components/site/MainNav.astro') + src('src/components/site/HeaderActions.astro');
   const hrefs = [...header.matchAll(/href="(\/[^"]*)"/g)].map((m) => m[1]);
