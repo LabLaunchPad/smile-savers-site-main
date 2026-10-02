@@ -375,6 +375,23 @@ footer .widget h2.h5-size {
     height: 14px;
     margin: 5px 6px;
   }
+  /* ponytail: quick-contact icon/text pairs (index dark strip — scoped
+     via .grid-divider so the booking overlay widget keeps its centered
+     single pair) — one fix for the whole class: center the icon against
+     its text block, pin the icon to a fixed-width column so every text
+     block starts at the same left offset, left-align the pair so the row
+     rhythm is identical, and let the text wrap instead of overflowing. */
+  .grid-divider .d-flex.justify-content-center:has(> i[class*="icon_"]) {
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .grid-divider .d-flex.justify-content-center:has(> i[class*="icon_"]) > i[class*="icon_"] {
+    flex: 0 0 56px;
+    text-align: center;
+  }
+  .grid-divider .d-flex.justify-content-center:has(> i[class*="icon_"]) > div {
+    min-width: 0;
+  }
 }
 /* task-9 (a11y): btn contrast 4.11 -> 4.83 (white on #4471BE, needs 4.5:1).
    Solid buttons only; .btn-line keeps its transparent outline look except on
