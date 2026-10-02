@@ -3,7 +3,7 @@
 // What it proves: brand copy lives in exactly one module and every consumer imports it.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync, existsSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { practice, fullAddress, mailtoWith, hoursSentence } from '../src/data/practice.ts';
 
 const src = (p) => readFileSync(p, 'utf8');
@@ -168,7 +168,7 @@ test('Workers deploy: wrangler.jsonc points at flat dist/', () => {
 test('merge plumbing: redirects, functions, offline route', () => {
   const redirects = src('public/_redirects');
   assert.ok(redirects.includes('/appointments'), '_redirects must cover /appointments');
-  assert.ok(redirects.includes('/booking 301'), 'appointments must point at local /booking');
+  assert.ok(redirects.includes('/booking/ 301'), 'appointments must point at local /booking/ (trailing slash: no 307 second hop)');
   for (const f of [
     'functions/_middleware.js',
     'functions/api/contact.js',
@@ -401,9 +401,11 @@ test('redirects: destinations resolve to routes', () => {
   assert.ok(lines.length > 0, '_redirects must define at least one redirect');
   for (const line of lines) {
     const tokens = line.split(/\s+/);
-    const dest = tokens[1];
-    assert.ok(dest, `redirect line missing destination: ${line}`);
-    if (/^https?:\/\//.test(dest)) continue;
+    const rawDest = tokens[1];
+    assert.ok(rawDest, `redirect line missing destination: ${line}`);
+    if (/^https?:\/\//.test(rawDest)) continue;
+    // trailing-slash dests dodge the Pages pretty-URL 307 second hop — strip for route resolve
+    const dest = rawDest.length > 1 ? rawDest.replace(/\/$/, '') : rawDest;
     assert.ok(dest.startsWith('/'), `destination must be a local path: ${line}`);
     const route = dest === '/' ? 'src/pages/index.astro' : `src/pages/${dest.slice(1)}.astro`;
     const alt = dest === '/' ? null : `src/pages/${dest.slice(1)}/index.astro`;
@@ -485,13 +487,13 @@ test('nav: structural hooks frozen (legacy contracts)', () => {
   assert.deepEqual([...idx].sort((a, b) => a - b), idx, 'legacy script load order must not change');
 });
 
-test('nav: item order Home Services Dentists Blog Contact More (dropdown last)', () => {
+test('nav: item order Home Services Dentists Blog Contact About (dropdown last)', () => {
   const nav = src('src/components/site/MainNav.astro');
-  const labels = ['Home', 'Services', 'Dentists', 'Blog', 'Contact', 'More'];
+  const labels = ['Home', 'Services', 'Dentists', 'Blog', 'Contact', 'About'];
   const idx = labels.map((l) => nav.indexOf(l));
   assert.ok(idx.every((i) => i >= 0), `all top-level labels must exist, missing: ${labels.filter((_, i) => idx[i] < 0)}`);
-  assert.deepEqual([...idx].sort((a, b) => a - b), idx, 'top-level nav order must be Home Services Dentists Blog Contact More');
-  assert.ok(!nav.includes('Pages'), 'Pages label must be renamed to More');
+  assert.deepEqual([...idx].sort((a, b) => a - b), idx, 'top-level nav order must be Home Services Dentists Blog Contact About');
+  assert.ok(!nav.includes('Pages'), 'Pages label must be renamed to About');
 });
 
 test('gallery: lightbox survives React filter remounts', () => {
@@ -611,6 +613,59 @@ test('sections: PageHeader + BookingCTA own the repeated blocks', () => {
   }
 });
 
+test('fonts: swap display + preloaded woff2 (no invisible text)', () => {
+  const css = src('src/styles/globals.css');
+  assert.ok(css.includes('font-display'), 'globals.css must redeclare font-display');
+  assert.ok(!css.includes('font-display: block'), 'must not use block (invisible text)');
+  const layout = src('src/layouts/Layout.astro');
+  assert.ok(layout.includes('rel="preload"') && layout.includes('.woff2'), 'critical woff2 must be preloaded');
+});
+
+test('hero LCP image is preloaded (lcp-discovery)', () => {
+  const layout = src('src/layouts/Layout.astro');
+  assert.ok(layout.includes('as="image"') && layout.includes('slider/1.jpg'), 'slide 1 must be preloaded as image');
+});
+
+test('no dead font-vendor weight ships (demo/sources/dups)', () => {
+  for (const dead of ['public/fonts/icofont/demo.html', 'public/fonts/elegant_font/HTML_CSS/index.html']) {
+    assert.ok(!existsSync(dead), `${dead} must not ship`);
+  }
+  const layout = src('src/layouts/Layout.astro');
+  assert.ok(!layout.includes('fontawesome4'), 'no FA4 references may remain');
+});
+
+test('image payload budget (10.6MB baseline)', () => {
+  // Portable: node:fs walk + integer byte compare. No shell, no locale parsing.
+  const BUDGET_BYTES = 6500 * 1024; // 6,656,000
+  let total = 0;
+  const walk = (dir) => {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      const p = `${dir}/${e.name}`;
+      if (e.isDirectory()) walk(p);
+      else total += statSync(p).size;
+    }
+  };
+  walk('public/images');
+  assert.ok(Number.isInteger(total), 'byte total must be an integer');
+  assert.ok(total < BUDGET_BYTES, `images must stay under 6.5MB, now ${Math.round(total / 1024)}KB`);
+  for (const big of ['public/images/slider/1.jpg', 'public/images/background/4.webp', 'public/images/misc/l4.webp', 'public/images/slider/2.jpg']) {
+    assert.ok(existsSync(big), `${big} path must survive compression`);
+  }
+});
+
+test('content images sized + lazy (no CLS), informative alts', () => {
+  const pages = ['src/pages/index.astro', 'src/pages/about.astro', 'src/pages/dentists.astro', 'src/pages/blog.astro'];
+  for (const f of pages) {
+    const imgs = [...src(f).matchAll(/<img[^>]*>/g)].map((m) => m[0]);
+    for (const img of imgs) {
+      if (img.includes('testimonial/') || img.includes('logo/')) continue; // decorative, keep alt=""
+      assert.ok(/width=/.test(img) && /height=/.test(img), `${f}: unsized ${img.slice(0, 60)}`);
+      assert.ok(img.includes('loading="lazy"') || img.includes('fetchpriority'), `${f}: eager ${img.slice(0, 60)}`);
+    }
+  }
+  assert.ok(src('src/pages/about.astro').includes('alt="Dr. Deepak Bhagat'), 'team lead photo needs descriptive alt');
+});
+
 test('nav: every header href resolves to a real route', () => {
   const header = src('src/components/site/MainNav.astro') + src('src/components/site/HeaderActions.astro');
   const hrefs = [...header.matchAll(/href="(\/[^"]*)"/g)].map((m) => m[1]);
@@ -620,4 +675,105 @@ test('nav: every header href resolves to a real route', () => {
     const alt = h === '/' ? null : `src/pages${h}/index.astro`;
     assert.ok(existsSync(route) || (alt && existsSync(alt)), `nav href ${h} must resolve to a route`);
   }
+});
+
+test('social share image is a real raster (not SVG)', () => {
+  const layout = src('src/layouts/Layout.astro');
+  assert.ok(layout.includes('og:image'), 'og:image missing');
+  assert.ok(!layout.match(/og:image[^>]*\.svg/), 'og:image must not be SVG');
+  assert.ok(existsSync('public/images/og-cover.jpg'), 'og-cover.jpg must exist');
+  assert.ok(layout.includes('summary_large_image'), 'twitter card must be large');
+});
+
+test('structured data: Dentist home + Organization/WebSite sitewide + breadcrumbs', () => {
+  assert.ok(src('src/layouts/Layout.astro').includes('application/ld+json'), 'layout needs sitewide schema');
+  const home = src('src/pages/index.astro');
+  assert.ok(home.includes('"@type":"Dentist"') || home.includes('"@type": "Dentist"'), 'home needs Dentist schema');
+  assert.ok(!home.includes('aggregateRating'), 'self-review stars are ineligible — must be absent');
+  assert.ok(!src('src/layouts/Layout.astro').includes('FAQPage'), 'FAQ rich results are gone — no FAQPage');
+  const header = src('src/components/sections/shared/PageHeader.astro');
+  assert.ok(header.includes('BreadcrumbList'), 'PageHeader trail must emit BreadcrumbList');
+});
+
+test('every route has unique SEO title + description (no stale pain-free default)', () => {
+  const layout = src('src/layouts/Layout.astro');
+  assert.ok(!layout.includes('pain-free family dentistry'), 'default description must drop pain-free');
+  assert.ok(layout.includes('Affordable') || layout.includes('affordable'), 'default must match Affordable positioning');
+  const titles = new Set();
+  const pages = ['src/pages/index.astro', 'src/pages/about.astro', 'src/pages/services.astro', 'src/pages/contact.astro', 'src/pages/booking.astro', 'src/pages/dentists.astro', 'src/pages/blog.astro', 'src/pages/faq.astro', 'src/pages/gallery.astro', 'src/pages/testimonials.astro', 'src/pages/blog/single.astro', 'src/pages/services/general-dentistry.astro', 'src/pages/services/cosmetic-dentistry.astro', 'src/pages/services/pediatric-dentistry.astro', 'src/pages/services/restorative-dentistry.astro', 'src/pages/services/preventive-dentistry.astro', 'src/pages/services/orthodontics.astro'];
+  for (const f of pages) {
+    const m = src(f).match(/title="([^"]+)"/);
+    assert.ok(m, `${f} must pass title`);
+    assert.ok(!titles.has(m[1]), `duplicate title: ${m[1]}`);
+    titles.add(m[1]);
+    assert.ok(m[1].length <= 60, `${f} title >60 chars`);
+  }
+});
+
+test('sitemap lists every canonical route, nothing else', () => {
+  const sm = src('public/sitemap.xml');
+  const routes = ['/', '/about', '/services', '/booking', '/contact', '/dentists', '/faq', '/gallery', '/blog', '/testimonials', '/services/general-dentistry', '/services/cosmetic-dentistry', '/services/pediatric-dentistry', '/services/restorative-dentistry', '/services/preventive-dentistry', '/services/orthodontics'];
+  for (const r of routes) assert.ok(sm.includes(`<loc>https://dentalsmilesavers.com${r}</loc>`), `sitemap missing ${r}`);
+  assert.ok(!sm.includes('404'), 'sitemap must not list 404');
+  assert.ok(!sm.includes('/blog/single'), 'non-canonical single must stay out unless routed');
+});
+
+test('css: every local url(...) ref resolves to a file on disk (dead-src guard)', () => {
+  // Pre-existing dead refs in frozen vendor style.css — grandfathered by exact
+  // URL string (never fix the CSS; vendor frozen). Discovery lines: ui/arrow-down-form.png:2506,
+  // ui/arrow-down-form-hover.png:2510, ui/arrow-top-right-white.svg:3336+3346 (same URL),
+  // NEW finds this pass: images_02/dotted.webp:6151, images_02/list-arrow.png:6622+6685,
+  // ui/arrow-right.svg:7182, ui/arrow-right-white.svg:7192.
+  const GRANDFATHERED = new Set([
+    '../images/ui/arrow-down-form.png',
+    '../images/ui/arrow-down-form-hover.png',
+    '../images/ui/arrow-top-right-white.svg',
+    '../images_02/dotted.webp',
+    '../images_02/list-arrow.png',
+    '../images/ui/arrow-right.svg',
+    '../images/ui/arrow-right-white.svg',
+  ]);
+  const missing = [];
+  for (const name of readdirSync('public/css')) {
+    if (!name.endsWith('.css')) continue;
+    for (const m of src(`public/css/${name}`).matchAll(/url\(\s*['"]?([^'")]+)['"]?\s*\)/g)) {
+      const u = m[1].trim().split(/[?#]/)[0];
+      if (/^(data:|https?:|\/\/)/i.test(u) || GRANDFATHERED.has(u)) continue;
+      const disk = u.startsWith('/') ? `public${u}` : `public/css/${u}`;
+      const parts = [];
+      for (const seg of disk.split('/')) {
+        if (seg === '..') parts.pop();
+        else if (seg !== '.') parts.push(seg);
+      }
+      if (!existsSync(parts.join('/'))) missing.push(`${name}: ${u}`);
+    }
+  }
+  assert.deepEqual(missing, [], `new dead css url(...) refs (grow GRANDFATHERED, keep css frozen): ${missing.join(', ')}`);
+});
+
+test('404 is noindex + canonical self-reference holds everywhere', () => {
+  const nf = src('src/pages/404.astro');
+  assert.ok(nf.includes('noindex'), '404 must be noindex');
+  const layout = src('src/layouts/Layout.astro');
+  assert.ok(layout.includes('rel="canonical"'), 'canonical intact');
+});
+
+test('lighthouse naming/order/contrast gates (task 9: exact prod items)', () => {
+  const nav = src('src/components/site/MainNav.astro');
+  assert.ok(!nav.includes('>More<'), 'nav: generic "More" link text fails link-text');
+  const home = src('src/pages/index.astro');
+  assert.ok(!home.includes('<h4 class="mb-0">'), 'home: strip/dentist h4s skip levels (heading-order)');
+  assert.ok(!home.match(/<h4>[A-Z]/), 'home: card h4s skip h3 (heading-order)');
+  assert.ok(!home.includes('<h5>'), 'home: why-point h5s skip levels (heading-order)');
+  assert.ok(!src('src/components/Footer.astro').includes('<h5>'), 'footer: widget h5s skip levels (heading-order)');
+  assert.ok(!src('src/layouts/Layout.astro').includes('<h5>'), 'extra-wrap: h5s skip levels (heading-order)');
+  const badgeOpen = home.match(/<a[^>]*class="google-badge"[^>]*>/s)[0];
+  assert.ok(!badgeOpen.includes('aria-label'), 'google-badge: name must derive from visible text (label-content-name-mismatch)');
+  assert.ok(
+    home.includes('Based on {practice.stats.reviews} Google Reviews'),
+    'google-badge: visible rating text must survive',
+  );
+  assert.ok(src('src/styles/globals.css').includes('#4471BE'), 'globals: btn-main needs the 4.5:1 bg override');
+  assert.ok(src('src/styles/globals.css').includes(':not(.btn-line)'), 'globals: btn-line keeps its outline look');
+  assert.ok(src('src/styles/globals.css').includes('footer .widget h2.h5-size'), 'globals: footer widget margin must survive the h5 retag');
 });

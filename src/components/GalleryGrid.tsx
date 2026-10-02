@@ -12,73 +12,73 @@ const galleryItems: GalleryItem[] = [
     id: 1,
     category: 'facilities',
     image: '/images/gallery/l1.webp',
-    alt: 'Bright reception area at Smile Savers Dental',
+    alt: 'Bright dental treatment room with an exam chair',
   },
   {
     id: 2,
     category: 'facilities',
     image: '/images/gallery/l2.webp',
-    alt: 'Modern treatment room at Smile Savers Dental',
+    alt: 'Monitor showing dental scans beside an exam light',
   },
   {
     id: 3,
     category: 'facilities',
     image: '/images/gallery/l3.webp',
-    alt: 'Dental chair and equipment close-up',
+    alt: 'Patients waiting in the reception area',
   },
   {
     id: 4,
     category: 'facilities',
     image: '/images/gallery/l4.webp',
-    alt: 'Clean dental operatory at Smile Savers Dental',
+    alt: 'Dentist in scrubs beside a dental X-ray monitor',
   },
   {
     id: 5,
     category: 'facilities',
     image: '/images/gallery/l5.webp',
-    alt: 'Dental office interior in Woodside Queens',
+    alt: 'Clinician treating a patient in the dental chair',
   },
   {
     id: 6,
     category: 'dentists',
     image: '/images/gallery/l6.webp',
-    alt: 'Smile Savers dentist consulting with a patient',
+    alt: 'Smiling clinician in safety glasses holding a dental tool',
   },
   {
     id: 7,
     category: 'dentists',
     image: '/images/gallery/l7.webp',
-    alt: 'Dentist performing a gentle checkup',
+    alt: 'Two dental staff standing in a treatment room',
   },
   {
     id: 8,
     category: 'dentists',
     image: '/images/gallery/l8.webp',
-    alt: 'Smile Savers dental team at work',
+    alt: 'Clinician and patient smiling for a phone selfie',
   },
   {
     id: 9,
     category: 'services',
     image: '/images/gallery/l9.webp',
-    alt: 'Dental treatment in progress',
+    alt: 'Dentist showing a clear dental tray to a patient',
   },
   {
     id: 10,
     category: 'services',
     image: '/images/gallery/l10.webp',
-    alt: 'Teeth cleaning procedure at Smile Savers',
+    alt: 'Clinician talking with a patient in the dental chair',
   },
   {
     id: 11,
     category: 'services',
     image: '/images/gallery/l11.webp',
-    alt: 'Cosmetic dentistry treatment close-up',
+    alt: 'Two clinicians treating a young patient',
   },
   {
     id: 12,
     category: 'services',
     image: '/images/gallery/l12.webp',
-    alt: 'Restorative dental procedure in progress',
+    alt: 'Clinician examining a reclined patient with a mirror',
   },
 ];
 
@@ -145,7 +145,15 @@ export default function GalleryGrid() {
                   View
                 </div>
                 <div className="overlay-black-5 hover-op-1 absolute start-0 z-2 h-100 w-100"></div>
-                <img src={item.image} className="hover-scale-1-2 w-100" alt={item.alt} />
+                <img
+                  src={item.image}
+                  className="hover-scale-1-2 w-100"
+                  width={1380}
+                  height={877}
+                  loading="lazy"
+                  decoding="async"
+                  alt={item.alt}
+                />
               </div>
             </a>
           </div>

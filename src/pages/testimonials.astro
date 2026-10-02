@@ -52,8 +52,8 @@ const testimonials: Testimonial[] = [
 ---
 
 <Layout
-  title="Testimonials — Smile Savers Dental"
-  description="See why patients rate Smile Savers Dental 4.5 on Google from 153 reviews. Woodside, NY dentist."
+  title="Patient Reviews Woodside, Queens | Smile Savers Dental"
+  description="Rated 4.5 from 153 Google reviews — see why Queens families trust our Woodside dentists. Call (718) 956-8400 to book your visit."
   headerClass="transparent header-light"
 >
   <PageHeader title="Testimonials" />
@@ -73,7 +73,15 @@ const testimonials: Testimonial[] = [
               </div>
               <p>{t.text}</p>
               <div class="relative">
-                <img class="circle absolute w-40px" alt="" src={t.img} />
+                <img
+                  class="circle absolute w-40px"
+                  alt=""
+                  src={t.img}
+                  width="100"
+                  height="100"
+                  loading="lazy"
+                  decoding="async"
+                />
                 <div class="ms-60px">
                   <h4 class="mb-0 fs-16 lh-1">{t.name}</h4>
                   <span class="fs-14">{t.treatment}</span>

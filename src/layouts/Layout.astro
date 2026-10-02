@@ -10,16 +10,42 @@ interface Props {
   description?: string;
   headerClass?: string;
   useHeaderInner?: boolean;
+  robots?: string;
 }
 
 const {
   title = `${practice.name} - Dentist & Dental Clinic in Woodside, NY`,
-  description = `${practice.name} in Woodside, NY - gentle, pain-free family dentistry. Call ${practice.phone.display}.`,
+  description = `Affordable family dentist in Woodside, Queens — exams, cleanings, fillings and same-day care for all ages. Call ${practice.phone.display}.`,
   headerClass = 'transparent header-light',
   useHeaderInner = false,
+  robots = 'index, follow',
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://dentalsmilesavers.com');
+// ponytail: one @graph block, not a schema partial — sitewide Organization+WebSite only.
+const siteBase = (Astro.site ?? 'https://dentalsmilesavers.com').toString().replace(/\/$/, '');
+const gbpUrl = 'https://share.google/tZftkQc4AVNwEkHfn';
+const orgJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${siteBase}/#organization`,
+      name: 'Smile Savers Dental',
+      url: `${siteBase}/`,
+      logo: `${siteBase}/images/logo.svg`,
+      sameAs: [gbpUrl],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${siteBase}/#website`,
+      url: `${siteBase}/`,
+      name: 'Smile Savers Dental',
+      alternateName: 'Smile Savers',
+      publisher: { '@id': `${siteBase}/#organization` },
+    },
+  ],
+});
 ---
 
 <!doctype html>
@@ -31,17 +57,24 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://dentalsmile
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonical} />
+    <meta name="robots" content={robots} />
     <meta name="theme-color" content="#4A7CD2" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="Smile Savers Dental" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    {/* ponytail: no og:image yet — needs a 1200x630 raster; SVG logo is ignored by scrapers */}
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={new URL('/images/og-cover.jpg', Astro.site ?? 'https://dentalsmilesavers.com').href} />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <script is:inline type="application/ld+json" set:html={orgJson} />
     <title>{title}</title>
+    {/* perf: above-the-fold icon fonts — hero stars (FA6 solid) + header icons (IcoFont) */}
+    <link rel="preload" href="/fonts/icofont/fonts/icofont.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/fontawesome6/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin />
+    {/* perf: hero LCP (slide 1) — homepage only; other pages lack /images/slider/1.jpg */}
+    {Astro.url.pathname === '/' && <link rel="preload" as="image" href="/images/slider/1.jpg" fetchpriority="high" />}
     <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="bootstrap" />
     <link href="/css/plugins.css" rel="stylesheet" type="text/css" />
     <link href="/css/swiper.css" rel="stylesheet" type="text/css" />
@@ -84,11 +117,17 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://dentalsmile
       </div>
 
       <div id="extra-content">
-        <img src="/images/logo-white.svg" class="w-150px" alt="Smile Savers Dental" />
+        <img
+          src="/images/logo-white.svg"
+          class="w-150px"
+          alt="Smile Savers Dental"
+          width="150"
+          height="29"
+        />
 
         <div class="spacer-30-line"></div>
 
-        <h5>Our Services</h5>
+        <h2 class="h5-size">Our Services</h2>
         <ul class="ul-check">
           <li>
             <a href="/services/general-dentistry">General Dentistry</a>
@@ -112,7 +151,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://dentalsmile
 
         <div class="spacer-30-line"></div>
 
-        <h5>Contact Us</h5>
+        <h2 class="h5-size">Contact Us</h2>
         <div>
           <i class="icofont-clock-time me-2 op-5"></i>
           {practice.hours.full}
@@ -132,7 +171,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://dentalsmile
 
         <div class="spacer-30-line"></div>
 
-        <h5>About Us</h5>
+        <h2 class="h5-size">About Us</h2>
         <p>
           At {practice.name}, we’re dedicated to providing high-quality, pain-free dental care for
           patients of all ages in Woodside, Queens.

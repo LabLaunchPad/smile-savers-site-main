@@ -6,14 +6,52 @@ export const prerender = true;
 
 const [lead, islam, li, avendano] = practice.roster;
 
-const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
+// ponytail: homepage-only Dentist block — no self-stars (ineligible per Google).
+const siteBase = 'https://dentalsmilesavers.com';
+const dentistJson = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Dentist",
+  "name": "Smile Savers Dental",
+  "image": `${siteBase}/images/og-cover.jpg`,
+  "url": `${siteBase}/`,
+  "telephone": "+17189568400",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": practice.address.street,
+    "addressLocality": practice.address.city,
+    "addressRegion": practice.address.state,
+    "postalCode": practice.address.zip,
+    "addressCountry": "US"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"],
+      "opens": "10:00",
+      "closes": "18:00"
+    },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "09:00", "closes": "17:00" },
+    { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "09:00", "closes": "13:00" }
+  ],
+  "sameAs": ["https://share.google/tZftkQc4AVNwEkHfn"]
+});
+const logos = [
+  { n: 'aaid', w: 208, h: 160 },
+  { n: 'agd', w: 585, h: 160 },
+  { n: 'ao', w: 253, h: 160 },
+  { n: 'ada', w: 351, h: 160 },
+  { n: 'icoi', w: 878, h: 160 },
+  { n: 'nyu', w: 1254, h: 160 },
+];
 ---
 
 <Layout
   title="Smile Savers Dental — Dentist in Woodside, Queens, NY"
-  description={`Pain-free family dentist in Woodside, Queens since 1987. Same-day CEREC crowns, implants and emergency care. Call ${practice.phone.display}.`}
+  description={`Affordable family dentist in Woodside, Queens with 35+ years of care. Same-day crowns, implants and emergency visits. Call ${practice.phone.display}.`}
   headerClass="transparent scroll-light"
 >
+  <script is:inline type="application/ld+json" set:html={dentistJson} />
   <section id="section-intro" class="text-light no-top no-bottom relative overflow-hidden">
     <div class="relative">
       <div class="abs abs-centered w-100 z-2">
@@ -37,7 +75,6 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
                 href="https://share.google/tZftkQc4AVNwEkHfn"
                 target="_blank"
                 rel="noopener"
-                aria-label={`Smile Savers Dental on Google: rated ${practice.stats.rating} out of 5 from ${practice.stats.reviews} reviews`}
               >
                 <span class="google-badge-main">
                 <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
@@ -114,7 +151,7 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
           <div class="d-flex justify-content-center">
             <i class="fs-60 id-color icon_phone"></i>
             <div class="ms-3">
-              <h4 class="mb-0">Need Dental Services?</h4>
+              <h2 class="mb-0 h4-size">Need Dental Services?</h2>
               <p>Call: {practice.phone.display}</p>
             </div>
           </div>
@@ -124,7 +161,7 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
           <div class="d-flex justify-content-center">
             <i class="fs-60 id-color icon_clock"></i>
             <div class="ms-3">
-              <h4 class="mb-0">Opening Hours</h4>
+              <h2 class="mb-0 h4-size">Opening Hours</h2>
               <p>{practice.hours.short}</p>
             </div>
           </div>
@@ -134,7 +171,7 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
           <div class="d-flex justify-content-center">
             <i class="fs-60 id-color icon_mail"></i>
             <div class="ms-3">
-              <h4 class="mb-0">Email Us</h4>
+              <h2 class="mb-0 h4-size">Email Us</h2>
               <p>{practice.email.address}</p>
             </div>
           </div>
@@ -147,8 +184,18 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
     <p class="text-dark mb-4 wow fadeInUp">Credentials That Speak for Themselves</p>
     <div class="d-flex">
       <div class="de-marquee-list wow fadeInUp" data-wow-delay=".3s">
-        {logos.map((n) => (
-          <img src={`/images/logo/${n}.png`} class="mx-5" style="height:64px;width:auto" alt="" aria-hidden="true" />
+        {logos.map((l) => (
+          <img
+            src={`/images/logo/${l.n}.png`}
+            class="mx-5"
+            style="height:64px;width:auto"
+            width={l.w}
+            height={l.h}
+            loading="lazy"
+            decoding="async"
+            alt=""
+            aria-hidden="true"
+          />
         ))}
       </div>
     </div>
@@ -159,7 +206,15 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
       <div class="row g-4 gx-5 align-items-center">
         <div class="col-md-3">
           <div class="rounded-1 overflow-hidden wow zoomIn">
-            <img src="/images/misc/p1.webp" class="w-100 wow scaleIn" alt="" />
+            <img
+              src="/images/misc/p1.webp"
+              class="w-100 wow scaleIn"
+              width="1000"
+              height="1350"
+              loading="lazy"
+              decoding="async"
+              alt="Smiling patient during a dental exam with a mirror"
+            />
           </div>
         </div>
 
@@ -179,7 +234,16 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
 
         <div class="col-lg-3">
           <div class="rounded-1 overflow-hidden wow zoomIn" data-wow-delay=".3s">
-            <img src="/images/misc/p2.webp" class="w-100 wow scaleIn" alt="" data-wow-delay=".3s" />
+            <img
+              src="/images/misc/p2.webp"
+              class="w-100 wow scaleIn"
+              width="1000"
+              height="1350"
+              loading="lazy"
+              decoding="async"
+              alt="Dentist standing beside a seated patient"
+              data-wow-delay=".3s"
+            />
           </div>
         </div>
       </div>
@@ -207,9 +271,9 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
         <div class="col-lg-3 col-sm-6">
           <div class="hover">
             <div class="bg-white h-100 p-40 rounded-1">
-              <img src="/images/icons/tooth-1.png" class="w-70px mb-3 wow scaleIn" alt="" />
+              <img src="/images/icons/tooth-1.png" class="w-70px mb-3 wow scaleIn" width="512" height="512" loading="lazy" decoding="async" alt="" />
               <div class="relative mt-4 wow fadeInUp">
-                <h4>General Dentistry</h4>
+                <h3 class="h4-size">General Dentistry</h3>
                 <p>
                   Comprehensive exams, cleanings, fillings, and preventive care to keep your whole
                   family healthy for life.
@@ -226,9 +290,9 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
         <div class="col-lg-3 col-sm-6">
           <div class="hover">
             <div class="bg-white h-100 p-40 rounded-1">
-              <img src="/images/icons/tooth-2.png" class="w-70px mb-3 wow scaleIn" alt="" />
+              <img src="/images/icons/tooth-2.png" class="w-70px mb-3 wow scaleIn" width="512" height="512" loading="lazy" decoding="async" alt="" />
               <div class="relative mt-4 wow fadeInUp">
-                <h4>Cosmetic Dentistry</h4>
+                <h3 class="h4-size">Cosmetic Dentistry</h3>
                 <p>
                   Teeth whitening, porcelain veneers, Invisalign, and full smile makeovers tailored
                   to your unique goals.
@@ -245,9 +309,9 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
         <div class="col-lg-3 col-sm-6">
           <div class="hover">
             <div class="bg-white h-100 p-40 rounded-1">
-              <img src="/images/icons/tooth-3.png" class="w-70px mb-3 wow scaleIn" alt="" />
+              <img src="/images/icons/tooth-3.png" class="w-70px mb-3 wow scaleIn" width="512" height="512" loading="lazy" decoding="async" alt="" />
               <div class="relative mt-4 wow fadeInUp">
-                <h4>Pediatric Dentistry</h4>
+                <h3 class="h4-size">Pediatric Dentistry</h3>
                 <p>
                   Gentle, kid-friendly dental care designed to build healthy habits and positive
                   experiences from the first tooth.
@@ -264,9 +328,9 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
         <div class="col-lg-3 col-sm-6">
           <div class="hover">
             <div class="bg-white h-100 p-40 rounded-1">
-              <img src="/images/icons/tooth-4.png" class="w-70px mb-3 wow scaleIn" alt="" />
+              <img src="/images/icons/tooth-4.png" class="w-70px mb-3 wow scaleIn" width="512" height="512" loading="lazy" decoding="async" alt="" />
               <div class="relative mt-4 wow fadeInUp">
-                <h4>Restorative Dentistry</h4>
+                <h3 class="h4-size">Restorative Dentistry</h3>
                 <p>
                   Dental implants, CEREC same-day crowns and root canals that repair and restore
                   your teeth.
@@ -361,7 +425,7 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
             <div class="col-sm-6">
               <div class="h-100">
                 <div class="relative wow fadeInUp">
-                  <h5>Clinical Excellence</h5>
+                  <h3 class="h5-size">Clinical Excellence</h3>
                   <p class="mb-0">State-of-the-art dentistry with trusted, lasting results.</p>
                 </div>
               </div>
@@ -370,7 +434,7 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
             <div class="col-sm-6">
               <div class="h-100">
                 <div class="relative wow fadeInUp">
-                  <h5>Patient Comfort</h5>
+                  <h3 class="h5-size">Patient Comfort</h3>
                   <p class="mb-0">Gentle care with zero judgment, ever.</p>
                 </div>
               </div>
@@ -379,7 +443,7 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
             <div class="col-sm-6">
               <div class="h-100">
                 <div class="relative wow fadeInUp">
-                  <h5>Advanced Technology</h5>
+                  <h3 class="h5-size">Advanced Technology</h3>
                   <p class="mb-0">Digital X-rays, CEREC same-day crowns and 3D imaging.</p>
                 </div>
               </div>
@@ -388,7 +452,7 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
             <div class="col-sm-6">
               <div class="h-100">
                 <div class="relative wow fadeInUp">
-                  <h5>Community Trust</h5>
+                  <h3 class="h5-size">Community Trust</h3>
                   <p class="mb-0">Serving Queens families since 1987, across generations.</p>
                 </div>
               </div>
@@ -400,16 +464,40 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
           <div class="row g-4 align-items-center">
             <div class="col-6 text-end">
               <div class="w-80 rounded-1 overflow-hidden mb-25 wow zoomIn d-inline-block">
-                <img src="/images/misc/s2.webp" class="w-100 wow scaleIn" alt="" />
+                <img
+                  src="/images/misc/s2.webp"
+                  class="w-100 wow scaleIn"
+                  width="1000"
+                  height="1000"
+                  loading="lazy"
+                  decoding="async"
+                  alt="Close-up of a smiling patient during a dental exam"
+                />
               </div>
               <div class="w-100 rounded-1 overflow-hidden mb-25 wow zoomIn d-inline-block">
-                <img src="/images/misc/s3.webp" class="w-100 wow scaleIn" alt="" />
+                <img
+                  src="/images/misc/s3.webp"
+                  class="w-100 wow scaleIn"
+                  width="1000"
+                  height="1000"
+                  loading="lazy"
+                  decoding="async"
+                  alt="Masked dentist and assistant leaning over a patient"
+                />
               </div>
             </div>
 
             <div class="col-6">
               <div class="w-100 rounded-1 overflow-hidden mb-25 wow zoomIn d-inline-block">
-                <img src="/images/misc/p3.webp" class="w-100 wow scaleIn" alt="" />
+                <img
+                  src="/images/misc/p3.webp"
+                  class="w-100 wow scaleIn"
+                  width="1000"
+                  height="1350"
+                  loading="lazy"
+                  decoding="async"
+                  alt="Patient in a dental chair giving a thumbs up"
+                />
               </div>
             </div>
           </div>
@@ -440,14 +528,18 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
               <img
                 src="/images/team/bhagat.webp"
                 class="w-100 wow scaleIn"
-                alt="Dr. Deepak Bhagat DDS"
+                width="740"
+                height="1000"
+                loading="lazy"
+                decoding="async"
+                alt="Dr. Deepak Bhagat, Lead Dentist at Smile Savers Dental"
               />
             </div>
             <div class="abs w-100 start-0 bottom-0 z-3">
               <div class="p-2 rounded-10 m-3 text-center bg-white wow fadeInDown">
-                <h4 class="mb-0">
+                <h3 class="mb-0 h4-size">
                   {lead.name} {lead.suffix}
-                </h4>
+                </h3>
                 <p class="mb-2">{lead.role}</p>
               </div>
             </div>
@@ -457,13 +549,21 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
         <div class="col-lg-3 col-md-6">
           <div class="relative rounded-1 overflow-hidden">
             <div class="rounded-1 overflow-hidden wow fadeIn zoomIn">
-              <img src="/images/team/2.webp" class="w-100 wow scaleIn" alt="" />
+              <img
+                src="/images/team/2.webp"
+                class="w-100 wow scaleIn"
+                width="1000"
+                height="1350"
+                loading="lazy"
+                decoding="async"
+                alt="Dr. Julie Islam, General Dentist at Smile Savers Dental"
+              />
             </div>
             <div class="abs w-100 start-0 bottom-0 z-3">
               <div class="p-2 rounded-10 m-3 text-center bg-white wow fadeInDown">
-                <h4 class="mb-0">
+                <h3 class="mb-0 h4-size">
                   {islam.name} {islam.suffix}
-                </h4>
+                </h3>
                 <p class="mb-2">{islam.role}</p>
               </div>
             </div>
@@ -473,13 +573,21 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
         <div class="col-lg-3 col-md-6">
           <div class="relative rounded-1 overflow-hidden">
             <div class="rounded-1 overflow-hidden wow fadeIn zoomIn">
-              <img src="/images/team/3.webp" class="w-100 wow scaleIn" alt="" />
+              <img
+                src="/images/team/3.webp"
+                class="w-100 wow scaleIn"
+                width="1000"
+                height="1350"
+                loading="lazy"
+                decoding="async"
+                alt="Dr. Dorothy Li, Restorative Dentist at Smile Savers Dental"
+              />
             </div>
             <div class="abs w-100 start-0 bottom-0 z-3">
               <div class="p-2 rounded-10 m-3 text-center bg-white wow fadeInDown">
-                <h4 class="mb-0">
+                <h3 class="mb-0 h4-size">
                   {li.name} {li.suffix}
-                </h4>
+                </h3>
                 <p class="mb-2">{li.role}</p>
               </div>
             </div>
@@ -489,13 +597,21 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
         <div class="col-lg-3 col-md-6">
           <div class="relative rounded-1 overflow-hidden">
             <div class="rounded-1 overflow-hidden wow fadeIn zoomIn">
-              <img src="/images/team/avendano.webp" class="w-100 wow scaleIn" alt="" />
+              <img
+                src="/images/team/avendano.webp"
+                class="w-100 wow scaleIn"
+                width="1103"
+                height="1426"
+                loading="lazy"
+                decoding="async"
+                alt="Dr. Sarha Avendaño, General Dentist at Smile Savers Dental"
+              />
             </div>
             <div class="abs w-100 start-0 bottom-0 z-3">
               <div class="p-2 rounded-10 m-3 text-center bg-white wow fadeInDown">
-                <h4 class="mb-0">
+                <h3 class="mb-0 h4-size">
                   {avendano.name} {avendano.suffix}
-                </h4>
+                </h3>
                 <p class="mb-2">{avendano.role}</p>
               </div>
             </div>
@@ -588,7 +704,7 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
               <blockquote>
                 <i class="fs-32 icofont-quote-left absolute start-0 mt-2 p-0 id-color"></i>
                 <div class="de_testi_by">
-                  <img class="circle" alt="" src="/images/testimonial/1.webp" />
+                  <img class="circle" alt="" src="/images/testimonial/1.webp" width="100" height="100" loading="lazy" decoding="async" />
                   <div>
                     Mohammed Rab<span>Verified via Google</span>
                   </div>
@@ -606,7 +722,7 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
               <blockquote>
                 <i class="fs-32 icofont-quote-left absolute start-0 mt-2 p-0 id-color"></i>
                 <div class="de_testi_by">
-                  <img class="circle" alt="" src="/images/testimonial/2.webp" />
+                  <img class="circle" alt="" src="/images/testimonial/2.webp" width="100" height="100" loading="lazy" decoding="async" />
                   <div>
                     Joe Velotta<span>Verified via Google</span>
                   </div>
@@ -623,7 +739,7 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
               <blockquote>
                 <i class="fs-32 icofont-quote-left absolute start-0 mt-2 p-0 id-color"></i>
                 <div class="de_testi_by">
-                  <img class="circle" alt="" src="/images/testimonial/3.webp" />
+                  <img class="circle" alt="" src="/images/testimonial/3.webp" width="100" height="100" loading="lazy" decoding="async" />
                   <div>
                     Walter Ocaña<span>Verified via Google</span>
                   </div>
@@ -641,7 +757,7 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
               <blockquote>
                 <i class="fs-32 icofont-quote-left absolute start-0 mt-2 p-0 id-color"></i>
                 <div class="de_testi_by">
-                  <img class="circle" alt="" src="/images/testimonial/4.webp" />
+                  <img class="circle" alt="" src="/images/testimonial/4.webp" width="100" height="100" loading="lazy" decoding="async" />
                   <div>
                     Aida Troya<span>Verified via Google</span>
                   </div>
