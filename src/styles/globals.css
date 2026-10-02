@@ -362,6 +362,13 @@ footer .widget h2.h5-size {
     min-width: 44px;
     min-height: 44px;
   }
+  /* owner call: decorative data-bgimage photo bands collapse to h=0 on
+     mobile — give them a mobile-only face (desktop untouched). */
+  div[data-bgimage] {
+    min-height: 220px;
+    background-size: cover;
+    background-position: center;
+  }
   /* owner call: testimonial dots were 8px — enlarge tap/read area on mobile. */
   .owl-dots .owl-dot span {
     width: 14px;
