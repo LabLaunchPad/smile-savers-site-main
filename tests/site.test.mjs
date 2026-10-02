@@ -664,3 +664,18 @@ test('nav: every header href resolves to a real route', () => {
     assert.ok(existsSync(route) || (alt && existsSync(alt)), `nav href ${h} must resolve to a route`);
   }
 });
+
+test('every route has unique SEO title + description (no stale pain-free default)', () => {
+  const layout = src('src/layouts/Layout.astro');
+  assert.ok(!layout.includes('pain-free family dentistry'), 'default description must drop pain-free');
+  assert.ok(layout.includes('Affordable') || layout.includes('affordable'), 'default must match Affordable positioning');
+  const titles = new Set();
+  const pages = ['src/pages/index.astro', 'src/pages/about.astro', 'src/pages/services.astro', 'src/pages/contact.astro', 'src/pages/booking.astro', 'src/pages/dentists.astro', 'src/pages/blog.astro', 'src/pages/faq.astro', 'src/pages/gallery.astro', 'src/pages/testimonials.astro', 'src/pages/blog/single.astro', 'src/pages/services/general-dentistry.astro', 'src/pages/services/cosmetic-dentistry.astro', 'src/pages/services/pediatric-dentistry.astro', 'src/pages/services/restorative-dentistry.astro', 'src/pages/services/preventive-dentistry.astro', 'src/pages/services/orthodontics.astro'];
+  for (const f of pages) {
+    const m = src(f).match(/title="([^"]+)"/);
+    assert.ok(m, `${f} must pass title`);
+    assert.ok(!titles.has(m[1]), `duplicate title: ${m[1]}`);
+    titles.add(m[1]);
+    assert.ok(m[1].length <= 60, `${f} title >60 chars`);
+  }
+});
