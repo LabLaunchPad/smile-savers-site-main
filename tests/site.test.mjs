@@ -498,6 +498,13 @@ test('nav: twin runtime ownership hooks present (no silent single-owner drift)',
   }
 });
 
+test('nav a11y: submenu arrows are keyboard-operable disclosures', () => {
+  const init = src('src/scripts/site-init.ts');
+  assert.ok(init.includes('keydown.mobileSmileMenuArrow'), 'arrow keys need a namespaced keydown owner');
+  assert.ok(init.includes('Toggle submenu'), 'injected arrows need an accessible name');
+  assert.ok(init.includes("role', 'button'") || init.includes('role="button"') || init.includes("role', \"button\""), 'injected arrows must expose button semantics');
+});
+
 test('nav a11y: current page, keyboard-open dropdowns, escape + focus return', () => {
   const nav = src('src/components/site/MainNav.astro');
   assert.ok(nav.includes('aria-current'), 'MainNav must mark the current page');

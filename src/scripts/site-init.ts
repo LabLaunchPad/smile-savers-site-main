@@ -255,7 +255,7 @@ function resetMobileHeaderState(): void {
 
   if (!isMenuOpen) {
     $('#mainmenu li ul').removeAttr('style');
-    $('#mainmenu li span').removeClass('active');
+    $('#mainmenu li span').removeClass('active').attr('aria-expanded', 'false');
     $('#mainmenu li').removeAttr('style');
     $('#mainmenu').removeAttr('style');
   }
@@ -268,6 +268,9 @@ function stabilizeMobileMenu(): void {
   // OWNERSHIP: submenu arrows — stabilizeMobileMenu OWNS injection + mobile toggle.
   // LabLaunchPad.menu_arrow also injects spans; both must stay consistent, never add a third.
   // NEVER change: selector '#mainmenu li > span', classes 'has-child/menu-item-has-children/active'.
+  // Iteration 2b: injected spans are keyboard-operable disclosures (tabindex + role +
+  // aria-expanded). Element type stays <span> so legacy selectors keep matching;
+  // keydown path never triggers 'click', so legacy click stacks can't double-fire.
   $('#mainmenu li > span').remove();
   $('#mainmenu li').removeClass('has-child menu-item-has-children');
   $('#mainmenu li').has('ul').addClass('has-child menu-item-has-children');
@@ -277,12 +280,15 @@ function stabilizeMobileMenu(): void {
       const $li = $(el);
       const $anchor = $li.children('a').first();
       if ($anchor.length) {
-        $('<span aria-hidden="true"></span>').insertAfter($anchor);
+        $('<span tabindex="0" role="button" aria-expanded="false" aria-label="Toggle submenu"></span>').insertAfter(
+          $anchor
+        );
       }
     });
 
   $(document).off('click.mobileSmileMenu', '#mainmenu a');
   $(document).off('click.mobileSmileMenuArrow', '#mainmenu li > span');
+  $(document).off('keydown.mobileSmileMenuArrow', '#mainmenu li > span');
 
   const closeMenu = (): void => {
     if (window.innerWidth > 992) return;
@@ -330,25 +336,42 @@ function stabilizeMobileMenu(): void {
       if (window.innerWidth > 992) return;
       e.preventDefault();
       e.stopPropagation();
-      const $span = $(this);
+      toggleArrow($(this));
+    }
+  );
+
+  // Keyboard path: Enter/Space toggles WITHOUT firing 'click', so the legacy
+  // click stacks in lablaunchpad.js can never double-fire from keyboard input.
+  $(document).on(
+    'keydown.mobileSmileMenuArrow',
+    '#mainmenu li > span',
+    function (this: HTMLElement, e) {
+      if (window.innerWidth > 992) return;
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      e.preventDefault();
+      e.stopPropagation();
+      toggleArrow($(this));
+    }
+  );
+
+  function toggleArrow($span: JQuery<HTMLElement>): void {
       const $submenu = $span.parent().children('ul').first();
       if (!$submenu.length) return;
 
       if ($span.hasClass('active')) {
         // Close menu
-        $span.removeClass('active');
+        $span.removeClass('active').attr('aria-expanded', 'false');
         $submenu.stop(true, true).animate({ height: '0' }, 300);
       } else {
         // Open menu
-        $span.addClass('active');
+        $span.addClass('active').attr('aria-expanded', 'true');
         // Manual height animation (because CSS sets height: 0, not display: none)
         $submenu.css('height', 'auto');
         const targetHeight = $submenu.height();
         $submenu.css('height', '0');
         $submenu.stop(true, true).animate({ height: targetHeight }, 300);
       }
-    }
-  );
+  }
 }
 
 let initialized = false;
