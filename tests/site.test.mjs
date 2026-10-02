@@ -698,6 +698,14 @@ test('every route has unique SEO title + description (no stale pain-free default
   }
 });
 
+test('sitemap lists every canonical route, nothing else', () => {
+  const sm = src('public/sitemap.xml');
+  const routes = ['', '/about', '/services', '/booking', '/contact', '/dentists', '/faq', '/gallery', '/blog', '/testimonials', '/services/general-dentistry', '/services/cosmetic-dentistry', '/services/pediatric-dentistry', '/services/restorative-dentistry', '/services/preventive-dentistry', '/services/orthodontics'];
+  for (const r of routes) assert.ok(sm.includes(`<loc>https://dentalsmilesavers.com${r}</loc>`), `sitemap missing ${r || '/'}`);
+  assert.ok(!sm.includes('404'), 'sitemap must not list 404');
+  assert.ok(!sm.includes('/blog/single'), 'non-canonical single must stay out unless routed');
+});
+
 test('lighthouse naming/order/contrast gates (task 9: exact prod items)', () => {
   const nav = src('src/components/site/MainNav.astro');
   assert.ok(!nav.includes('>More<'), 'nav: generic "More" link text fails link-text');
