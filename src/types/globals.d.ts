@@ -38,6 +38,7 @@ interface JQuery {
 interface Window {
   jQuery?: JQueryStatic;
   de_init?: () => void;
+  rebindGalleryPopup?: () => void;
   WOW?: new () => { init(): void };
   Swiper?: new (
     el: Element,

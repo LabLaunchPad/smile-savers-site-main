@@ -485,6 +485,18 @@ test('nav: structural hooks frozen (legacy contracts)', () => {
   assert.deepEqual([...idx].sort((a, b) => a - b), idx, 'legacy script load order must not change');
 });
 
+test('gallery: lightbox survives React filter remounts', () => {
+  const grid = src('src/components/GalleryGrid.tsx');
+  assert.ok(grid.includes('rebindGalleryPopup'), 'GalleryGrid must rebind the lightbox after filter remounts');
+  const init = src('src/scripts/site-init.ts');
+  assert.ok(init.includes('rebindGalleryPopup'), 'site-init must expose the lightbox rebind');
+});
+
+test('css: small-viewport type scale (no 390px clipping)', () => {
+  const css = src('src/styles/globals.css');
+  assert.ok(css.includes('576px'), 'globals.css must scale display type under 576px');
+});
+
 test('nav: twin runtime ownership hooks present (no silent single-owner drift)', () => {
   for (const f of ['public/js/lablaunchpad.js', 'src/scripts/site-init.ts']) {
     const t = src(f);

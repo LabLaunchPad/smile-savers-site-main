@@ -143,6 +143,21 @@ button#menu-btn {
   visibility: visible;
   opacity: 1;
 }
+/* ponytail: 390px bleed — legacy h1/h2 are fixed 60/48px with no small-viewport
+   rule, so display type clips at the viewport edge. Additive scale only. */
+@media (max-width: 576px) {
+  h1 {
+    font-size: 38px;
+  }
+  h2 {
+    font-size: 34px;
+  }
+  /* Hero h1 sits over a bright photo on mobile; shadow keeps it legible where
+     the overlay washes out (scoped to the intro section only). */
+  #section-intro h1 {
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65);
+  }
+}
 .skip-link {
   position: absolute;
   left: -9999px;

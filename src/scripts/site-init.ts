@@ -24,6 +24,11 @@ function initMagnificPopup(): void {
   const $ = window.jQuery;
   if (!$ || !$.fn || !$.fn.magnificPopup) return;
 
+  // Iteration 3b: React-remounted gallery nodes lose template binds on filter
+  // change. Exposed so GalleryGrid re-runs binding after each remount; .off()
+  // first keeps this re-entrancy safe (same discipline as island release).
+  window.rebindGalleryPopup = initMagnificPopup;
+
   $(
     '.popup-youtube, .popup-vimeo, .popup-gmaps, .image-popup, .image-popup-vertical-fit, .image-popup-fit-width, .image-popup-no-margins, .image-popup-gallery'
   ).off('click.magnificPopup');

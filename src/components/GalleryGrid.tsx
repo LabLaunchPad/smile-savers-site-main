@@ -98,6 +98,12 @@ export default function GalleryGrid() {
     window.jQuery?.('#filters a').off('click');
   }, []);
 
+  // Magnific binds at init to the nodes React later remounts on filter change;
+  // re-run binding after every render so the lightbox survives filtering.
+  useEffect(() => {
+    window.rebindGalleryPopup?.();
+  });
+
   const filteredItems =
     filter === '*' ? galleryItems : galleryItems.filter((item) => item.category === filter);
 
