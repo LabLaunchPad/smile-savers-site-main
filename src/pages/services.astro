@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/sections/shared/PageHeader.astro';
 
 export const prerender = true;
 
@@ -55,22 +56,7 @@ const services: Service[] = [
   description="Dental services in Woodside, NY: general, cosmetic, pediatric, restorative, preventive care and orthodontics. Call (718) 956-8400."
   headerClass="transparent header-light"
 >
-  <section id="subheader" class="bg-color-op-1 text-center">
-    <div class="container relative z-2">
-      <div class="row align-items-center">
-        <div class="col-lg-12">
-          <h1 class="wow fadeInUp">Our Services</h1>
-          <div class="border-bottom my-3"></div>
-          <ul class="crumb wow fadeInDown">
-            <li>
-              <a href="/">Home</a>
-            </li>
-            <li class="active">Our Services</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
+  <PageHeader title="Our Services" />
 
   <section>
     <div class="container">

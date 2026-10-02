@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/sections/shared/PageHeader.astro';
 import ContactForm from '../components/ContactForm.tsx';
 import { practice, fullAddress, hoursSentence } from '../data/practice';
 
@@ -11,22 +12,7 @@ export const prerender = true;
   description={`Contact ${practice.name}, ${fullAddress()}. Call ${practice.phone.display} or message us today.`}
   headerClass="transparent header-light"
 >
-  <section id="subheader" class="bg-color-op-1 text-center">
-    <div class="container relative z-2">
-      <div class="row align-items-center">
-        <div class="col-lg-12">
-          <h1 class="wow fadeInUp">Contact Us</h1>
-          <div class="border-bottom my-3"></div>
-          <ul class="crumb wow fadeInDown">
-            <li>
-              <a href="/">Home</a>
-            </li>
-            <li class="active">Contact</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
+  <PageHeader title="Contact Us" crumb="Contact" />
 
   <section>
     <div class="container">

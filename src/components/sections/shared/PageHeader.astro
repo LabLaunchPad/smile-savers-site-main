@@ -1,0 +1,41 @@
+---
+/* Iteration 3: PageHeader OWNS the repeated #subheader page-header block
+   (16/17 pages, verified identical shells; blog/single keeps its bespoke h2
+   variant). Props: title (h1), crumb (defaults to title), trail (extra crumbs,
+   e.g. service pages pass [{ label: 'Services', href: '/services' }]). */
+interface Crumb {
+  label: string;
+  href: string;
+}
+interface Props {
+  title: string;
+  crumb?: string;
+  trail?: Crumb[];
+}
+
+const { title, crumb = title, trail = [] } = Astro.props;
+---
+
+<section id="subheader" class="bg-color-op-1 text-center">
+  <div class="container relative z-2">
+    <div class="row align-items-center">
+      <div class="col-lg-12">
+        <h1 class="wow fadeInUp">{title}</h1>
+        <div class="border-bottom my-3"></div>
+        <ul class="crumb wow fadeInDown">
+          <li>
+            <a href="/">Home</a>
+          </li>
+          {
+            trail.map((c) => (
+              <li>
+                <a href={c.href}>{c.label}</a>
+              </li>
+            ))
+          }
+          <li class="active">{crumb}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

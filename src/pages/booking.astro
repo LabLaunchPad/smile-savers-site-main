@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/sections/shared/PageHeader.astro';
 import BookingForm from '../components/BookingForm.tsx';
 import { practice } from '../data/practice';
 
@@ -11,22 +12,7 @@ export const prerender = true;
   description={`Book a dentist appointment in Woodside, NY online. ${practice.hours.full}. ${practice.name}, ${practice.phone.display}.`}
   headerClass="transparent header-light"
 >
-  <section id="subheader" class="bg-color-op-1 text-center">
-    <div class="container relative z-2">
-      <div class="row align-items-center">
-        <div class="col-lg-12">
-          <h1 class="wow fadeInUp">Book Appointment</h1>
-          <div class="border-bottom my-3"></div>
-          <ul class="crumb wow fadeInDown">
-            <li>
-              <a href="/">Home</a>
-            </li>
-            <li class="active">Book Appointment</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
+  <PageHeader title="Book Appointment" />
 
   <section>
     <div class="container relative z-2">

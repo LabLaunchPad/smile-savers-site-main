@@ -508,6 +508,30 @@ test('nav a11y: current page, keyboard-open dropdowns, escape + focus return', (
   assert.ok(init.includes('focus?.()'), 'Escape/panel close must return focus to its invoker');
 });
 
+test('sections: PageHeader + BookingCTA own the repeated blocks', () => {
+  assert.ok(existsSync('src/components/sections/shared/PageHeader.astro'), 'PageHeader must exist');
+  assert.ok(existsSync('src/components/sections/shared/BookingCTA.astro'), 'BookingCTA must exist');
+  const pages = [];
+  const walk = (dir) => {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      const p = `${dir}/${e.name}`;
+      if (e.isDirectory()) walk(p);
+      else if (e.name.endsWith('.astro')) pages.push(p);
+    }
+  };
+  walk('src/pages');
+  const withHeader = pages.filter((p) => src(p).includes('<PageHeader'));
+  assert.ok(withHeader.length >= 16, `16+ pages must compose PageHeader, found ${withHeader.length}`);
+  const inlineSub = pages.filter((p) => src(p).includes('<section id="subheader"'));
+  assert.deepEqual(inlineSub, ['src/pages/blog/single.astro'], 'only blog/single keeps a bespoke subheader');
+  const servicePages = pages.filter((p) => p.includes('services/') && !p.includes('services.astro'));
+  assert.equal(servicePages.length, 6);
+  for (const p of servicePages) {
+    assert.ok(src(p).includes('<BookingCTA'), `${p} must compose BookingCTA`);
+    assert.ok(!src(p).includes('Ready to Book Your Appointment?'), `${p} must not inline the CTA`);
+  }
+});
+
 test('nav: every header href resolves to a real route', () => {
   const header = src('src/components/site/MainNav.astro') + src('src/components/site/HeaderActions.astro');
   const hrefs = [...header.matchAll(/href="(\/[^"]*)"/g)].map((m) => m[1]);
