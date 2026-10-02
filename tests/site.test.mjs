@@ -169,7 +169,7 @@ test('Workers deploy: wrangler.jsonc points at flat dist/', () => {
 test('merge plumbing: redirects, functions, offline route', () => {
   const redirects = src('public/_redirects');
   assert.ok(redirects.includes('/appointments'), '_redirects must cover /appointments');
-  assert.ok(redirects.includes('/booking 301'), 'appointments must point at local /booking');
+  assert.ok(redirects.includes('/booking/ 301'), 'appointments must point at local /booking/ (trailing slash: no 307 second hop)');
   for (const f of [
     'functions/_middleware.js',
     'functions/api/contact.js',
@@ -402,9 +402,11 @@ test('redirects: destinations resolve to routes', () => {
   assert.ok(lines.length > 0, '_redirects must define at least one redirect');
   for (const line of lines) {
     const tokens = line.split(/\s+/);
-    const dest = tokens[1];
-    assert.ok(dest, `redirect line missing destination: ${line}`);
-    if (/^https?:\/\//.test(dest)) continue;
+    const rawDest = tokens[1];
+    assert.ok(rawDest, `redirect line missing destination: ${line}`);
+    if (/^https?:\/\//.test(rawDest)) continue;
+    // trailing-slash dests dodge the Pages pretty-URL 307 second hop — strip for route resolve
+    const dest = rawDest.length > 1 ? rawDest.replace(/\/$/, '') : rawDest;
     assert.ok(dest.startsWith('/'), `destination must be a local path: ${line}`);
     const route = dest === '/' ? 'src/pages/index.astro' : `src/pages/${dest.slice(1)}.astro`;
     const alt = dest === '/' ? null : `src/pages/${dest.slice(1)}/index.astro`;
@@ -704,6 +706,13 @@ test('sitemap lists every canonical route, nothing else', () => {
   for (const r of routes) assert.ok(sm.includes(`<loc>https://dentalsmilesavers.com${r}</loc>`), `sitemap missing ${r}`);
   assert.ok(!sm.includes('404'), 'sitemap must not list 404');
   assert.ok(!sm.includes('/blog/single'), 'non-canonical single must stay out unless routed');
+});
+
+test('404 is noindex + canonical self-reference holds everywhere', () => {
+  const nf = src('src/pages/404.astro');
+  assert.ok(nf.includes('noindex'), '404 must be noindex');
+  const layout = src('src/layouts/Layout.astro');
+  assert.ok(layout.includes('rel="canonical"'), 'canonical intact');
 });
 
 test('lighthouse naming/order/contrast gates (task 9: exact prod items)', () => {

@@ -10,6 +10,7 @@ interface Props {
   description?: string;
   headerClass?: string;
   useHeaderInner?: boolean;
+  robots?: string;
 }
 
 const {
@@ -17,6 +18,7 @@ const {
   description = `Affordable family dentist in Woodside, Queens — exams, cleanings, fillings and same-day care for all ages. Call ${practice.phone.display}.`,
   headerClass = 'transparent header-light',
   useHeaderInner = false,
+  robots = 'index, follow',
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://dentalsmilesavers.com');
@@ -55,6 +57,7 @@ const orgJson = JSON.stringify({
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonical} />
+    <meta name="robots" content={robots} />
     <meta name="theme-color" content="#4A7CD2" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
