@@ -7,7 +7,7 @@
 - T1 — `src/layouts/Layout.astro` (shell: CSS/JS load, header/footer/overlay) · `src/scripts/site-init.ts` (all client motion) · `src/types/globals.d.ts` (legacy window surface)
 - T2 — page under edit (`src/pages/…`) + its components (`src/components/…`)
 - T3 — `public/css/style.css` (12k+ lines: spacing §7553, motion §6842, header §247) — grep selectors, never full-read
-- T4 — `public/js/{plugins,on3step,swiper,custom-marquee}.js` (minified vendor) — `Select-String` for hook names only
+- T4 — `public/js/{plugins,lablaunchpad,swiper,custom-marquee}.js` (minified vendor) — `Select-String` for hook names only
 
 ## File roles
 | Path | Role | Touch? |

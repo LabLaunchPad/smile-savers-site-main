@@ -1,5 +1,5 @@
  /* --------------------------------------------------
- * © Copyright 2024 - Smile Savers Dental by on3step
+ * © Copyright 2024 - Smile Savers Dental by Lab LaunchPad
   * --------------------------------------------------*/
 (function($) {
 	'use strict';

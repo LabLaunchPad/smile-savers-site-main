@@ -256,12 +256,19 @@ test('branding: no Dentia/template strings in shipped code', () => {
     }
   };
   walk('src');
-  files.push('public/css/style.css', 'public/js/on3step.js');
+  files.push('public/css/style.css', 'public/js/lablaunchpad.js');
   const srcFiles = files.filter((f) => f.startsWith('src/'));
+  // Owner decision 2026-10-02: zero on3step anywhere — Lab LaunchPad instead.
+  assert.ok(!existsSync('public/js/on3step.js'), 'public/js/on3step.js must be renamed');
+  assert.ok(existsSync('public/js/lablaunchpad.js'), 'public/js/lablaunchpad.js must exist');
+  assert.ok(
+    src('src/layouts/Layout.astro').includes('/js/lablaunchpad.js'),
+    'Layout must load /js/lablaunchpad.js'
+  );
   for (const f of files) {
     const t = src(f);
     assert.ok(!/dentia/i.test(t), `${f} must not contain Dentia branding`);
-    assert.ok(!t.includes('on3step.com'), `${f} must not contain on3step.com`);
+    assert.ok(!/on3step/i.test(t), `${f} must not contain on3step (Lab LaunchPad instead)`);
   }
   // Owner decision 2026-10-02: the homepage logo marquee (index.astro) is an
   // intentional prefill slot for verified partner logos — exempt from the ban.

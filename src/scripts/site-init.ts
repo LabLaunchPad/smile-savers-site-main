@@ -266,7 +266,7 @@ function stabilizeMobileMenu(): void {
   if (!$ || !$.fn) return;
 
   // OWNERSHIP: submenu arrows — stabilizeMobileMenu OWNS injection + mobile toggle.
-  // on3step.menu_arrow also injects spans; both must stay consistent, never add a third.
+  // LabLaunchPad.menu_arrow also injects spans; both must stay consistent, never add a third.
   // NEVER change: selector '#mainmenu li > span', classes 'has-child/menu-item-has-children/active'.
   $('#mainmenu li > span').remove();
   $('#mainmenu li').removeClass('has-child menu-item-has-children');
@@ -355,7 +355,7 @@ let initialized = false;
 
 function releaseTemplateBoundIslandControls($: JQueryStatic): void {
   // OWNERSHIP: #filters clicks — GalleryGrid (React) OWNS filtering; this OWNS releasing template binds.
-  // on3step.filter_gallery/masonry must never own #filters on React pages; runs at init + window load.
+  // LabLaunchPad.filter_gallery/masonry must never own #filters on React pages; runs at init + window load.
   // NEVER change: '#filters a' selector, '.selected' class, or remove the .off('click') calls.
   $('#filters a').off('click');
 }
