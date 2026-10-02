@@ -512,6 +512,10 @@ test('content: hero carries a static Google badge linked to the GBP', () => {
 test('content: homepage language line is blanket, verified-safe (no enumeration)', () => {
   const home = src('src/pages/index.astro');
   assert.ok(home.includes('we speak all our Queens community languages'), 'homepage hero must carry the blanket language line');
+  const trustLine = home.split('\n').find((l) => l.includes('hero-trust'));
+  assert.ok(trustLine && !/op-\d/.test(trustLine), 'hero trust line must be full-opacity .text-light white (no op-* wash over the photo)');
+  const css = src('src/styles/globals.css');
+  assert.ok(/#section-intro\s+\.hero-trust\s*\{[^}]*color:\s*#fff/.test(css), 'hero trust line must override the theme 60%-white paragraph tone with full white');
   for (const s of ['Bangla', 'Bengali', 'Punjabi', 'Urdu', 'Mandarin', 'Marathi']) {
     assert.ok(!home.includes(s), `homepage must not enumerate languages (${s})`);
   }

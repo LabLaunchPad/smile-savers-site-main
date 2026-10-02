@@ -200,6 +200,13 @@ button#menu-btn {
   opacity: 0.75;
 }
 
+/* Photographic hero: the theme renders .text-light p at 60% white
+   (var(--body-font-color-dark)) — correct on dark backings, unreadable over
+   bright photo regions. Restore full white for the trust line. */
+#section-intro .hero-trust {
+  color: #fff;
+}
+
 /* Small screens: stack the badge count under G + rating + stars;
    cap hero text + badge to the viewport (a wide template ancestor below lg
    otherwise lets them run past 390px). */
