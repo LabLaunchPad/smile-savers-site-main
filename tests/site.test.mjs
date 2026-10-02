@@ -459,3 +459,52 @@ test('hygiene: no secrets in tracked source', () => {
     assert.ok(!secretRe.test(src(f)), `${f} must not contain secrets`);
   }
 });
+
+test('nav: structural hooks frozen (legacy contracts)', () => {
+  const header = src('src/components/Header.astro');
+  for (const s of [
+    'data-base-class',
+    'id="logo"',
+    'id="mainmenu"',
+    'id="menu-btn"',
+    'aria-controls="mainmenu"',
+    'id="btn-extra"',
+    'href="/booking"',
+  ]) {
+    assert.ok(header.includes(s), `Header.astro must keep ${s}`);
+  }
+  assert.ok(header.includes('<button') && header.includes('type="button"'), '#menu-btn must stay a native button');
+  const layout = src('src/layouts/Layout.astro');
+  for (const s of ['id="extra-wrap"', 'role="dialog"', 'id="btn-close"', 'id="extra-content"']) {
+    assert.ok(layout.includes(s), `Layout.astro must keep ${s}`);
+  }
+  // load-bearing script order: plugins -> lablaunchpad -> swiper -> custom-marquee -> site-init
+  const order = ['/js/plugins.js', '/js/lablaunchpad.js', '/js/swiper.js', '/js/custom-marquee.js', 'site-init'];
+  const idx = order.map((s) => layout.indexOf(s));
+  assert.ok(idx.every((i) => i >= 0), 'all legacy scripts + site-init must load in Layout');
+  assert.deepEqual([...idx].sort((a, b) => a - b), idx, 'legacy script load order must not change');
+});
+
+test('nav: twin runtime ownership hooks present (no silent single-owner drift)', () => {
+  for (const f of ['public/js/lablaunchpad.js', 'src/scripts/site-init.ts']) {
+    const t = src(f);
+    for (const s of ['has-child', 'menu-item-has-children', 'menu-open', 'autoshow', 'header-mobile']) {
+      assert.ok(t.includes(s), `${f} must keep owning ${s}`);
+    }
+  }
+  const init = src('src/scripts/site-init.ts');
+  for (const s of ['mobileSmileMenuBtn', 'mobileSmileMenuArrow', 'accordionSmile', '.off(']) {
+    assert.ok(init.includes(s), `site-init.ts must keep duplicate-binding guard ${s}`);
+  }
+});
+
+test('nav: every header href resolves to a real route', () => {
+  const header = src('src/components/Header.astro');
+  const hrefs = [...header.matchAll(/href="(\/[^"]*)"/g)].map((m) => m[1]);
+  assert.ok(hrefs.length >= 15, `expected 15+ nav hrefs, found ${hrefs.length}`);
+  for (const h of new Set(hrefs)) {
+    const route = h === '/' ? 'src/pages/index.astro' : `src/pages${h}.astro`;
+    const alt = h === '/' ? null : `src/pages${h}/index.astro`;
+    assert.ok(existsSync(route) || (alt && existsSync(alt)), `nav href ${h} must resolve to a route`);
+  }
+});
