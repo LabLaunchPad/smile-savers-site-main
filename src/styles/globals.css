@@ -324,6 +324,45 @@ footer .widget h2.h5-size {
   margin-bottom: 20px;
 }
 
+/* mobile-ui-home pass (390px audit): 44px tap targets — additive,
+   mobile-only (desktop rendering untouched), theme + legacy selectors
+   and markup unchanged (sizing only, no binding/behavior change). */
+@media (max-width: 576px) {
+  /* BLOCKER B1: hamburger was 32x32. */
+  button#menu-btn {
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    min-height: 44px;
+    padding: 6px;
+    line-height: 32px;
+  }
+  /* POLISH P1: plus-link circle was 36px; keep the circle + hover-expand,
+     recenter the icon and text offset for the larger diameter. */
+  main .btn-plus {
+    max-width: 44px;
+    height: 44px;
+    border-radius: 44px;
+  }
+  main .btn-plus i {
+    left: 14px;
+  }
+  main .btn-plus span {
+    margin-left: 44px;
+  }
+  /* POLISH P2: two CTAs measured 42px tall. */
+  main .btn-main {
+    min-height: 44px;
+  }
+  /* POLISH P3: footer social hit area was 42x17. */
+  footer .social-icons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
 /* task-9 (a11y): btn contrast 4.11 -> 4.83 (white on #4471BE, needs 4.5:1).
    Solid buttons only; .btn-line keeps its transparent outline look except on
    brand-blue panels (section.bg-color) where white text needs a solid face.
