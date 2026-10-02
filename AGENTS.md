@@ -18,7 +18,7 @@
 - Launch detached: `Start-Process cmd.exe "/c npm run dev > <temp>/astro-dev.log 2>&1" -WindowStyle Hidden`. Never `start /min` (kills the harness shell).
 
 ## 2. Architecture
-- `astro.config.mjs`: `output: 'static'`, NO adapter — plain `astro build` emits flat `dist/`; deploys as Workers Static Assets via `wrangler.jsonc` (`assets.directory: ./dist`). Pages Functions in `functions/` untouched.
+- `astro.config.mjs`: `output: 'static'`, NO adapter — plain `astro build` emits flat `dist/`; deploys via Cloudflare Pages (`.github/workflows/deploy.yml`, project `smile-savers` — NOT wrangler.jsonc, which is unused by CI). Pages Functions in `functions/` untouched.
 - `.astro` pages/layouts/components; `.tsx` React islands only (`client:load`: BookingForm, ContactForm, GalleryGrid).
 - `tsconfig.json` strict; `@/*` alias exists but `src/` uses RELATIVE imports — keep them.
 - Legacy JS load order in `Layout.astro` is load-bearing: `plugins.js` (jQuery 3.7.1 + Bootstrap + Owl + Magnific + marquee + Jarallax v2 BUNDLED — no separate files) → `lablaunchpad.js` (owns `de_init`, counters, jarallax init, accordion twin bindings) → `swiper.js` → `custom-marquee.js` → `site-init.ts`.

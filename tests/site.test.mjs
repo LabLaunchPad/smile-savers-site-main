@@ -221,6 +221,7 @@ test('cleanup: no dead public weight, no PWA corpse', () => {
     'public/icons/icon-192.png',
     'src/pages/offline.astro',
     'public/aff1.png',
+    'public/aff5-300x68.png',
     'public/aff6.png',
     'public/images/clinic-interior.jpg',
     'public/images/hero-dental-office.jpg',
