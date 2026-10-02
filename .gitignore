@@ -38,6 +38,7 @@ Thumbs.db
 !public/**/*.png
 !src/assets/**/*.jpg
 !src/assets/**/*.png
+!docs/readme/*.png
 
 # Cloudflare
 .wrangler/
