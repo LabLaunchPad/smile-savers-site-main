@@ -392,6 +392,14 @@ footer .widget h2.h5-size {
   .grid-divider .d-flex.justify-content-center:has(> i[class*="icon_"]) > div {
     min-width: 0;
   }
+  /* mobile-ui-contact pass (390px audit BLOCKER): nested .row.gx-5 carries
+     3rem gutters (-24px row margins) inside a .col padded only 12px by the
+     outer .g-4 row — ~24px right-overflow clipped H2/paragraph/hours on
+     /contact (same pattern on /about outer rows). Clamp to standard 1.5rem
+     gutters on mobile only; desktop untouched. */
+  .row.gx-5 {
+    --bs-gutter-x: 1.5rem;
+  }
 }
 /* task-9 (a11y): btn contrast 4.11 -> 4.83 (white on #4471BE, needs 4.5:1).
    Solid buttons only; .btn-line keeps its transparent outline look except on
