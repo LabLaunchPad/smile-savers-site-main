@@ -17,6 +17,8 @@
 | `src/pages/services[6]|dentists|testimonials|faq|gallery|blog*.astro` | Template copy, fictional content | only if asked |
 | `src/pages/homepage-6.astro` | Deleted variant (see AGENTS.md §2); `index.astro` is the only homepage | no |
 | `src/components/Header|Footer|Preloader.astro` | Chrome (NAP lives here) | yes — text only |
+| `src/components/site/MainNav|HeaderActions.astro` | Nav markup boundary (contracts frozen in tests) | links/ARIA only, never selectors |
+| `src/components/sections/shared/PageHeader|BookingCTA.astro` | Shared page header (16pp) + service CTA (6pp) | props/copy only |
 | `src/components/BookingForm|ContactForm|GalleryGrid.tsx` | React islands | forms: labels/roles only; gallery: owner-asked only |
 | `src/styles/globals.css` | Light-only base tokens + menu fixes | tokens: no dark mode ever |
 | `public/css/colors/scheme-01.css` | Brand color scheme | only for retheme |

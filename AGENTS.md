@@ -30,6 +30,7 @@
 WOW reveals→`site-init` · Swiper hero→`site-init`+`swiper.js` · logo marquee→`custom-marquee.js` · Owl testimonials→`site-init` (reset+rebuild) · accordion→`Lab LaunchPad`+`site-init` rebind · counters→`Lab LaunchPad de_counter` · lightbox→`site-init` magnific · jarallax hero slides→`Lab LaunchPad` (class-only hook) · gallery filters→React-owned.
 - Hazard: accordion/menu selectors (`.accordion-section-title`, `data-tab`, `#mainmenu li > span`, `.active`) are bound in BOTH `site-init.ts` and `lablaunchpad.js`. Element swaps (div→button) must preserve class + data attrs byte-identical.
 - Known latent gap (pre-existing, unfixed): gallery lightbox binds at init; React-remounted items after filter changes lose it until reload.
+- Nav ownership (frozen by tests): markup lives in `src/components/site/MainNav.astro` (`#mainmenu`, links) + `HeaderActions.astro` (`#menu-btn`, `#btn-extra`, CTA), composed by `Header.astro` (logo + props); side panel lives in `Layout.astro` (`#extra-wrap`, `#btn-close`); behavior is twin-owned (`lablaunchpad.js` legacy binds + `site-init.ts` delegated guards — never remove `.off()`); dropdown keyboard support is an additive `:focus-within` override in `globals.css` (never touch `style.css` hover rules). Shared sections: `src/components/sections/shared/PageHeader.astro` (title/crumb/trail; blog/single is the deliberate exception) + `BookingCTA.astro` (6 service pages).
 
 ## 4. Spacing system (`public/css/style.css` — read, don't guess)
 - Base rhythm: `section { padding: 120px 0 }`.
