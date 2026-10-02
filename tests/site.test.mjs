@@ -3,7 +3,7 @@
 // What it proves: brand copy lives in exactly one module and every consumer imports it.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { practice, fullAddress, mailtoWith, hoursSentence } from '../src/data/practice.ts';
 
 const src = (p) => readFileSync(p, 'utf8');
@@ -177,6 +177,28 @@ test('merge plumbing: redirects, functions, offline route', () => {
   const offline = src('src/pages/offline.astro');
   assert.ok(offline.includes('practice.phone.href'), 'offline page needs the emergency call link');
   assert.ok(offline.includes('location.reload()'), 'offline page needs a retry path');
+});
+
+test('brand assets: every /images/* + /favicon referenced in src/ exists in public/', () => {
+  const refs = new Set();
+  const walk = (dir) => {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      const p = `${dir}/${e.name}`;
+      if (e.isDirectory()) walk(p);
+      else if (/\.(astro|tsx|ts)$/.test(e.name)) {
+        for (const m of src(p).matchAll(/[`"'](\/images\/[^`"'?#]*|\/favicon\.svg)/g)) {
+          refs.add(m[1]);
+        }
+      }
+    }
+  };
+  walk('src');
+  assert.ok(refs.size > 20, `expected many asset refs, found ${refs.size}`);
+  const missing = [...refs].filter((u) => {
+    if (u.includes('${')) return !existsSync(`public${u.slice(0, u.indexOf('${'))}`);
+    return !existsSync(`public${u}`);
+  });
+  assert.deepEqual(missing, [], `src/ refs missing public files: ${missing.join(', ')}`);
 });
 
 test('forms POST to /api/contact with mailto fallback, no EmailJS', () => {
