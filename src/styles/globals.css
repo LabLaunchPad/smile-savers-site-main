@@ -362,6 +362,12 @@ footer .widget h2.h5-size {
     min-width: 44px;
     min-height: 44px;
   }
+  /* owner call: testimonial dots were 8px — enlarge tap/read area on mobile. */
+  .owl-dots .owl-dot span {
+    width: 14px;
+    height: 14px;
+    margin: 5px 6px;
+  }
 }
 /* task-9 (a11y): btn contrast 4.11 -> 4.83 (white on #4471BE, needs 4.5:1).
    Solid buttons only; .btn-line keeps its transparent outline look except on
