@@ -501,6 +501,35 @@ test('gallery: lightbox survives React filter remounts', () => {
   assert.ok(init.includes('rebindGalleryPopup'), 'site-init must expose the lightbox rebind');
 });
 
+test('content: homepage language line is blanket, verified-safe (no enumeration)', () => {
+  const home = src('src/pages/index.astro');
+  assert.ok(home.includes('we speak all our Queens community languages'), 'homepage hero must carry the blanket language line');
+  for (const s of ['Bangla', 'Bengali', 'Punjabi', 'Urdu', 'Mandarin', 'Marathi']) {
+    assert.ok(!home.includes(s), `homepage must not enumerate languages (${s})`);
+  }
+});
+
+test('content: homepage booking CTAs target /booking, rating stays 4.5/153', () => {
+  const home = src('src/pages/index.astro');
+  assert.ok(!home.includes('href="/contact"'), 'no homepage CTA may point at /contact');
+  assert.ok(home.includes('/booking'), 'homepage booking CTAs must target /booking');
+  const data = src('src/data/practice.ts');
+  assert.ok(data.includes("rating: '4.5'") && data.includes("reviews: '153'"), 'canon rating must stay 4.5/153');
+  for (const f of ['src/pages/index.astro', 'src/data/practice.ts']) {
+    assert.ok(!src(f).includes('5.0'), `${f} must never claim 5.0`);
+  }
+});
+
+test('content: homepage testimonials are real Google reviews (no fiction)', () => {
+  const home = src('src/pages/index.astro');
+  for (const n of ['Mohammed Rab', 'Joe Velotta', 'Walter Oca', 'Aida Troya']) {
+    assert.ok(home.includes(n), `homepage must quote real reviewer ${n}`);
+  }
+  for (const n of ['Sofia R.', 'James K.', 'Robert M.', 'Aisha T.', 'Brunilda', 'lorem', 'shades']) {
+    assert.ok(!home.includes(n), `homepage must not contain fictional content (${n})`);
+  }
+});
+
 test('css: small-viewport type scale (no 390px clipping)', () => {
   const css = src('src/styles/globals.css');
   assert.ok(css.includes('576px'), 'globals.css must scale display type under 576px');
