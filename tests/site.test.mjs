@@ -501,6 +501,14 @@ test('gallery: lightbox survives React filter remounts', () => {
   assert.ok(init.includes('rebindGalleryPopup'), 'site-init must expose the lightbox rebind');
 });
 
+test('content: hero carries a static Google badge linked to the GBP', () => {
+  const home = src('src/pages/index.astro');
+  assert.ok(home.includes('share.google/tZftkQc4AVNwEkHfn'), 'hero badge must link the GBP share URL');
+  assert.ok(home.includes('google-badge'), 'hero badge must carry the google-badge hook');
+  assert.ok(home.includes('target="_blank"'), 'GBP link must open in a new tab');
+  assert.ok(!home.includes('Google Rating'), 'old rating-row label must be gone');
+});
+
 test('content: homepage language line is blanket, verified-safe (no enumeration)', () => {
   const home = src('src/pages/index.astro');
   assert.ok(home.includes('we speak all our Queens community languages'), 'homepage hero must carry the blanket language line');

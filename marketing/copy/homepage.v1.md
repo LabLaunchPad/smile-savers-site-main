@@ -33,6 +33,15 @@ heart emoji dropped (font support). Photos untouched per owner order
 fix needs owner-supplied patient photos or permission to use initials-only
 cards; proposed for v2).
 
+## 6. Hero Google badge (static now, npm package later per owner)
+Replaced the "Google Rating" text row with a white-pill badge: G logo (inline
+SVG) + 4.5 + 5 stars + "Based on 153 Google Reviews", whole pill linked to the
+GBP share URL (new tab, noopener, full aria-label). Numbers stay bound to
+practice.ts canon. No new dependency, no runtime calls.
+Mobile (≤576px): count stacks under G+rating+stars; trust line 15px; both
+capped to the viewport (a wide template ancestor below lg otherwise lets hero
+content run past 390px — root cause unidentified, neutralized with caps).
+
 ## Explicitly NOT changed (held for owner gates)
 - Rating stays 4.5/153 (Birdeye mirror shows ~163; conservative canon kept
   until GBP native count confirmed).

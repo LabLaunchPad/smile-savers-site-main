@@ -172,3 +172,46 @@ button#menu-btn {
   left: 8px;
   top: 8px;
 }
+
+/* Hero Google badge: white pill over the slider image (light-only map).
+   Scoped to #section-intro to beat the theme's .text-light a rule. */
+#section-intro .google-badge {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.96);
+  color: #1b2a4a;
+  border-radius: 999px;
+  padding: 8px 18px 8px 12px;
+  text-decoration: none;
+  line-height: 1.2;
+}
+#section-intro .google-badge:hover {
+  color: #1b2a4a;
+  text-decoration: underline;
+}
+.google-badge-rating {
+  font-weight: 800;
+  font-size: 20px;
+}
+.google-badge-count {
+  font-size: 14px;
+  opacity: 0.75;
+}
+
+/* Small screens: stack the badge count under G + rating + stars;
+   cap hero text + badge to the viewport (a wide template ancestor below lg
+   otherwise lets them run past 390px). */
+@media (max-width: 576px) {
+  #section-intro .google-badge-count {
+    flex-basis: 100%;
+  }
+  #section-intro .hero-trust {
+    font-size: 15px;
+    max-width: 340px;
+  }
+  #section-intro .google-badge {
+    max-width: calc(100vw - 48px);
+  }
+}
