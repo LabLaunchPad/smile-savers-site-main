@@ -36,14 +36,6 @@
 /icons/*
   Cache-Control: public, max-age=604800, immutable
 
-# ── PWA files: short cache for updates ──────────────────────
-/sw.js
-  Cache-Control: public, max-age=0, must-revalidate
-  Service-Worker-Allowed: /
-
-/manifest.json
-  Cache-Control: public, max-age=3600
-
 # ── API: no caching ─────────────────────────────────────────
 /api/*
   Cache-Control: no-store, no-cache

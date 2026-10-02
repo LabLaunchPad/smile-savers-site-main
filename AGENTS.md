@@ -8,7 +8,7 @@
 |---|---|
 | `npm run dev` | Dev server `:4321` (exactly ONE instance — see §1) |
 | `npm run build` / `build:ci` | Prod build, plain adapter-less `astro build` → flat `dist/` for Cloudflare Pages (STOP dev first — see §1) |
-| `npx astro check` | Typecheck, no npm script (STOP dev first — shared `.astro` cache) |
+| `npx astro check` / `npm run check` | Typecheck (STOP dev first — shared `.astro` cache) |
 | `npm run preview` / `preview:cf` | Local preview / Pages preview (`wrangler pages dev dist`) |
 
 ## 1. Dev-server discipline (earned the hard way, 3 outages)
@@ -34,7 +34,7 @@ WOW reveals→`site-init` · Swiper hero→`site-init`+`swiper.js` · logo marqu
 
 ## 4. Spacing system (`public/css/style.css` — read, don't guess)
 - Base rhythm: `section { padding: 120px 0 }`.
-- Native overrides: `.pt-NN`/`.pb-NN` pixel utilities (10–100); Bootstrap `!important` utils (`pt-5`=48px etc.); flow spacers `.spacer-half/single/double/triple` = 15/30/60/90px.
+- Native overrides: `.pt-NN`/`.pb-NN` pixel utilities (10–100); Bootstrap `!important` utils (`pt-5`=48px etc.); flow spacers `.spacer-half/single/double/triple` = 15/30/60/90px; plus `.spacer-20` (20px) and `.spacer-30-line` (30px divider) used by Layout/Footer.
 - Junction rule: a section's `pb-0` is only safe when the NEXT section supplies top padding (about supplies 120px; the dark strip supplies 50px — measure both sides, keep junctions near-symmetric).
 
 ## 5. A11y floor (audit: FAIL vs WCAG 2.2 AA — 23 issues on file)
@@ -45,7 +45,7 @@ New/edited markup MUST: real `<label for>` on every field (never placeholder-onl
 - Hours: `Mon–Thu 10AM–6PM · Fri 9AM–5PM · Sat 9AM–1PM · Sun Closed` (Fri 9–5 wins over any blurb)
 - Rating: `4.5` / `153 Google reviews` (GBP wins; NEVER ship 5.0/200+, 23k, 98%, "100+ Companies" — trust bar now holds 6 verified logos: aaid/agd/ao/ada/icoi/nyu)
 - Roster: Bhagat DDS (Lead Dentist, NOT founder) · Islam DMD · Li DDS · Avendaño DDS (photos pending except Bhagat)
-- Stats allowed: `35+ years`, `10,000+ patients`. EmailJS keys stay EMPTY (forms inert by design; Worker+Turnstile route pending owner approval).
+- Stats allowed: `35+ years`, `10,000+ patients`. Forms POST to `/api/contact` (Resend via Pages Function, `RESEND_API_KEY` server env) with `mailtoWith` fallback — EmailJS is banned by tests, never re-add.
 - Prefill status: DONE homepage, about, contact, booking (NAP/copy). STILL FICTIONAL: services×6 bodies, dentists page, testimonials, faq, gallery items, blog. `dentists.astro`/team photos pending shoot.
 
 ## 7. Assets
@@ -53,7 +53,7 @@ New/edited markup MUST: real `<label for>` on every field (never placeholder-onl
 - Team: `public/images/team/bhagat.webp` (740×1000, studio-blue BG). Slot aspect ~20:27. Source JPG retained (watermarked, will be removed on request).
 - Theme: `public/css/colors/scheme-01.css` owns brand color; `globals.css` is LIGHT-ONLY (a dark-mode block once ghosted all body copy — never re-add).
 
-## 8. Verification protocol (no test suite exists — this IS the suite)
+## 8. Verification protocol (29-test node suite IS the suite: `node --test tests/site.test.mjs`)
 1. Static asserts: `Select-String` on edited files (strings present/absent).
 2. Live DOM gates: dev-fetch rendered HTML (`Invoke-WebRequest`, ASCII-safe patterns — console mangles en-dashes) for copy + `aria-*`/hooks + motion classes.
 3. Visual proof: Edge headless screenshots (`C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe --headless --screenshot=... --virtual-time-budget=15000 <url>`); tall pages fail — use ≤3600px windows or read the asset directly.
@@ -61,4 +61,4 @@ New/edited markup MUST: real `<label for>` on every field (never placeholder-onl
 5. Look, don't infer: read the rendered PNG/SVG yourself before claiming visual state.
 
 ## 9. Git
-`main` only unless owner approves a branch; conventional commits (`feat/fix/a11y(scope): …`); SDD worktree flow lives in `.worktrees/` (gitignored) with binding SPEC + ledger per epic. Never commit `.wrangler/` state or `node_modules`/`dist`/`.astro`.
+`main` only unless owner approves a branch; conventional commits (`feat/fix/a11y(scope): …`); SDD worktree flow lives in `.worktrees/` (gitignored) with binding SPEC + ledger per epic. Never commit `.wrangler/` state or `node_modules`/`dist`/`.astro` (on-disk build residue is normal — it just must stay untracked).
