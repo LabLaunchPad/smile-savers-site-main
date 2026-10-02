@@ -20,6 +20,30 @@ const {
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://dentalsmilesavers.com');
+// ponytail: one @graph block, not a schema partial — sitewide Organization+WebSite only.
+const siteBase = (Astro.site ?? 'https://dentalsmilesavers.com').toString().replace(/\/$/, '');
+const gbpUrl = 'https://share.google/tZftkQc4AVNwEkHfn';
+const orgJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${siteBase}/#organization`,
+      name: 'Smile Savers Dental',
+      url: `${siteBase}/`,
+      logo: `${siteBase}/images/logo.svg`,
+      sameAs: [gbpUrl],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${siteBase}/#website`,
+      url: `${siteBase}/`,
+      name: 'Smile Savers Dental',
+      alternateName: 'Smile Savers',
+      publisher: { '@id': `${siteBase}/#organization` },
+    },
+  ],
+});
 ---
 
 <!doctype html>
@@ -41,6 +65,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://dentalsmile
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <script is:inline type="application/ld+json" set:html={orgJson} />
     <title>{title}</title>
     {/* perf: above-the-fold icon fonts — hero stars (FA6 solid) + header icons (IcoFont) */}
     <link rel="preload" href="/fonts/icofont/fonts/icofont.woff2" as="font" type="font/woff2" crossorigin />

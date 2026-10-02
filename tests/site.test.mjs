@@ -673,6 +673,16 @@ test('social share image is a real raster (not SVG)', () => {
   assert.ok(layout.includes('summary_large_image'), 'twitter card must be large');
 });
 
+test('structured data: Dentist home + Organization/WebSite sitewide + breadcrumbs', () => {
+  assert.ok(src('src/layouts/Layout.astro').includes('application/ld+json'), 'layout needs sitewide schema');
+  const home = src('src/pages/index.astro');
+  assert.ok(home.includes('"@type":"Dentist"') || home.includes('"@type": "Dentist"'), 'home needs Dentist schema');
+  assert.ok(!home.includes('aggregateRating'), 'self-review stars are ineligible — must be absent');
+  assert.ok(!src('src/layouts/Layout.astro').includes('FAQPage'), 'FAQ rich results are gone — no FAQPage');
+  const header = src('src/components/sections/shared/PageHeader.astro');
+  assert.ok(header.includes('BreadcrumbList'), 'PageHeader trail must emit BreadcrumbList');
+});
+
 test('every route has unique SEO title + description (no stale pain-free default)', () => {
   const layout = src('src/layouts/Layout.astro');
   assert.ok(!layout.includes('pain-free family dentistry'), 'default description must drop pain-free');
