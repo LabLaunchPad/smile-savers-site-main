@@ -1,53 +1,13 @@
 {
-  // ═══════════════════════════════════════════════════════════════════════════
-  // Smile Savers Dental — Cloudflare Pages Configuration (wrangler.jsonc)
-  // Docs: https://developers.cloudflare.com/pages/
-  // NOTE: Pages only supports "preview" and "production" named environments
-  // ═══════════════════════════════════════════════════════════════════════════
-
+  "$schema": "node_modules/wrangler/config-schema.json",
   "name": "smile-savers-site-main",
-  "main": "src/entrypoint.js",
-  "compatibility_date": "2025-01-01",
+  "compatibility_date": "2026-09-06",
   "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "directory": "./dist",
-    "binding": "ASSETS"
+    "not_found_handling": "404-page"
   },
-
-  // ── Observability ──────────────────────────────────────────────────────────
   "observability": {
     "enabled": true
-  },
-
-  // ── Environment variables (non-secret, static config) ─────────────────────
-  "vars": {
-    "ENVIRONMENT": "production",
-    "SITE_URL": "https://smilesavers.dental",
-    "NODE_VERSION": "22"
-  },
-
-  // ── Cloudflare Workers AI (10,000 req/day free) ────────────────────────────
-  "ai": {
-    "binding": "AI"
-  },
-
-  // ── KV Namespace — Chat cache (optional, only needed for rate-limiting) ────
-  // To enable: run `npx wrangler kv namespace create CHAT_CACHE`
-  // then uncomment and replace "your-kv-namespace-id" with the returned ID.
-  // "kv_namespaces": [
-  //   {
-  //     "binding": "CHAT_CACHE",
-  //     "id": "your-kv-namespace-id"
-  //   }
-  // ],
-
-  // ── Preview environment (branch/PR deploys) ────────────────────────────────
-  "env": {
-    "preview": {
-      "vars": {
-        "ENVIRONMENT": "preview",
-        "SITE_URL": "https://smile-savers-site-main.pages.dev"
-      }
-    }
   }
 }

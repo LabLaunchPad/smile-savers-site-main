@@ -1,0 +1,139 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+export const prerender = true;
+
+interface Dentist {
+  n: string;
+  name: string;
+  role: string;
+  img: string;
+  qual: string;
+  certs: string[];
+  awards: string[];
+}
+
+const dentists: Dentist[] = [
+  {
+    n: '1',
+    name: 'Dr. Deepak Bhagat',
+    role: 'Lead Dentist',
+    img: '/images/team/bhagat.webp',
+    qual: 'Doctor of Dental Surgery (DDS), New York University College of Dentistry (1987)',
+    certs: [
+      'Diplomate, International Congress of Oral Implantologists (ICOI)',
+      'Certified Implant Specialist',
+    ],
+    awards: [
+      'Dental Implants',
+      'Restorative Dentistry',
+      'Full Mouth Rehabilitation',
+      'CEREC Same-Day Crowns',
+    ],
+  },
+  {
+    n: '2',
+    name: 'Dr. Julie Islam',
+    role: 'General Dentist',
+    img: '/images/team/2.webp',
+    qual: 'Doctor of Medicine in Dentistry (DMD), New York University College of Dentistry (2015)',
+    certs: ['Certified Implant Specialist', 'Preventive & Pediatric Care'],
+    awards: ['General Dentistry', 'Preventive Care', 'Cosmetic Dentistry', 'Pediatric Dentistry'],
+  },
+  {
+    n: '3',
+    name: 'Dr. Dorothy Li',
+    role: 'Restorative Dentist',
+    img: '/images/team/3.webp',
+    qual: 'Doctor of Dental Surgery (DDS), Stony Brook University School of Dental Medicine (2018)',
+    certs: ['Certified Implant Specialist', 'Emergency Dental Care'],
+    awards: ['Restorative Procedures', 'Root Canal Therapy', 'Extractions', 'General Dentistry'],
+  },
+  {
+    n: '4',
+    name: 'Dr. Sarha Avendaño',
+    role: 'General Dentist',
+    img: '/images/team/4.webp',
+    qual: 'Doctor of Dental Surgery (DDS), New York University College of Dentistry (2019); General Practice Residency, New York Presbyterian – Queens (2020)',
+    certs: ['Certified Implant Specialist', 'General Practice Residency (NYP Queens)'],
+    awards: ['Preventive Care', 'Restorative Procedures', 'Patient Education', 'General Dentistry'],
+  },
+];
+---
+
+<Layout
+  title="Our Dentists — Smile Savers Dental"
+  description="Meet the dentists of Smile Savers Dental in Woodside, NY: Dr. Bhagat, Dr. Islam, Dr. Li, Dr. Avendano. Call (718) 956-8400."
+  headerClass="transparent header-light"
+>
+  <section id="subheader" class="bg-color-op-1 text-center">
+    <div class="container relative z-2">
+      <div class="row align-items-center">
+        <div class="col-lg-12">
+          <h1 class="wow fadeInUp">Our Dentists</h1>
+          <div class="border-bottom my-3"></div>
+          <ul class="crumb wow fadeInDown">
+            <li>
+              <a href="/">Home</a>
+            </li>
+            <li class="active">Our Dentists</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row g-4 gy-5">
+        {dentists.map((d) => (
+          <div class="col-md-12">
+            <div class="bg-light rounded-1 relative overflow-hidden">
+              <div class="abs end-0 bottom-0 p-5 fs-150 fw-bold op-1 lh-1 id-color">{d.n}</div>
+              <div class="row g-0 align-items-center">
+                <div class="col-md-4">
+                  <img src={d.img} class="w-100 rounded" alt={d.name} />
+                </div>
+                <div class="col-md-8">
+                  <div class="h-100 p-40">
+                    <h3 class="mb-0">{d.name}</h3>
+                    <p class="id-color">{d.role}</p>
+
+                    <h4>Qualification</h4>
+                    <p>{d.qual}</p>
+
+                    <h4>Certifications</h4>
+                    <ul class="ul-check">
+                      {d.certs.map((c) => (
+                        <li>{c}</li>
+                      ))}
+                    </ul>
+
+                    <h4>Specialties</h4>
+                    <ul class="ul-check">
+                      {d.awards.map((a) => (
+                        <li>{a}</li>
+                      ))}
+                    </ul>
+
+                    <div class="sc-icons mt-4">
+                      <a href="#">
+                        <i class="fa-brands fa-facebook-f"></i>
+                      </a>
+                      <a href="#">
+                        <i class="fa-brands fa-x-twitter"></i>
+                      </a>
+                      <a href="#">
+                        <i class="fa-brands fa-youtube"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

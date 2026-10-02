@@ -1,4 +1,10 @@
 /**
+ * VENDORED from LabLaunchPad/smile-savers-site-main functions/api/contact.js.
+ * LOCAL FIX (flagged upstream in PR): auto-reply hours/address corrected to
+ * canon (Fri 9AM–5PM, 32-02 53rd Pl) below.
+ */
+
+/**
  * API Route: /api/contact
  * Handles contact form + appointment booking submissions for Smile Savers Dental
  *
@@ -23,7 +29,7 @@ async function sendViaResend(apiKey, { to, from, replyTo, subject, text, html })
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${apiKey}`,
+      Authorization: `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -75,9 +81,10 @@ export async function onRequestPost(context) {
     }
 
     // ── Build email content ───────────────────────────────────────────────
-    const subject = urgent !== 'No'
-      ? `⚠️ URGENT: New Contact from ${name} — Smile Savers`
-      : `New Appointment Request from ${name} — Smile Savers`;
+    const subject =
+      urgent !== 'No'
+        ? `⚠️ URGENT: New Contact from ${name} — Smile Savers`
+        : `New Appointment Request from ${name} — Smile Savers`;
 
     const textBody = [
       `New form submission from smilesavers.dental`,
@@ -126,7 +133,18 @@ export async function onRequestPost(context) {
 </html>`;
 
     // ── Log submission (always — visible in CF dashboard → Logs) ─────────
-    console.log('FORM_SUBMISSION', JSON.stringify({ name, email, phone, service, newPatient, urgent, ts: new Date().toISOString() }));
+    console.log(
+      'FORM_SUBMISSION',
+      JSON.stringify({
+        name,
+        email,
+        phone,
+        service,
+        newPatient,
+        urgent,
+        ts: new Date().toISOString(),
+      })
+    );
 
     // ── Send via Resend (requires RESEND_API_KEY env var) ─────────────────
     if (env.RESEND_API_KEY) {
@@ -145,15 +163,16 @@ export async function onRequestPost(context) {
         from: 'Smile Savers Dental <onboarding@resend.dev>',
         to: email,
         subject: 'We received your message — Smile Savers Dental',
-        text: `Hi ${name},\n\nThank you for reaching out to Smile Savers Dental. We've received your message and will get back to you within 24 hours.\n\nIf this is a dental emergency, please call us directly:\n(718) 956-8400\n\nOffice Hours:\nMon–Thu: 10 AM – 6 PM\nFri: 9 AM - 1 PM\nSat: 9 AM – 1 PM\n\nWarm regards,\nSmile Savers Dental\n3202 53rd Place, Woodside, NY 11377\n(718) 956-8400`,
-      }).catch(() => { }); // silently fail — auto-reply is best-effort
+        text: `Hi ${name},\n\nThank you for reaching out to Smile Savers Dental. We've received your message and will get back to you within 24 hours.\n\nIf this is a dental emergency, please call us directly:\n(718) 956-8400\n\nOffice Hours:\nMon–Thu: 10 AM – 6 PM\nFri: 9 AM – 5 PM\nSat: 9 AM – 1 PM\n\nWarm regards,\nSmile Savers Dental\n32-02 53rd Pl, Woodside, NY 11377\n(718) 956-8400`,
+      }).catch(() => {}); // silently fail — auto-reply is best-effort
     } else {
       // No API key configured — log warning, still return success
-      console.warn('RESEND_API_KEY not set. Submission logged but email not sent. Add key in CF Pages → Settings → Variables and Secrets.');
+      console.warn(
+        'RESEND_API_KEY not set. Submission logged but email not sent. Add key in CF Pages → Settings → Variables and Secrets.'
+      );
     }
 
     return json({ success: true, message: 'Message sent successfully.' });
-
   } catch (err) {
     console.error('Contact form error:', err?.message || err);
     // Always return JSON — never let Cloudflare serve an HTML error page

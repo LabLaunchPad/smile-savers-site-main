@@ -1,0 +1,22 @@
+---
+---
+
+<!-- OWNERSHIP: #de-loader visibility — this file OWNS show/hide timing (load+1s, 3s fallback). -->
+<!-- on3step OWNS spinner markup (.lds-roller) + load fadeOut(500) only; never add a second hide timer. -->
+<!-- NEVER change: id 'de-loader', or remove either side's hide path (race-safe redundancy). -->
+<div id="de-loader"></div>
+<script is:inline>
+  (function () {
+    var loader = document.getElementById('de-loader');
+    if (loader) loader.style.display = 'flex';
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        if (loader) loader.style.display = 'none';
+      }, 1000);
+    });
+    // Fallback in case load already fired
+    setTimeout(function () {
+      if (loader) loader.style.display = 'none';
+    }, 3000);
+  })();
+</script>

@@ -1,0 +1,280 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export const prerender = true;
+
+const treatments = [
+  { h: 'Digital Consultation', p: '3D scans with simulation preview.' },
+  { h: 'Custom Aligners Made', p: 'Your unique set of aligners is manufactured for comfort.' },
+  { h: 'Wear & Progress', p: '1-2 weeks per tray, check-ins every 6-8 weeks.' },
+  {
+    h: 'Refinements & Retainers',
+    p: 'Final refinement aligners and retainers keep your result permanent.',
+  },
+  { h: '20-22 Hours Daily Wear', p: 'Remove only to eat, drink and clean your teeth.' },
+];
+
+const whyUs = [
+  {
+    h: 'Experienced Team',
+    p: 'Our board-certified orthodontists have years of experience providing top-quality care with the latest techniques and technology in orthodontics.',
+    d: '.3s',
+  },
+  {
+    h: 'Personalized Treatment Plans',
+    p: 'We take the time to understand your unique needs and create a treatment plan tailored specifically to you.',
+    d: '.4s',
+  },
+  {
+    h: 'Comfortable Environment',
+    p: 'We strive to create a welcoming, stress-free atmosphere for patients of all ages, making each visit enjoyable and relaxing.',
+    d: '.5s',
+  },
+  {
+    h: 'Advanced Technology',
+    p: 'We use state-of-the-art tools, such as digital X-rays and 3D imaging, to ensure the most accurate diagnosis and treatment plan for you.',
+    d: '.6s',
+  },
+  {
+    h: 'Flexible Payment Plans',
+    p: 'We offer various payment options to make orthodontic care accessible to everyone, including financing and insurance assistance.',
+    d: '.7s',
+  },
+  {
+    h: 'Proven Results',
+    p: 'We have helped thousands of patients achieve their dream smiles, delivering beautiful, long-lasting results that boost both oral health and confidence.',
+    d: '.8s',
+  },
+];
+
+const quotes = [
+  {
+    text: 'I used to cancel dentist appointments out of pure fear. Dr Li changed that completely — he explained every step, checked in constantly, and I left feeling proud of myself.',
+    name: 'James K.',
+  },
+  {
+    text: 'Dr. Bhagat has been my family dentist for over 15 years. He remembered every detail about my dental history without checking notes. That level of care is rare.',
+    name: 'Sofia R.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'How does Invisalign work?',
+    a: 'You wear a series of custom-made clear plastic aligners, each slightly different, that gradually shift your teeth into the desired position. You change to the next set approximately every 1–2 weeks.',
+    id: 'accordion-a1',
+  },
+  {
+    q: 'How long will treatment take?',
+    a: "Mild cases can be completed in 6 months. Average cases take 12–18 months. We'll give you a personalised timeline at your consultation.",
+    id: 'accordion-a2',
+  },
+  {
+    q: 'Do I have to wear them all the time?',
+    a: 'Aligners should be worn 20–22 hours per day for best results. You remove them to eat, drink anything other than water, and clean your teeth.',
+    id: 'accordion-a3',
+  },
+  {
+    q: 'Is Invisalign as effective as braces?',
+    a: "For most common alignment issues — crowding, spacing, mild bite problems — Invisalign is equally effective. Severe bite corrections may still require traditional braces, which we'll advise at consultation.",
+    id: 'accordion-a4',
+  },
+];
+---
+
+<Layout
+  title="Orthodontics — Smile Savers Dental"
+  description="Orthodontics in Woodside, NY: straighter teeth and bite correction. Smile Savers Dental, (718) 956-8400."
+  headerClass="transparent header-light"
+>
+  <section id="subheader" class="bg-color-op-1 text-center">
+    <div class="container relative z-2">
+      <div class="row align-items-center">
+        <div class="col-lg-12">
+          <h1 class="wow fadeInUp">Orthodontics</h1>
+          <div class="border-bottom my-3"></div>
+          <ul class="crumb wow fadeInDown">
+            <li>
+              <a href="/">Home</a>
+            </li>
+            <li>
+              <a href="/services">Services</a>
+            </li>
+            <li class="active">Orthodontics</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row g-4 gx-5 align-items-center">
+        <div class="col-md-3 wow fadeInRight">
+          <div class="relative rounded-1 overflow-hidden">
+            <img src="/images/misc/p1.webp" class="w-100" alt="" />
+            <div class="de-overlay-gradient-color h-50 top-50"></div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="ps-lg-3 text-lg-center">
+            <div class="subtitle id-color wow fadeInUp" data-wow-delay=".2s">
+              Orthodontics
+            </div>
+            <h2 class="wow fadeInUp" data-wow-delay=".4s">
+              Transform Your Smile with Expert Orthodontic Care
+            </h2>
+            <p class="mb-0 wow fadeInUp" data-wow-delay=".6s">
+              Straighten your teeth discreetly with custom clear aligners. No metal, no wires — just
+              a confident smile.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-3 wow fadeInRight">
+          <div class="relative rounded-1 overflow-hidden">
+            <img src="/images/misc/p2.webp" class="w-100" alt="" />
+            <div class="de-overlay-gradient-color h-50 top-50"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-color-op-1">
+    <div class="container">
+      <div class="row g-4 justify-content-center">
+        <div class="col-lg-8 text-center">
+          <div class="subtitle wow fadeInUp mb-3">Our Services</div>
+          <h2 class="wow fadeInUp" data-wow-delay=".2s">
+            Orthodontic Treatments We Offer
+          </h2>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        {treatments.map((t) => (
+          <div class="col-lg-4 col-md-6">
+            <div class="border-gray p-40 h-100 rounded-1">
+              <div class="relative wow fadeInUp">
+                <h4>{t.h}</h4>
+                <p class="mb-0">{t.p}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-color-op-2">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="subtitle id-color wow fadeInUp" data-wow-delay=".0s">
+            Why Choose Us
+          </div>
+          <h2 class="wow fadeInUp" data-wow-delay=".2s">
+            Why Choose Our Orthodontic Services?
+          </h2>
+        </div>
+
+        <div class="col-lg-7">
+          <div class="row g-4">
+            {whyUs.map((w) => (
+              <div class="col-md-6 wow fadeInUp" data-wow-delay={w.d}>
+                <div class="relative">
+                  <span class="abs w-70px p-3 circle bg-color d-block">
+                    <img src="/images/ui/check-white.png" class="w-100" alt="" />
+                  </span>
+                  <div class="ps-90">
+                    <h5>{w.h}</h5>
+                    <p class="mb-0">{w.p}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="no-top no-bottom overflow-hidden">
+    <div class="container-fluid position-relative half-fluid">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 position-lg-absolute left-half h-100">
+            <div
+              class="image"
+              style="background-image: url(/images/misc/s2.webp); background-position: center; background-size: cover;"
+            ></div>
+          </div>
+          <div class="col-lg-5 offset-lg-7">
+            <div class="py-5 my-5">
+              <div class="owl-single-dots owl-carousel owl-theme">
+                {quotes.map((q) => (
+                  <div class="item">
+                    <i class="icofont-quote-left id-color fs-40 mb-4 wow fadeInUp"></i>
+                    <h3 class="mb-4 wow fadeInUp fs-32">{q.text}</h3>
+                    <span class="wow fadeInUp">{q.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-light">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="subtitle id-color wow fadeInUp" data-wow-delay=".0s">
+            Everything You Need to Know
+          </div>
+          <h2 class="wow fadeInUp" data-wow-delay=".2s">
+            Frequently Asked Questions
+          </h2>
+        </div>
+
+        <div class="col-lg-7">
+          <div class="accordion s2 wow fadeInUp">
+            <div class="accordion-section">
+              {faqs.map((f) => (
+                <>
+                  <div class="accordion-section-title" data-tab={'#' + f.id}>
+                    {f.q}
+                  </div>
+                  <div class="accordion-section-content" id={f.id}>
+                    {f.a}
+                  </div>
+                </>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-color text-light pt-50 pb-50">
+    <div class="container">
+      <div class="row g-4 align-items-center">
+        <div class="col-md-9">
+          <h3 class="mb-0 fs-32">Ready to Book Your Appointment?</h3>
+          <p class="mb-0">
+            Contact us today to schedule your visit and take the first step toward a healthier
+            smile.
+          </p>
+        </div>
+        <div class="col-lg-3 text-lg-end">
+          <a class="btn-main fx-slide btn-line" href="/booking">
+            <span>Book Appointment</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

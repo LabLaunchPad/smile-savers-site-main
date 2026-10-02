@@ -1,0 +1,211 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export const prerender = true;
+
+const features = [
+  {
+    h: 'Comprehensive Dental Exams',
+    p: 'Thorough evaluation of your teeth, gums, and oral tissues.',
+  },
+  { h: 'Professional Cleanings', p: 'Removal of plaque and tartar buildup.' },
+  { h: 'Digital X-Rays', p: 'State-of-the-art imaging with 90% less radiation.' },
+  { h: 'Tooth-Colored Fillings', p: 'Natural-looking restorations for cavities.' },
+  { h: 'Fluoride Treatments', p: 'Strengthening enamel to prevent decay.' },
+  { h: 'Oral Cancer Screenings', p: 'Early detection for better outcomes.' },
+];
+
+const reasons = [
+  'Experienced & Gentle Dentists',
+  'Modern Technology',
+  'Flexible Appointments',
+  'Transparent Pricing',
+  'Personalized Treatment Plans',
+  'Sterile & Safe Facility',
+];
+
+const faqs = [
+  {
+    q: 'How often should I visit the dentist?',
+    a: 'We recommend visiting every 6 months for routine checkups and cleanings. However, some patients may need more frequent visits based on their oral health needs.',
+    id: 'accordion-a1',
+  },
+  {
+    q: 'What happens during a dental exam?',
+    a: "During your exam, we'll check for cavities, gum disease, and oral cancer. We'll also review your dental X-rays and discuss any concerns you may have.",
+    id: 'accordion-a2',
+  },
+  {
+    q: 'Do you accept dental insurance?',
+    a: 'Yes, we accept most major dental insurance plans. Our team will help you understand your coverage and maximize your benefits.',
+    id: 'accordion-a3',
+  },
+];
+---
+
+<Layout
+  title="General Dentistry — Smile Savers Dental"
+  description="General dentistry in Woodside, NY: exams, cleanings, fillings and pain-free family care. Smile Savers Dental, (718) 956-8400."
+  headerClass="transparent header-light"
+>
+  <section id="subheader" class="bg-color-op-1 text-center">
+    <div class="container relative z-2">
+      <div class="row align-items-center">
+        <div class="col-lg-12">
+          <h1 class="wow fadeInUp">General Dentistry</h1>
+          <div class="border-bottom my-3"></div>
+          <ul class="crumb wow fadeInDown">
+            <li>
+              <a href="/">Home</a>
+            </li>
+            <li>
+              <a href="/services">Services</a>
+            </li>
+            <li class="active">General Dentistry</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row g-4 align-items-center">
+        <div class="col-lg-6">
+          <div class="relative">
+            <div class="w-100 pe-5 pb-5 wow scaleIn">
+              <img src="/images/misc/l1.webp" class="w-100 rounded-1" alt="" />
+            </div>
+            <img
+              src="/images/misc/s1.webp"
+              class="w-40 rounded-1 abs end-0 bottom-0 z-2 soft-shadow wow scaleIn"
+              data-wow-delay=".2s"
+              alt=""
+            />
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="ps-lg-3">
+            <div class="subtitle id-color wow fadeInUp" data-wow-delay=".2s">
+              General Dentistry
+            </div>
+            <h2 class="wow fadeInUp" data-wow-delay=".4s">
+              Comprehensive Oral Care for Every Stage of Life
+            </h2>
+            <p class="mb-0 wow fadeInUp" data-wow-delay=".6s">
+              We believe in preventive care first. By catching problems early, we can often provide
+              simpler, more affordable treatments. Comprehensive dental care including exams,
+              cleanings, fillings, and preventive treatments for the whole family.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="spacer-double"></div>
+
+      <div class="row g-4">
+        {features.map((f) => (
+          <div class="col-lg-4 col-md-6">
+            <div class="border-gray p-40 h-100 rounded-1">
+              <div class="relative wow fadeInUp">
+                <h4>{f.h}</h4>
+                <p class="mb-0">{f.p}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="text-light bg-dark no-top no-bottom overflow-hidden">
+    <div class="container-fluid position-relative half-fluid">
+      <div class="container">
+        <div class="row">
+          {/* Image */}
+          <div class="col-lg-6 position-lg-absolute right-half h-100">
+            <div class="triangle-bottomright-dark"></div>
+            <div
+              class="image"
+              style="background-image: url(/images/misc/s5.webp); background-position: center; background-size: cover;"
+            ></div>
+          </div>
+          {/* Text */}
+          <div class="col-lg-6">
+            <div class="me-lg-3">
+              <div class="py-5 my-5 me-lg-3">
+                <div class="subtitle s2 mb-3 wow fadeInUp" data-wow-delay=".0s">
+                  Top Reasons
+                </div>
+                <h2 class="wow fadeInUp" data-wow-delay=".2s">
+                  Why Choose Us
+                </h2>
+
+                <div class="row g-4">
+                  <div class="col-lg-8 col-md-8 col-sm-6">
+                    <ul class="ul-check fw-600 text-white mb-4 wow fadeInUp" data-wow-delay=".6s">
+                      {reasons.map((r) => (
+                        <li>{r}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-light">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="subtitle id-color wow fadeInUp" data-wow-delay=".0s">
+            Everything You Need to Know
+          </div>
+          <h2 class="wow fadeInUp" data-wow-delay=".2s">
+            Frequently Asked Questions
+          </h2>
+        </div>
+
+        <div class="col-lg-7">
+          <div class="accordion s2 wow fadeInUp">
+            <div class="accordion-section">
+              {faqs.map((f) => (
+                <>
+                  <div class="accordion-section-title" data-tab={'#' + f.id}>
+                    {f.q}
+                  </div>
+                  <div class="accordion-section-content" id={f.id}>
+                    {f.a}
+                  </div>
+                </>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-color text-light pt-50 pb-50">
+    <div class="container">
+      <div class="row g-4 align-items-center">
+        <div class="col-md-9">
+          <h3 class="mb-0 fs-32">Ready to Book Your Appointment?</h3>
+          <p class="mb-0">
+            Contact us today to schedule your visit and take the first step toward a healthier
+            smile.
+          </p>
+        </div>
+        <div class="col-lg-3 text-lg-end">
+          <a class="btn-main fx-slide btn-line" href="/booking">
+            <span>Book Appointment</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,20 +1,9 @@
-# ═══════════════════════════════════════════════════════════
-# Cloudflare Pages — Redirects
-# ═══════════════════════════════════════════════════════════
-
-# www → non-www canonical redirection should be set up via Cloudflare Dashboard Redirect Rules
-# since Workers Assets only supports relative paths for source URLs.
-
-# Legacy / common misspellings
-/services/cerec               /services/cerec-crowns          301
-/services/whitening           /services/cosmetic-dentistry    301
-/services/braces              /services/invisalign            301
-/services/crowns              /services/cerec-crowns          301
-/booking                      /appointments                   301
-/book                         /appointments                   301
-/about-us                     /about                          301
-/our-team                     /about                          301
-/team                         /about                          301
-
-# SPA fallback (should not be needed for static, but safety net)
-# /404                          /404.html                     404
+# Cloudflare Pages redirects.
+# /booking is canonical in this repo (upstream direction inverted at merge if needed).
+# Service-misspelling aliases from upstream intentionally omitted: their targets
+# (/services/cerec-crowns, /services/invisalign) do not exist here — follow-up.
+/appointments /booking 301
+/book /booking 301
+/about-us /about 301
+/our-team /about 301
+/team /about 301

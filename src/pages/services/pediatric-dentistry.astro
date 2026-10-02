@@ -1,0 +1,238 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export const prerender = true;
+
+const reasons = [
+  'Kid-friendly and calming environment designed just for children',
+  'Experienced, gentle dentists families trust',
+  'Comfortable treatment rooms with fun themes',
+  'Parents welcome during exams and treatments',
+  'Focus on education to build lifelong healthy habits',
+  'Flexible scheduling and emergency care available',
+];
+
+const treatments = [
+  { h: 'First Visits', p: 'First dental visits and wellness exams by age 1.' },
+  { h: 'Cleanings & Fluoride', p: 'Professional cleanings and fluoride treatments.' },
+  { h: 'Sealants', p: 'Dental sealants to protect molars.' },
+  { h: 'Tooth-Colored Fillings', p: 'Natural-looking tooth-colored fillings.' },
+  { h: 'Stainless Steel Crowns', p: 'Stainless steel crowns for baby teeth.' },
+  { h: 'Space Maintainers', p: 'Space maintainers if teeth are lost early.' },
+];
+
+const quotes = [
+  {
+    text: 'My daughter is 7 and was terrified. Dr. Islam sat on the floor with her for 10 minutes before even touching a tool. Now my daughter asks when she gets to go back.',
+    name: 'Aisha T.',
+  },
+  {
+    text: 'Finding a dentist who accepts my insurance AND delivers this quality in Queens felt impossible. Smile Savers does both. The front desk team is also incredibly organised.',
+    name: 'Robert M.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'When should my child first visit the dentist?',
+    a: 'The American Academy of Pediatric Dentistry recommends a first visit by age 1 or within 6 months of the first tooth appearing.',
+    id: 'accordion-a1',
+  },
+  {
+    q: 'How do you help anxious children?',
+    a: 'We use a gentle, patient approach with lots of explanation in kid-friendly terms. We introduce tools slowly, use positive reinforcement, and never rush nervous children.',
+    id: 'accordion-a2',
+  },
+  {
+    q: 'Are dental X-rays safe for children?',
+    a: 'Yes. We use digital X-rays that emit 90% less radiation than traditional X-rays. We also use protective lead aprons and only take X-rays when clinically necessary.',
+    id: 'accordion-a3',
+  },
+  {
+    q: 'How can I prepare my child for their first visit?',
+    a: "Keep it positive! Read children's books about dentist visits, play pretend dentist at home, and avoid using scary words. We'll take care of the rest!",
+    id: 'accordion-a4',
+  },
+];
+---
+
+<Layout
+  title="Pediatric Dentistry — Smile Savers Dental"
+  description="Pediatric dentist in Woodside, NY: gentle pain-free care for kids. Smile Savers Dental, (718) 956-8400."
+  headerClass="transparent header-light"
+>
+  <section id="subheader" class="bg-color-op-1 text-center">
+    <div class="container relative z-2">
+      <div class="row align-items-center">
+        <div class="col-lg-12">
+          <h1 class="wow fadeInUp">Pediatric Dentistry</h1>
+          <div class="border-bottom my-3"></div>
+          <ul class="crumb wow fadeInDown">
+            <li>
+              <a href="/">Home</a>
+            </li>
+            <li>
+              <a href="/services">Services</a>
+            </li>
+            <li class="active">Pediatric Dentistry</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="text-light bg-dark no-top no-bottom overflow-hidden">
+    <div class="container-fluid position-relative half-fluid">
+      <div class="container">
+        <div class="row">
+          {/* Image */}
+          <div class="col-lg-6 position-lg-absolute right-half h-100">
+            <div class="triangle-bottomright-dark"></div>
+            <div
+              class="image"
+              style="background-image: url(/images/misc/l4.webp); background-position: center; background-size: cover;"
+            ></div>
+          </div>
+          {/* Text */}
+          <div class="col-lg-5">
+            <div class="me-lg-3">
+              <div class="py-5 my-5 me-lg-3">
+                <div class="subtitle id-color wow fadeInUp" data-wow-delay=".2s">
+                  Pediatric Dentistry
+                </div>
+                <h2 class="wow fadeInUp" data-wow-delay=".4s">
+                  Comprehensive Oral Care for Every Stage of Life
+                </h2>
+                <p class="mb-0 wow fadeInUp" data-wow-delay=".6s">
+                  Gentle, kid-friendly dental care designed to build healthy habits and positive
+                  experiences from the first tooth.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-color-op-1">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <div class="subtitle id-color wow fadeInUp" data-wow-delay=".0s">
+            Top Reasons
+          </div>
+          <h2 class="wow fadeInUp" data-wow-delay=".2s">
+            Why Choose Us?
+          </h2>
+        </div>
+
+        <div class="col-lg-8">
+          <ul class="ul-check text-dark fs-24">
+            {reasons.map((r) => (
+              <li>{r}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row g-4">
+        {treatments.map((t) => (
+          <div class="col-lg-4 col-md-6">
+            <div class="border-gray p-40 h-100 rounded-1">
+              <div class="relative wow fadeInUp">
+                <h4>{t.h}</h4>
+                <p class="mb-0">{t.p}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-color-op-2 no-top no-bottom overflow-hidden">
+    <div class="container-fluid position-relative half-fluid">
+      <div class="container">
+        <div class="row">
+          {/* Image */}
+          <div class="col-lg-6 position-lg-absolute left-half h-100">
+            <div
+              class="image"
+              style="background-image: url(/images/misc/l5.webp); background-position: center; background-size: cover;"
+            ></div>
+          </div>
+          {/* Text */}
+          <div class="col-lg-5 offset-lg-7">
+            <div class="py-5 my-5">
+              <div class="owl-single-dots owl-carousel owl-theme">
+                {quotes.map((q) => (
+                  <div class="item">
+                    <i class="icofont-quote-left id-color fs-40 mb-4 wow fadeInUp"></i>
+                    <h3 class="mb-4 wow fadeInUp fs-32">{q.text}</h3>
+                    <span class="wow fadeInUp">{q.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-color-op-1">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="subtitle id-color wow fadeInUp" data-wow-delay=".0s">
+            Everything You Need to Know
+          </div>
+          <h2 class="wow fadeInUp" data-wow-delay=".2s">
+            Frequently Asked Questions
+          </h2>
+        </div>
+
+        <div class="col-lg-7">
+          <div class="accordion s2 wow fadeInUp">
+            <div class="accordion-section">
+              {faqs.map((f) => (
+                <>
+                  <div class="accordion-section-title" data-tab={'#' + f.id}>
+                    {f.q}
+                  </div>
+                  <div class="accordion-section-content" id={f.id}>
+                    {f.a}
+                  </div>
+                </>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-color text-light pt-50 pb-50">
+    <div class="container">
+      <div class="row g-4 align-items-center">
+        <div class="col-md-9">
+          <h3 class="mb-0 fs-32">Ready to Book Your Appointment?</h3>
+          <p class="mb-0">
+            Contact us today to schedule your visit and take the first step toward a healthier
+            smile.
+          </p>
+        </div>
+        <div class="col-lg-3 text-lg-end">
+          <a class="btn-main fx-slide btn-line" href="/booking">
+            <span>Book Appointment</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,126 @@
+---
+import { practice, fullAddress } from '../data/practice';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="section-dark">
+  <div class="container">
+    <div class="row gx-5">
+      <div class="col-lg-4 col-sm-6">
+        <img src="/images/logo-white.svg" class="logo-footer" alt={practice.name} />
+        <div class="spacer-20"></div>
+        <p>
+          At {practice.name}, we’re dedicated to providing high-quality, pain-free dental care for
+          patients of all ages in Woodside, Queens.
+        </p>
+
+        <div class="social-icons mb-sm-30">
+          {practice.socials.map((s) => (
+            <a href={s.href} aria-label={`${practice.name} on ${s.label}`}>
+              <i class={`fa-brands ${s.icon}`} aria-hidden="true"></i>
+            </a>
+          ))}
+        </div>
+      </div>
+      <div class="col-lg-4 col-sm-12 order-lg-1 order-sm-2">
+        <div class="row">
+          <div class="col-lg-6 col-sm-6">
+            <div class="widget">
+              <h5>Company</h5>
+              <ul>
+                <li>
+                  <a href="/">Home</a>
+                </li>
+                <li>
+                  <a href="/services">Our Services</a>
+                </li>
+                <li>
+                  <a href="/gallery">Gallery</a>
+                </li>
+                <li>
+                  <a href="/about">About Us</a>
+                </li>
+                <li>
+                  <a href="/blog">Blog</a>
+                </li>
+                <li>
+                  <a href="/contact">Contact</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-6 col-sm-6">
+            <div class="widget">
+              <h5>Our Services</h5>
+              <ul>
+                <li>
+                  <a href="/services/general-dentistry">General Dentistry</a>
+                </li>
+                <li>
+                  <a href="/services/cosmetic-dentistry">Cosmetic Dentistry</a>
+                </li>
+                <li>
+                  <a href="/services/pediatric-dentistry">Pediatric Dentistry</a>
+                </li>
+                <li>
+                  <a href="/services/restorative-dentistry">Restorative Dentistry</a>
+                </li>
+                <li>
+                  <a href="/services/preventive-dentistry">Preventive Dentistry</a>
+                </li>
+                <li>
+                  <a href="/services/orthodontics">Orthodontics</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-sm-6 order-lg-2 order-sm-1">
+        <div class="widget">
+          <h5>Contact Us</h5>
+          <div class="fw-bold text-white">
+            <i class="icofont-location-pin me-2 id-color"></i>Clinic Location
+          </div>
+          {fullAddress()}
+
+          <div class="spacer-20"></div>
+
+          <div class="fw-bold text-white">
+            <i class="icofont-phone me-2 id-color"></i>Call Us
+          </div>
+          <a href={practice.phone.href}>{practice.phone.display}</a>
+
+          <div class="spacer-20"></div>
+
+          <div class="fw-bold text-white">
+            <i class="icofont-envelope me-2 id-color"></i>Send a Message
+          </div>
+          <a href={practice.email.href}>{practice.email.address}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="subfooter">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="de-flex">
+            <div class="de-flex-col">
+              Copyright {year} - {practice.name}
+            </div>
+            <ul class="menu-simple">
+              <li>
+                <a href="#">Terms &amp; Conditions</a>
+              </li>
+              <li>
+                <a href="#">Privacy Policy</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
