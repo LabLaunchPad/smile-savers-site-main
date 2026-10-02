@@ -180,16 +180,23 @@ button#menu-btn {
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
-  background: rgba(255, 255, 255, 0.96);
+  width: fit-content;
+  background: #fff;
   color: #1b2a4a;
   border-radius: 999px;
   padding: 8px 18px 8px 12px;
   text-decoration: none;
   line-height: 1.2;
+  box-shadow: 0 8px 24px rgba(10, 20, 40, 0.22);
 }
 #section-intro .google-badge:hover {
   color: #1b2a4a;
   text-decoration: underline;
+}
+#section-intro .google-badge-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 }
 .google-badge-rating {
   font-weight: 800;
@@ -198,6 +205,26 @@ button#menu-btn {
 .google-badge-count {
   font-size: 14px;
   opacity: 0.75;
+}
+
+/* 4.5 rating: 4 full stars + a half 5th (grey Google-style empty base,
+   theme-amber #FEC42C overlay clipped to 50%). */
+#section-intro .star-half {
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+}
+#section-intro .star-half .star-bg {
+  color: #dadce0;
+}
+#section-intro .star-half .star-fg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: inline-block;
+  width: 50%;
+  overflow: hidden;
+  color: #fec42c;
 }
 
 /* Photographic hero: the theme renders .text-light p at 60% white
@@ -211,8 +238,11 @@ button#menu-btn {
    cap hero text + badge to the viewport (a wide template ancestor below lg
    otherwise lets them run past 390px). */
 @media (max-width: 576px) {
-  #section-intro .google-badge-count {
-    flex-basis: 100%;
+  #section-intro .google-badge {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 10px 16px;
   }
   #section-intro .hero-trust {
     font-size: 15px;

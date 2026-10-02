@@ -507,6 +507,9 @@ test('content: hero carries a static Google badge linked to the GBP', () => {
   assert.ok(home.includes('google-badge'), 'hero badge must carry the google-badge hook');
   assert.ok(home.includes('target="_blank"'), 'GBP link must open in a new tab');
   assert.ok(!home.includes('Google Rating'), 'old rating-row label must be gone');
+  assert.ok(home.includes('star-half'), '5th star must render half-filled (rating is 4.5, not 5.0)');
+  const css = src('src/styles/globals.css');
+  assert.ok(/#section-intro\s+\.google-badge\s*\{[^}]*width:\s*fit-content/.test(css), 'badge pill must hug content on mobile (no full-width white slab)');
 });
 
 test('content: hero eyebrow is the affordable positioning line', () => {

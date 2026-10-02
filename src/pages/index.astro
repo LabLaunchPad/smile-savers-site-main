@@ -39,6 +39,7 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
                 rel="noopener"
                 aria-label={`Smile Savers Dental on Google: rated ${practice.stats.rating} out of 5 from ${practice.stats.reviews} reviews`}
               >
+                <span class="google-badge-main">
                 <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
                   <path
                     fill="#4285F4"
@@ -63,7 +64,12 @@ const logos = ['aaid', 'agd', 'ao', 'ada', 'icoi', 'nyu'];
                   <i class="fa fa-solid fa-star m-1" aria-hidden="true"></i>
                   <i class="fa fa-solid fa-star m-1" aria-hidden="true"></i>
                   <i class="fa fa-solid fa-star m-1" aria-hidden="true"></i>
-                  <i class="fa fa-solid fa-star m-1" aria-hidden="true"></i>
+                  <span class="star-half m-1" aria-hidden="true"><i
+                      class="fa fa-solid fa-star star-bg"
+                      aria-hidden="true"></i><i
+                      class="fa fa-solid fa-star star-fg"
+                      aria-hidden="true"></i></span>
+                </span>
                 </span>
                 <span class="google-badge-count"
                   >Based on {practice.stats.reviews} Google Reviews</span
