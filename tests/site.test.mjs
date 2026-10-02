@@ -509,6 +509,12 @@ test('content: hero carries a static Google badge linked to the GBP', () => {
   assert.ok(!home.includes('Google Rating'), 'old rating-row label must be gone');
 });
 
+test('content: hero eyebrow is the affordable positioning line', () => {
+  const home = src('src/pages/index.astro');
+  assert.ok(home.includes('Affordable Family Dentistry in Woodside, NYC'), 'hero eyebrow must read Affordable Family Dentistry in Woodside, NYC');
+  assert.ok(!home.includes('Pain-Free Family Dentistry'), 'old pain-free eyebrow must be gone from the hero');
+});
+
 test('content: homepage language line is blanket, verified-safe (no enumeration)', () => {
   const home = src('src/pages/index.astro');
   assert.ok(home.includes('we speak all our Queens community languages'), 'homepage hero must carry the blanket language line');
