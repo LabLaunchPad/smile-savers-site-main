@@ -665,6 +665,14 @@ test('nav: every header href resolves to a real route', () => {
   }
 });
 
+test('social share image is a real raster (not SVG)', () => {
+  const layout = src('src/layouts/Layout.astro');
+  assert.ok(layout.includes('og:image'), 'og:image missing');
+  assert.ok(!layout.match(/og:image[^>]*\.svg/), 'og:image must not be SVG');
+  assert.ok(existsSync('public/images/og-cover.jpg'), 'og-cover.jpg must exist');
+  assert.ok(layout.includes('summary_large_image'), 'twitter card must be large');
+});
+
 test('every route has unique SEO title + description (no stale pain-free default)', () => {
   const layout = src('src/layouts/Layout.astro');
   assert.ok(!layout.includes('pain-free family dentistry'), 'default description must drop pain-free');

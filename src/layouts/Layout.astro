@@ -37,8 +37,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://dentalsmile
     <meta property="og:site_name" content="Smile Savers Dental" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    {/* ponytail: no og:image yet — needs a 1200x630 raster; SVG logo is ignored by scrapers */}
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={new URL('/images/og-cover.jpg', Astro.site ?? 'https://dentalsmilesavers.com').href} />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <title>{title}</title>
