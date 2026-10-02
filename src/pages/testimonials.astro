@@ -1,0 +1,102 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+export const prerender = true;
+
+interface Testimonial {
+  img: string;
+  name: string;
+  treatment: string;
+  stars: number;
+  text: string;
+}
+
+const testimonials: Testimonial[] = [
+  {
+    img: '/images/testimonial/1.webp',
+    name: 'Sofia R.',
+    treatment: 'Verified via Google',
+    stars: 5,
+    text: 'Dr. Bhagat has been my family dentist for over 15 years. He remembered every detail about my dental history without checking notes. That level of care is rare.',
+  },
+  {
+    img: '/images/testimonial/2.webp',
+    name: 'James K.',
+    treatment: 'Verified via Google',
+    stars: 5,
+    text: 'I used to cancel dentist appointments out of pure fear. Dr Li changed that completely — he explained every step, checked in constantly, and I left feeling proud of myself.',
+  },
+  {
+    img: '/images/testimonial/3.webp',
+    name: 'Robert M.',
+    treatment: 'Verified via Yelp',
+    stars: 5,
+    text: 'Finding a dentist who accepts my insurance AND delivers this quality in Queens felt impossible. Smile Savers does both. The front desk team is also incredibly organised.',
+  },
+  {
+    img: '/images/testimonial/4.webp',
+    name: 'Aisha T.',
+    treatment: 'Verified via Zocdoc',
+    stars: 5,
+    text: 'My daughter is 7 and was terrified. Dr. Islam sat on the floor with her for 10 minutes before even touching a tool. Now my daughter asks when she gets to go back.',
+  },
+  {
+    img: '/images/testimonial/5.webp',
+    name: 'John D.',
+    treatment: 'Verified via Google',
+    stars: 5,
+    text: 'Excellent care and professional staff. My teeth have never looked better!',
+  },
+];
+---
+
+<Layout
+  title="Testimonials — Smile Savers Dental"
+  description="See why patients rate Smile Savers Dental 4.5 on Google from 153 reviews. Woodside, NY dentist."
+  headerClass="transparent header-light"
+>
+  <section id="subheader" class="bg-color-op-1 text-center">
+    <div class="container relative z-2">
+      <div class="row align-items-center">
+        <div class="col-lg-12">
+          <h1 class="wow fadeInUp">Testimonials</h1>
+          <div class="border-bottom my-3"></div>
+          <ul class="crumb wow fadeInDown">
+            <li>
+              <a href="/">Home</a>
+            </li>
+            <li class="active">Testimonials</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div id="reviews" class="row g-4 justify-content-center wow fadeInUp">
+        {testimonials.map((t) => (
+          <div class="col-md-4 item">
+            <div class="p-40 bg-light rounded-1">
+              <div class="de-rating-ext mb-2">
+                <span class="d-stars">
+                  {[1, 2, 3, 4, 5].map((s) => (
+                    <i class={s <= t.stars ? 'fa fa-star' : 'fa fa-star off'}></i>
+                  ))}
+                </span>
+              </div>
+              <p>{t.text}</p>
+              <div class="relative">
+                <img class="circle absolute w-40px" alt="" src={t.img} />
+                <div class="ms-60px">
+                  <h4 class="mb-0 fs-16 lh-1">{t.name}</h4>
+                  <span class="fs-14">{t.treatment}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

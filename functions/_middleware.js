@@ -1,4 +1,9 @@
 /**
+ * VENDORED from LabLaunchPad/smile-savers-site-main functions/_middleware.js — do not edit locally.
+ * Security headers, CORS for /api/*, cache rules. Upstream owns this file at merge.
+ */
+
+/**
  * Cloudflare Pages Middleware
  * Handles CORS, security headers, and request preprocessing
  */
@@ -10,7 +15,8 @@ const securityHeaders = {
   'X-XSS-Protection': '1; mode=block',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
-  'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;",
+  'Content-Security-Policy':
+    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://fonts.googleapis.com https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;",
 };
 
 // CORS headers for API routes

@@ -1,0 +1,137 @@
+---
+interface Props {
+  headerClass?: string;
+  useHeaderInner?: boolean;
+}
+
+const { headerClass = 'transparent scroll-light', useHeaderInner = false } = Astro.props;
+const isLightHeader = headerClass.includes('header-light');
+const rowClassName = useHeaderInner ? 'de-flex sm-pt10 header-inner' : 'de-flex sm-pt10';
+---
+
+<header class={headerClass} data-base-class={headerClass}>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class={rowClassName}>
+          <div class="de-flex-col">
+            {/* logo begin */}
+            <div id="logo">
+              <a href="/" aria-label="Smile Savers Dental — home">
+                <img
+                  class="logo-main logo"
+                  src="/images/logo-white.svg"
+                  alt="Smile Savers Dental — home"
+                />
+                <img class="logo-scroll logo-2" src="/images/logo.svg" alt="Smile Savers Dental" />
+                <img
+                  class="logo-mobile"
+                  src={isLightHeader ? '/images/logo.svg' : '/images/logo-white.svg'}
+                  alt="Smile Savers Dental"
+                />
+              </a>
+            </div>
+            {/* logo end */}
+          </div>
+          <div class="de-flex-col header-col-mid">
+            {/* mainemenu begin */}
+            <ul id="mainmenu">
+              <li>
+                <a class="menu-item" href="/">
+                  Home
+                </a>
+              </li>
+              <li>
+                <a class="menu-item" href="/services" aria-haspopup="true">
+                  Services
+                </a>
+                <ul>
+                  <li>
+                    <a href="/services/general-dentistry">General Dentistry</a>
+                  </li>
+                  <li>
+                    <a href="/services/cosmetic-dentistry">Cosmetic Dentistry</a>
+                  </li>
+                  <li>
+                    <a href="/services/pediatric-dentistry">Pediatric Dentistry</a>
+                  </li>
+                  <li>
+                    <a href="/services/restorative-dentistry">Restorative Dentistry</a>
+                  </li>
+                  <li>
+                    <a href="/services/preventive-dentistry">Preventive Dentistry</a>
+                  </li>
+                  <li>
+                    <a href="/services/orthodontics">Orthodontics</a>
+                  </li>
+                  <li>
+                    <a href="/services">All Services</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a class="menu-item" href="/dentists">
+                  Dentists
+                </a>
+              </li>
+              <li>
+                <a class="menu-item" href="/about" aria-haspopup="true">
+                  Pages
+                </a>
+                <ul>
+                  <li>
+                    <a href="/about">About Us</a>
+                  </li>
+                  <li>
+                    <a href="/faq">FAQ</a>
+                  </li>
+                  <li>
+                    <a href="/gallery">Gallery</a>
+                  </li>
+                  <li>
+                    <a href="/testimonials">Testimonials</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a class="menu-item" href="/blog">
+                  Blog
+                </a>
+              </li>
+              <li>
+                <a class="menu-item" href="/contact">
+                  Contact
+                </a>
+              </li>
+            </ul>
+            {/* mainmenu end */}
+          </div>
+          <div class="de-flex-col">
+            <div class="menu_side_area">
+              <a href="/booking" class="btn-main fx-slide">
+                <span>Book Appointment</span>
+              </a>
+              <button
+                type="button"
+                id="menu-btn"
+                aria-label="Menu"
+                aria-expanded="false"
+                aria-controls="mainmenu"
+              ></button>
+            </div>
+
+            <div
+              id="btn-extra"
+              role="button"
+              tabindex="0"
+              aria-label="Open site menu and contact details"
+            >
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

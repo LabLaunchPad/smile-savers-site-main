@@ -1,0 +1,61 @@
+---
+import Layout from '../layouts/Layout.astro';
+import BookingForm from '../components/BookingForm.tsx';
+import { practice } from '../data/practice';
+
+export const prerender = true;
+---
+
+<Layout
+  title={`Book Appointment — ${practice.name}`}
+  description={`Book a dentist appointment in Woodside, NY online. ${practice.hours.full}. ${practice.name}, ${practice.phone.display}.`}
+  headerClass="transparent header-light"
+>
+  <section id="subheader" class="bg-color-op-1 text-center">
+    <div class="container relative z-2">
+      <div class="row align-items-center">
+        <div class="col-lg-12">
+          <h1 class="wow fadeInUp">Book Appointment</h1>
+          <div class="border-bottom my-3"></div>
+          <ul class="crumb wow fadeInDown">
+            <li>
+              <a href="/">Home</a>
+            </li>
+            <li class="active">Book Appointment</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container relative z-2">
+      <div class="row g-4 gx-5 justify-content-between">
+        <div class="col-lg-6">
+          <BookingForm client:load />
+        </div>
+
+        <div class="col-lg-6">
+          <div
+            class="h-100 rounded-1 relative"
+            data-bgimage="url(/images/misc/s4.webp) center"
+            style="background-image: url(/images/misc/s4.webp); background-position: center; background-size: cover;"
+          >
+            <div
+              class="bg-blur text-light shadow-1 abs start-10 bottom-10 p-4 rounded-1 overflow-hidden z-2"
+              data-wow-delay=".5s"
+            >
+              <div class="d-flex justify-content-center">
+                <i class="fs-60 text-white icon_clock"></i>
+                <div class="ms-3">
+                  <h4 class="mb-0">Opening Hours</h4>
+                  {practice.hours.short}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,160 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Preloader from '../components/Preloader.astro';
+import { practice, fullAddress } from '../data/practice';
+import '../styles/globals.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  headerClass?: string;
+  useHeaderInner?: boolean;
+}
+
+const {
+  title = `${practice.name} - Dentist & Dental Clinic in Woodside, NY`,
+  description = `${practice.name} in Woodside, NY - gentle, pain-free family dentistry. Call ${practice.phone.display}.`,
+  headerClass = 'transparent header-light',
+  useHeaderInner = false,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://dentalsmilesavers.com');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#4A7CD2" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Smile Savers Dental" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {/* ponytail: no og:image yet — needs a 1200x630 raster; SVG logo is ignored by scrapers */}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <title>{title}</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="bootstrap" />
+    <link href="/css/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="/css/swiper.css" rel="stylesheet" type="text/css" />
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+    <link id="colors" href="/css/colors/scheme-01.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#content">
+      Skip to content
+    </a>
+    <div id="wrapper">
+      <a href="#top" id="back-to-top" aria-label="Back to top"></a>
+
+      {/* preloader begin */}
+      <Preloader />
+      {/* preloader end */}
+
+      <Header headerClass={headerClass} useHeaderInner={useHeaderInner} />
+
+      {/* content begin */}
+      <main class="no-bottom no-top" id="content">
+        <div id="top"></div>
+        <slot />
+      </main>
+      {/* content end */}
+
+      <Footer />
+    </div>
+
+    {/* overlay content begin */}
+    <div
+      id="extra-wrap"
+      class="text-light"
+      role="dialog"
+      aria-label="Site menu and contact details"
+    >
+      <div id="btn-close" role="button" tabindex="0" aria-label="Close panel">
+        <span></span>
+        <span></span>
+      </div>
+
+      <div id="extra-content">
+        <img src="/images/logo-white.svg" class="w-150px" alt="Smile Savers Dental" />
+
+        <div class="spacer-30-line"></div>
+
+        <h5>Our Services</h5>
+        <ul class="ul-check">
+          <li>
+            <a href="/services/general-dentistry">General Dentistry</a>
+          </li>
+          <li>
+            <a href="/services/cosmetic-dentistry">Cosmetic Dentistry</a>
+          </li>
+          <li>
+            <a href="/services/pediatric-dentistry">Pediatric Dentistry</a>
+          </li>
+          <li>
+            <a href="/services/restorative-dentistry">Restorative Dentistry</a>
+          </li>
+          <li>
+            <a href="/services/preventive-dentistry">Preventive Dentistry</a>
+          </li>
+          <li>
+            <a href="/services/orthodontics">Orthodontics</a>
+          </li>
+        </ul>
+
+        <div class="spacer-30-line"></div>
+
+        <h5>Contact Us</h5>
+        <div>
+          <i class="icofont-clock-time me-2 op-5"></i>
+          {practice.hours.full}
+        </div>
+        <div>
+          <i class="icofont-location-pin me-2 op-5"></i>
+          {fullAddress()}
+        </div>
+        <div>
+          <i class="icofont-phone me-2 op-5"></i>
+          <a href={practice.phone.href}>{practice.phone.display}</a>
+        </div>
+        <div>
+          <i class="icofont-envelope me-2 op-5"></i>
+          {practice.email.address}
+        </div>
+
+        <div class="spacer-30-line"></div>
+
+        <h5>About Us</h5>
+        <p>
+          At {practice.name}, we’re dedicated to providing high-quality, pain-free dental care for
+          patients of all ages in Woodside, Queens.
+        </p>
+
+        <div class="social-icons">
+          {practice.socials.map((s) => (
+            <a href={s.href} aria-label={`${practice.name} on ${s.label}`}>
+              <i class={`fa-brands ${s.icon}`} aria-hidden="true"></i>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    {/* legacy template scripts: order matters (jQuery first) */}
+    <script is:inline src="/js/plugins.js"></script>
+    <script is:inline src="/js/on3step.js"></script>
+    <script is:inline src="/js/swiper.js"></script>
+    <script is:inline src="/js/custom-marquee.js"></script>
+    <script>
+      import '../scripts/site-init.ts';
+    </script>
+  </body>
+</html>

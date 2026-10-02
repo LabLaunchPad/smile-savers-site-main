@@ -1,0 +1,271 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export const prerender = true;
+
+const whyUs = [
+  {
+    h: 'Kid-Friendly Environment',
+    p: 'Our space is fun, welcoming, and designed to keep children relaxed and happy during every visit.',
+  },
+  {
+    h: 'Experienced Pediatric Dentists',
+    p: 'Our team has advanced training in caring for children, using gentle techniques.',
+  },
+  {
+    h: 'Preventive Focus',
+    p: 'We emphasize early detection and education to help kids avoid problems before they start.',
+  },
+  {
+    h: 'Modern Technology',
+    p: 'We use child-safe digital X-rays and advanced tools to ensure accuracy, safety, and comfort.',
+  },
+  {
+    h: 'Parent & Patient Education',
+    p: 'We take time to teach proper brushing, flossing, and nutrition to build long-term dental health.',
+  },
+  {
+    h: 'Flexible Scheduling',
+    p: 'We offer after-school and weekend appointments to fit your family’s busy schedule.',
+  },
+];
+
+const treatments = [
+  { h: 'Assessment', p: 'We evaluate your gum health and check for problem areas.' },
+  { h: 'Scaling', p: 'Careful removal of plaque and tartar deposits.' },
+  { h: 'Polishing', p: 'Smooth and polish teeth surfaces.' },
+  { h: 'Flossing', p: 'Thorough cleaning between teeth.' },
+  { h: 'Fluoride Treatment', p: 'Fluoride to strengthen enamel.' },
+  { h: 'Education', p: 'Tips for maintaining your results at home.' },
+];
+
+const quotes = [
+  {
+    text: 'Finding a dentist who accepts my insurance AND delivers this quality in Queens felt impossible. Smile Savers does both. The front desk team is also incredibly organised.',
+    name: 'Robert M.',
+  },
+  {
+    text: 'Excellent care and professional staff. My teeth have never looked better!',
+    name: 'John D.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'Is teeth cleaning painful?',
+    a: 'Most patients experience little to no discomfort during professional cleanings. If you have sensitive teeth or gum issues, let us know and we can take extra care to ensure your comfort.',
+    id: 'accordion-a1',
+  },
+  {
+    q: 'How long does a cleaning take?',
+    a: 'A typical cleaning appointment takes 45-60 minutes, including examination and discussion of your oral health goals.',
+    id: 'accordion-a2',
+  },
+  {
+    q: "What's the difference between regular and deep cleaning?",
+    a: 'Regular cleanings remove plaque and tartar above the gumline. Deep cleanings (scaling and root planing) are needed when tartar has built up below the gumline and may include local anesthesia.',
+    id: 'accordion-a3',
+  },
+];
+---
+
+<Layout
+  title="Preventive Dentistry — Smile Savers Dental"
+  description="Preventive dental care in Woodside, NY: cleanings, exams and early protection. Smile Savers Dental, (718) 956-8400."
+  headerClass="transparent header-light"
+>
+  <section id="subheader" class="bg-color-op-1 text-center">
+    <div class="container relative z-2">
+      <div class="row align-items-center">
+        <div class="col-lg-12">
+          <h1 class="wow fadeInUp">Preventive Dentistry</h1>
+          <div class="border-bottom my-3"></div>
+          <ul class="crumb wow fadeInDown">
+            <li>
+              <a href="/">Home</a>
+            </li>
+            <li>
+              <a href="/services">Services</a>
+            </li>
+            <li class="active">Preventive Dentistry</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row g-4 gx-5 align-items-center">
+        <div class="col-lg-6">
+          <div class="row g-4">
+            <div class="col-lg-6">
+              <div class="relative rounded-1 overflow-hidden wow zoomIn">
+                <img src="/images/misc/p1.webp" class="w-100 wow scaleIn" alt="" />
+                <div class="de-overlay-gradient-color h-50 top-50"></div>
+              </div>
+            </div>
+            <div class="col-lg-6" data-wow-delay=".3s">
+              <div class="relative rounded-1 overflow-hidden wow zoomIn">
+                <img src="/images/misc/p2.webp" class="w-100 wow scaleIn" alt="" />
+                <div class="de-overlay-gradient-color h-50 top-50"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="ps-lg-3">
+            <div class="subtitle id-color wow fadeInUp" data-wow-delay=".2s">
+              Preventive Dentistry
+            </div>
+            <h2 class="wow fadeInUp" data-wow-delay=".4s">
+              Building Healthy Smiles That Last a Lifetime
+            </h2>
+            <p class="mb-0 wow fadeInUp" data-wow-delay=".6s">
+              Professional dental cleanings and preventive care to maintain optimal oral health and
+              prevent gum disease.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-color-op-1">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="subtitle id-color wow fadeInUp" data-wow-delay=".0s">
+            Why Choose Us
+          </div>
+          <h2 class="wow fadeInUp" data-wow-delay=".2s">
+            Why Choose Our Preventive Dental Services?
+          </h2>
+        </div>
+
+        <div class="col-lg-7">
+          <div class="row g-4">
+            {whyUs.map((w) => (
+              <div class="col-md-6 wow fadeInUp" data-wow-delay=".3s">
+                <div class="relative">
+                  <span class="abs w-70px p-3 circle bg-color d-block">
+                    <img src="/images/ui/check-white.png" class="w-100" alt="" />
+                  </span>
+                  <div class="ps-90">
+                    <h5>{w.h}</h5>
+                    <p class="mb-0">{w.p}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row g-4 justify-content-center">
+        <div class="col-lg-8 text-center">
+          <div class="subtitle wow fadeInUp mb-3">Preventive Dentistry</div>
+          <h2 class="wow fadeInUp" data-wow-delay=".2s">
+            Preventive Treatments We Offer
+          </h2>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        {treatments.map((t) => (
+          <div class="col-lg-4 col-md-6">
+            <div class="border-gray p-40 h-100 rounded-1">
+              <div class="relative wow fadeInUp">
+                <h4>{t.h}</h4>
+                <p class="mb-0">{t.p}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-color-op-2 no-top no-bottom overflow-hidden">
+    <div class="container-fluid position-relative half-fluid">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 position-lg-absolute left-half h-100">
+            <div
+              class="image"
+              style="background-image: url(/images/misc/s2.webp); background-position: center; background-size: cover;"
+            ></div>
+          </div>
+          <div class="col-lg-5 offset-lg-7">
+            <div class="py-5 my-5">
+              <div class="owl-single-dots owl-carousel owl-theme">
+                {quotes.map((q) => (
+                  <div class="item">
+                    <i class="icofont-quote-left id-color fs-40 mb-4 wow fadeInUp"></i>
+                    <h3 class="mb-4 wow fadeInUp fs-32">{q.text}</h3>
+                    <span class="wow fadeInUp">{q.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-light">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="subtitle id-color wow fadeInUp" data-wow-delay=".0s">
+            Everything You Need to Know
+          </div>
+          <h2 class="wow fadeInUp" data-wow-delay=".2s">
+            Frequently Asked Questions
+          </h2>
+        </div>
+
+        <div class="col-lg-7">
+          <div class="accordion s2 wow fadeInUp">
+            <div class="accordion-section">
+              {faqs.map((f) => (
+                <>
+                  <div class="accordion-section-title" data-tab={'#' + f.id}>
+                    {f.q}
+                  </div>
+                  <div class="accordion-section-content" id={f.id}>
+                    {f.a}
+                  </div>
+                </>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-color text-light pt-50 pb-50">
+    <div class="container">
+      <div class="row g-4 align-items-center">
+        <div class="col-md-9">
+          <h3 class="mb-0 fs-32">Ready to Book Your Appointment?</h3>
+          <p class="mb-0">
+            Contact us today to schedule your visit and take the first step toward a healthier
+            smile.
+          </p>
+        </div>
+        <div class="col-lg-3 text-lg-end">
+          <a class="btn-main fx-slide btn-line" href="/booking">
+            <span>Book Appointment</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

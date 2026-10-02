@@ -1,137 +1,81 @@
 ---
-/**
- * Contact Page
- * Contact form, info, hours, and map
- */
+import Layout from '../layouts/Layout.astro';
+import ContactForm from '../components/ContactForm.tsx';
+import { practice, fullAddress, hoursSentence } from '../data/practice';
 
-import PageLayout from "../layouts/PageLayout.astro";
-import PageHeader from "../components/common/PageHeader.astro";
-import ContactInfo from "../modules/contact/components/ContactInfo.astro";
-import OfficeHours from "../modules/contact/components/OfficeHours.astro";
-import LocationMap from "../modules/contact/components/LocationMap.astro";
-
-const title = "Contact Us";
-const description =
-  "Get in touch with Smile Savers. Call us, send a message, or visit our Woodside, NY office. We're here to help with all your dental needs.";
+export const prerender = true;
 ---
 
-<PageLayout title={title} description={description}>
-  <main id="main-content">
-    <PageHeader
-      title="Contact Us"
-      description="Have questions? We're here to help. Reach out and our team will get back to you within 24 hours."
-      breadcrumbs={[
-        { label: "Home", href: "/" },
-        { label: "Contact" }
-      ]}
-    />
-
-    <!-- Contact Bento Grid -->
-    <section class="contact-section section">
-      <div class="contact-container">
-        <div class="bento-grid">
-          <div class="bento-card bento-info">
-            <ContactInfo />
-          </div>
-          <div class="bento-card bento-hours">
-            <OfficeHours />
-          </div>
+<Layout
+  title="Contact Us — Smile Savers Dental"
+  description={`Contact ${practice.name}, ${fullAddress()}. Call ${practice.phone.display} or message us today.`}
+  headerClass="transparent header-light"
+>
+  <section id="subheader" class="bg-color-op-1 text-center">
+    <div class="container relative z-2">
+      <div class="row align-items-center">
+        <div class="col-lg-12">
+          <h1 class="wow fadeInUp">Contact Us</h1>
+          <div class="border-bottom my-3"></div>
+          <ul class="crumb wow fadeInDown">
+            <li>
+              <a href="/">Home</a>
+            </li>
+            <li class="active">Contact</li>
+          </ul>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Map Section -->
-    <section class="map-section">
-      <div class="map-container">
-        <LocationMap />
+  <section>
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div class="subtitle">Get In Touch</div>
+          <h2 class="wow fadeInUp">We are always ready to help you and answer your questions</h2>
+
+          <p>
+            Whether you have a question, a suggestion, or just want to say hello, this is the place
+            to do it. Please fill out the form below with your details and message, and we&apos;ll
+            get back to you as soon as possible.
+          </p>
+
+          <div class="row g-4 gx-5">
+            <div class="col-lg-6">
+              <div class="fw-bold text-dark">
+                <i class="icofont-clock-time me-2 id-color-2"></i>We&apos;re Open
+              </div>
+              {hoursSentence()}
+            </div>
+
+            <div class="col-lg-6">
+              <div class="fw-bold text-dark">
+                <i class="icofont-location-pin me-2 id-color-2"></i>Clinic Location
+              </div>
+              {fullAddress()}
+            </div>
+
+            <div class="col-lg-6">
+              <div class="fw-bold text-dark">
+                <i class="icofont-phone me-2 id-color-2"></i>Call Us Directly
+              </div>
+              <a href={practice.phone.href}>{practice.phone.display}</a>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="fw-bold text-dark">
+                <i class="icofont-envelope me-2 id-color-2"></i>Send a Message
+              </div>
+              <a href={practice.email.href}>{practice.email.address}</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <ContactForm client:load />
+        </div>
       </div>
-    </section>
-  </main>
-</PageLayout>
-
-<style>
-  .contact-section {
-    background: var(--color-bg-human);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .contact-section::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(229, 231, 235, 0.3) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(229, 231, 235, 0.3) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
-    -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .contact-container {
-    max-width: var(--container-xl);
-    margin-inline: auto;
-    padding-inline: var(--spacing-element);
-    position: relative;
-    z-index: 1;
-  }
-
-  /* Bento Grid */
-  .bento-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-
-  @media (min-width: 768px) {
-    .bento-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  /* Bento Cards Base */
-  .bento-card {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(229, 231, 235, 0.5);
-    border-radius: var(--radius-2xl);
-    padding: 0;
-    transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
-    overflow: hidden;
-  }
-
-  .bento-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-xl);
-    border-color: rgba(16, 43, 63, 0.3);
-  }
-
-  /* Info Card */
-  .bento-info :global(.contact-info) {
-    background: transparent;
-    border: none;
-    border-radius: 0;
-    height: 100%;
-  }
-
-  /* Hours Card */
-  .bento-hours :global(.office-hours) {
-    background: transparent;
-    border: none;
-    border-radius: 0;
-    height: 100%;
-  }
-
-  .map-section {
-    padding-block: var(--spacing-section);
-    background: var(--color-surface-sunken);
-  }
-
-  .map-container {
-    max-width: var(--container-xl);
-    margin-inline: auto;
-    padding-inline: var(--spacing-element);
-  }
-</style>
+    </div>
+  </section>
+</Layout>

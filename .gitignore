@@ -41,5 +41,9 @@ Thumbs.db
 
 # Cloudflare
 .wrangler/
+.dev.vars
+
+# SDD scratch worktrees (never commit)
+.worktrees/
 
 node_modules

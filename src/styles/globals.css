@@ -1,0 +1,153 @@
+/* Ported from the Next.js app's globals.css (Tailwind directives removed —
+   Tailwind was never installed; these are the live base rules). */
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+/* ponytail: light tokens only — template is white-section only; a dark-mode
+   media query here once turned body copy near-white on white sections. */
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  /* Removed fixed height to allow natural scrolling */
+}
+
+/* Flex layout for sticky footer */
+#wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#content {
+  flex: 1 0 auto; /* Grow to fill space, don't shrink */
+  width: 100%;
+}
+
+footer {
+  flex-shrink: 0;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Fix for side menu scroll */
+#extra-content {
+  overflow-y: auto !important;
+  right: 0 !important;
+  width: 100% !important;
+  padding-right: 0 !important;
+}
+
+/* Hide body scroll when menu is open */
+body.no-scroll {
+  overflow: hidden !important;
+}
+
+/* Custom scrollbar for side menu */
+#extra-content::-webkit-scrollbar {
+  width: 6px;
+}
+#extra-content::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+/* ponytail: equal-height card rows — the .hover wrapper breaks the h-100
+   stretch chain (col > .hover > card), so flex restores it; btn-plus pins
+   to the card bottom so CTAs align across uneven copy lengths. */
+.row > [class*='col-'] > .hover {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.row > [class*='col-'] > .hover > div[class*='p-40'] {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+.row > [class*='col-'] > .hover .relative.mt-4 {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+.row > [class*='col-'] > .hover .btn-plus {
+  margin-top: auto;
+  align-self: flex-start;
+}
+/* ponytail: review grid cards have no h-100 at all — fill the column.
+   (Grid must NOT reuse id="gallery": on3step runs isotope on #gallery,
+   which absolute-positions items and defeats flex stretch.) */
+.row > .item > div[class*='p-40'] {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+/* ponytail: pin review bylines to the card bottom so short/long quotes align */
+#reviews > .item > div > .relative {
+  margin-top: auto;
+}
+/* ponytail: owl carousel slides vary with copy length — flex stage keeps
+   visible slides at uniform height */
+.owl-carousel .owl-stage {
+  display: flex;
+}
+.owl-carousel .owl-stage:after {
+  content: none;
+}
+.owl-carousel .owl-item {
+  display: flex;
+}
+.owl-carousel .owl-item > .item {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+.owl-carousel .owl-item > .item > div {
+  flex: 1 1 auto;
+}
+
+/* ponytail: a11y — native #menu-btn keeps its :before hamburger lines;
+   UA button chrome (background/border/font) is reset so visuals don't shift */
+button#menu-btn {
+  background: none;
+  border: 0;
+  font: inherit;
+}
+:focus-visible {
+  outline: 3px solid #1a56db;
+  outline-offset: 2px;
+}
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 9999;
+  background: #fff;
+  color: #171717;
+  padding: 10px 16px;
+  font-weight: 700;
+}
+.skip-link:focus {
+  left: 8px;
+  top: 8px;
+}

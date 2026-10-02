@@ -1,4 +1,11 @@
 /**
+ * VENDORED from LabLaunchPad/smile-savers-site-main functions/api/chat.js — do not edit locally.
+ * POST /api/chat (JSON) → Workers AI reply. Upstream owns this file at merge.
+ * Merge follow-up: CORS allowlist + BOOKING nudges reference smilesavers.dental —
+ * must add dentalsmilesavers.com (canonical domain decision).
+ */
+
+/**
  * Smile Savers AI Assistant — /api/chat
  * ─────────────────────────────────────────────────────────────────────────────
  * Model:   @cf/meta/llama-3-8b-instruct (faster, smarter than llama-2-7b)
@@ -57,13 +64,21 @@ const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutes
 const CACHE_MAX = 200; // max entries before LRU eviction
 
 function cacheKey(message) {
-  return message.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, ' ').trim().slice(0, 120);
+  return message
+    .toLowerCase()
+    .replace(/[^a-z0-9 ]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 120);
 }
 
 function cacheGet(key) {
   const entry = REPLY_CACHE.get(key);
   if (!entry) return null;
-  if (Date.now() - entry.ts > CACHE_TTL_MS) { REPLY_CACHE.delete(key); return null; }
+  if (Date.now() - entry.ts > CACHE_TTL_MS) {
+    REPLY_CACHE.delete(key);
+    return null;
+  }
   return entry.reply;
 }
 
@@ -80,18 +95,18 @@ function cacheSet(key, reply) {
 function sanitise(input) {
   if (typeof input !== 'string') return '';
   return input
-    .replace(/<[^>]*>/g, '')          // strip HTML
+    .replace(/<[^>]*>/g, '') // strip HTML
     .replace(/[^\w\s.,!?'"\-@()]/g, '') // strip special chars
     .trim()
-    .slice(0, 500);                    // max 500 chars
+    .slice(0, 500); // max 500 chars
 }
 
 // CORS headers — restrict to production domain in prod
 function corsHeaders(origin) {
   const allowed = ['https://smilesavers.dental', 'http://localhost:4321'];
-  const isAllowed = !origin || allowed.some(a => origin.startsWith(a));
+  const isAllowed = !origin || allowed.some((a) => origin.startsWith(a));
   return {
-    'Access-Control-Allow-Origin': isAllowed ? (origin || '*') : 'https://smilesavers.dental',
+    'Access-Control-Allow-Origin': isAllowed ? origin || '*' : 'https://smilesavers.dental',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Max-Age': '86400',
@@ -105,8 +120,11 @@ export async function onRequestPost(context) {
   try {
     // Parse and validate body
     let body;
-    try { body = await request.json(); }
-    catch { return json({ error: 'Invalid JSON' }, 400, origin); }
+    try {
+      body = await request.json();
+    } catch {
+      return json({ error: 'Invalid JSON' }, 400, origin);
+    }
 
     const rawMessage = sanitise(body.message || '');
     const history = Array.isArray(body.history) ? body.history.slice(-6) : [];
@@ -127,10 +145,12 @@ export async function onRequestPost(context) {
     // Build messages for the model
     const messages = [
       { role: 'system', content: SMILE_CONTEXT },
-      ...history.filter(m => m.role && m.content).map(m => ({
-        role: m.role === 'user' ? 'user' : 'assistant',
-        content: sanitise(String(m.content)),
-      })),
+      ...history
+        .filter((m) => m.role && m.content)
+        .map((m) => ({
+          role: m.role === 'user' ? 'user' : 'assistant',
+          content: sanitise(String(m.content)),
+        })),
     ];
 
     // Only append the current user message if the history does not already end with a user message
@@ -142,9 +162,14 @@ export async function onRequestPost(context) {
     // Check AI binding exists
     if (!env.AI) {
       console.error('AI binding not configured');
-      return json({
-        reply: "I'm not available right now. Please call us at (718) 956-8400 or book online at /appointments.",
-      }, 200, origin);
+      return json(
+        {
+          reply:
+            "I'm not available right now. Please call us at (718) 956-8400 or book online at /appointments.",
+        },
+        200,
+        origin
+      );
     }
 
     // Call Workers AI — llama-3.1-8b-instruct-fast is active and optimized
@@ -158,7 +183,8 @@ export async function onRequestPost(context) {
     let reply = (response?.response || '').trim();
 
     if (!reply) {
-      reply = "I'm not sure about that one. Please call us at (718) 956-8400 — our team is happy to help!";
+      reply =
+        "I'm not sure about that one. Please call us at (718) 956-8400 — our team is happy to help!";
     }
 
     // Strip any model self-reference artifacts
@@ -170,12 +196,16 @@ export async function onRequestPost(context) {
     if (isSingleTurn && reply) cacheSet(ck, reply);
 
     return json({ reply }, 200, origin);
-
   } catch (err) {
     console.error('Chat API error:', err?.message || err);
-    return json({
-      reply: "Something went wrong on my end. Please call Smile Savers at (718) 956-8400 or try again.",
-    }, 200, origin); // 200 so frontend shows the fallback message gracefully
+    return json(
+      {
+        reply:
+          'Something went wrong on my end. Please call Smile Savers at (718) 956-8400 or try again.',
+      },
+      200,
+      origin
+    ); // 200 so frontend shows the fallback message gracefully
   }
 }
 

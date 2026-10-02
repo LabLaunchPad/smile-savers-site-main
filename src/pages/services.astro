@@ -1,0 +1,142 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+export const prerender = true;
+
+interface Service {
+  icon: string;
+  name: string;
+  desc: string;
+  href: string;
+}
+
+const services: Service[] = [
+  {
+    icon: '/images/icons/tooth-1.png',
+    name: 'General Dentistry',
+    desc: 'Comprehensive exams, cleanings, fillings, and preventive care to keep your whole family healthy for life.',
+    href: '/services/general-dentistry',
+  },
+  {
+    icon: '/images/icons/tooth-2.png',
+    name: 'Cosmetic Dentistry',
+    desc: 'Teeth whitening, porcelain veneers, Invisalign, and full smile makeovers tailored to your unique goals.',
+    href: '/services/cosmetic-dentistry',
+  },
+  {
+    icon: '/images/icons/tooth-3.png',
+    name: 'Pediatric Dentistry',
+    desc: 'Gentle, kid-friendly dental care designed to build healthy habits and positive experiences from the first tooth.',
+    href: '/services/pediatric-dentistry',
+  },
+  {
+    icon: '/images/icons/tooth-4.png',
+    name: 'Restorative Dentistry',
+    desc: 'Dental implants, CEREC same-day crowns and root canals that repair and restore your teeth.',
+    href: '/services/restorative-dentistry',
+  },
+  {
+    icon: '/images/icons/tooth-1.png',
+    name: 'Preventive Dentistry',
+    desc: 'Professional cleanings for a healthier smile.',
+    href: '/services/preventive-dentistry',
+  },
+  {
+    icon: '/images/icons/tooth-2.png',
+    name: 'Orthodontics',
+    desc: 'Straighter teeth without metal braces.',
+    href: '/services/orthodontics',
+  },
+];
+---
+
+<Layout
+  title="Our Services — Smile Savers Dental"
+  description="Dental services in Woodside, NY: general, cosmetic, pediatric, restorative, preventive care and orthodontics. Call (718) 956-8400."
+  headerClass="transparent header-light"
+>
+  <section id="subheader" class="bg-color-op-1 text-center">
+    <div class="container relative z-2">
+      <div class="row align-items-center">
+        <div class="col-lg-12">
+          <h1 class="wow fadeInUp">Our Services</h1>
+          <div class="border-bottom my-3"></div>
+          <ul class="crumb wow fadeInDown">
+            <li>
+              <a href="/">Home</a>
+            </li>
+            <li class="active">Our Services</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row g-4">
+        {services.slice(0, 2).map((s) => (
+          <div class="col-lg-3 col-md-6">
+            <div class="hover">
+              <div class="bg-color-op-1 h-100 p-40 rounded-1">
+                <img src={s.icon} class="w-70px mb-3 wow scaleIn" alt="" />
+                <div class="relative mt-4 wow fadeInUp">
+                  <h4>{s.name}</h4>
+                  <p>{s.desc}</p>
+                  <a class="btn-plus" href={s.href}>
+                    <i class="fa fa-plus"></i>
+                    <span>Read more</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        <div class="col-lg-3 col-md-6">
+          <div class="h-100 rounded-1" data-bgimage="url(/images/misc/s3.webp) center"></div>
+        </div>
+
+        {services.slice(2, 4).map((s) => (
+          <div class="col-lg-3 col-md-6">
+            <div class="hover">
+              <div class="bg-color-op-1 h-100 p-40 rounded-1">
+                <img src={s.icon} class="w-70px mb-3 wow scaleIn" alt="" />
+                <div class="relative mt-4 wow fadeInUp">
+                  <h4>{s.name}</h4>
+                  <p>{s.desc}</p>
+                  <a class="btn-plus" href={s.href}>
+                    <i class="fa fa-plus"></i>
+                    <span>Read more</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        <div class="col-lg-3 col-md-6">
+          <div class="h-100 rounded-1" data-bgimage="url(/images/misc/s2.webp) center"></div>
+        </div>
+
+        {services.slice(4).map((s) => (
+          <div class="col-lg-3 col-md-6">
+            <div class="hover">
+              <div class="bg-color-op-1 h-100 p-40 rounded-1">
+                <img src={s.icon} class="w-70px mb-3 wow scaleIn" alt="" />
+                <div class="relative mt-4 wow fadeInUp">
+                  <h4>{s.name}</h4>
+                  <p>{s.desc}</p>
+                  <a class="btn-plus" href={s.href}>
+                    <i class="fa fa-plus"></i>
+                    <span>Read more</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

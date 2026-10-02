@@ -1,48 +1,272 @@
 ---
-/**
- * About Page
- * Clinic story, values, and team information
- */
+import Layout from '../layouts/Layout.astro';
 
-import PageLayout from "@/layouts/PageLayout.astro";
-import PageHeader from "@/components/common/PageHeader.astro";
-import CTASection from "@/components/common/CTASection.astro";
-import ClinicStory from "@/modules/about/components/ClinicStory.astro";
-import ValuesList from "@/modules/about/components/ValuesList.astro";
-import TeamGrid from "@/modules/about/components/TeamGrid.astro";
-
-const title = "About Us";
-const description =
-  "Learn about Smile Savers, our experienced dental team, and our commitment to providing exceptional care to the Woodside community since 1987.";
+export const prerender = true;
 ---
 
-<PageLayout title={title} description={description}>
-  <main id="main-content">
-    <PageHeader
-      title="About Smile Savers"
-      description="Creating smiles and building lasting relationships with our patients since 1987."
-      breadcrumbs={[
-        { label: "Home", href: "/" },
-        { label: "About" }
-      ]}
-    />
+<Layout
+  title="About Us — Smile Savers Dental — Dentist in Woodside, Queens, NY"
+  description="Pain-free family dentist in Woodside, Queens since 1987. Same-day CEREC crowns, implants and emergency care. Call (718) 956-8400."
+  headerClass="transparent header-light"
+>
+  <section id="subheader" class="bg-color-op-1 text-center">
+    <div class="container relative z-2">
+      <div class="row align-items-center">
+        <div class="col-lg-12">
+          <h1 class="wow fadeInUp">About Us</h1>
+          <div class="border-bottom my-3"></div>
+          <ul class="crumb wow fadeInDown">
+            <li>
+              <a href="/">Home</a>
+            </li>
+            <li class="active">About Us</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Clinic Story -->
-    <ClinicStory />
+  <section>
+    <div class="container">
+      <div class="row g-4 gx-5 align-items-center">
+        <div class="col-lg-6">
+          <div class="row g-4">
+            <div class="col-6">
+              <div class="row g-4">
+                <div class="col-lg-12">
+                  <div class="rounded-1 overflow-hidden wow zoomIn">
+                    <img src="/images/misc/p1.webp" class="w-100 wow scaleIn" alt="" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="row g-4">
+                <div class="spacer-single sm-hide"></div>
 
-    <!-- Values -->
-    <ValuesList />
+                <div class="col-lg-12">
+                  <div class="rounded-1 overflow-hidden wow zoomIn" data-wow-delay=".3s">
+                    <img
+                      src="/images/misc/p2.webp"
+                      class="w-100 wow scaleIn"
+                      alt=""
+                      data-wow-delay=".3s"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    <!-- Team -->
-    <TeamGrid />
+        <div class="col-lg-6">
+          <div class="me-lg-3">
+            <div class="subtitle s2 mb-3 wow fadeInUp" data-wow-delay=".0s">
+              About Us
+            </div>
+            <h2 class="wow fadeInUp" data-wow-delay=".2s">
+              Serving Queens with Gentle, Modern Dentistry Since 1987
+            </h2>
+            <p class="wow fadeInUp" data-wow-delay=".4s">
+              Smile Savers Dental has served Woodside, Queens since 1987. Multiple generations trust
+              our gentle, pain-free care, from routine checkups to same-day emergency visits.
+            </p>
+            <ul class="ul-check text-dark cols-2 fw-600 mb-4 wow fadeInUp" data-wow-delay=".6s">
+              <li>Personalized Treatment Plans</li>
+              <li>Gentle Care for Kids and Adults</li>
+              <li>State-of-the-Art Technology</li>
+              <li>Flexible Appointment Scheduling</li>
+            </ul>
 
-    <CTASection
-      title="Ready to Experience the Difference?"
-      description="Schedule your visit and discover why families throughout Queens trust Smile Savers for their dental care."
-      buttons={[
-        { label: "Call Now", href: "tel:+17189568400", variant: "primary" },
-        { label: "Contact Us", href: "/contact", variant: "outline" }
-      ]}
-    />
-  </main>
-</PageLayout>
+            <a class="btn-main fx-slide wow fadeInUp" data-wow-delay=".8s" href="/contact">
+              <span>Book Appointment</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-color-op-1">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 offset-lg-3 text-center">
+          <div class="subtitle wow fadeInUp mb-3">Meet Our Dental Team</div>
+          <h2 class="wow fadeInUp" data-wow-delay=".2s">
+            Meet the Dentists Who Care
+          </h2>
+          <p class="wow fadeInUp">
+            Four experienced dentists. One shared commitment to your comfort and long-term oral
+            health.
+          </p>
+          <div class="spacer-single"></div>
+        </div>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-3">
+          <div class="relative rounded-1 overflow-hidden">
+            <div class="rounded-1 overflow-hidden wow fadeIn zoomIn">
+              <img
+                src="/images/team/bhagat.webp"
+                class="w-100 wow scaleIn"
+                alt="Dr. Deepak Bhagat DDS"
+              />
+            </div>
+
+            <div class="abs w-100 start-0 bottom-0 z-3">
+              <div class="p-2 rounded-10 m-3 text-center bg-white wow fadeInDown">
+                <h4 class="mb-0">Dr. Deepak Bhagat DDS</h4>
+                <p class="mb-2">Lead Dentist</p>
+                <a class="id-color fw-600" href="/dentists">
+                  View Profile
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <div class="relative rounded-1 overflow-hidden">
+            <div class="rounded-1 overflow-hidden wow fadeIn zoomIn">
+              <img src="/images/team/2.webp" class="w-100 wow scaleIn" alt="" />
+            </div>
+
+            <div class="abs w-100 start-0 bottom-0 z-3">
+              <div class="p-2 rounded-10 m-3 text-center bg-white wow fadeInDown">
+                <h4 class="mb-0">Dr. Julie Islam DMD</h4>
+                <p class="mb-2">Dentist</p>
+                <a class="id-color fw-600" href="/dentists">
+                  View Profile
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <div class="relative rounded-1 overflow-hidden">
+            <div class="rounded-1 overflow-hidden wow fadeIn zoomIn">
+              <img src="/images/team/3.webp" class="w-100 wow scaleIn" alt="" />
+            </div>
+
+            <div class="abs w-100 start-0 bottom-0 z-3">
+              <div class="p-2 rounded-10 m-3 text-center bg-white wow fadeInDown">
+                <h4 class="mb-0">Dr. Dorothy Li DDS</h4>
+                <p class="mb-2">Dentist</p>
+                <a class="id-color fw-600" href="/dentists">
+                  View Profile
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <div class="relative rounded-1 overflow-hidden">
+            <div class="rounded-1 overflow-hidden wow fadeIn zoomIn">
+              <img src="/images/team/4.webp" class="w-100 wow scaleIn" alt="" />
+            </div>
+
+            <div class="abs w-100 start-0 bottom-0 z-3">
+              <div class="p-2 rounded-10 m-3 text-center bg-white wow fadeInDown">
+                <h4 class="mb-0">Dr. Sarha Avendaño DDS</h4>
+                <p class="mb-2">Dentist</p>
+                <a class="id-color fw-600" href="/dentists">
+                  View Profile
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row gy-4 gx-5 align-items-center">
+        <div class="col-lg-6">
+          <div class="subtitle id-color wow fadeInUp" data-wow-delay=".0s">
+            Why Choose Our Dental Care
+          </div>
+          <h2 class="wow fadeInUp" data-wow-delay=".2s">
+            The Principles That Guide Everything We Do
+          </h2>
+          <p class="wow fadeInUp" data-wow-delay=".4s">
+            Choosing your Woodside dentist matters. For 35+ years, 10,000+ patients have trusted our
+            gentle care, modern technology, and same-day emergency appointments.
+          </p>
+
+          <div class="border-bottom mb-4"></div>
+
+          <div class="row g-4">
+            <div class="col-lg-6">
+              <div class="h-100">
+                <div class="relative wow fadeInUp">
+                  <h5>Clinical Excellence</h5>
+                  <p class="mb-0">
+                    The highest standards in dental care, proven techniques and premium materials
+                    for results that last.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="h-100">
+                <div class="relative wow fadeInUp">
+                  <h5>Advanced Technology</h5>
+                  <p class="mb-0">
+                    From digital X-rays to CEREC same-day crowns and 3D imaging for better outcomes.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="h-100">
+                <div class="relative wow fadeInUp">
+                  <h5>Patient Comfort</h5>
+                  <p class="mb-0">
+                    Your comfort first — a calm, welcoming space with gentle options for anxious
+                    patients.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="h-100">
+                <div class="relative wow fadeInUp">
+                  <h5>Community Trust</h5>
+                  <p class="mb-0">
+                    Three generations of Queens families trust us with their smiles, every visit.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="row g-4 align-items-center">
+            <div class="col-6 text-end">
+              <div class="w-80 rounded-1 overflow-hidden mb-25 wow zoomIn d-inline-block">
+                <img src="/images/misc/s2.webp" class="w-100 wow scaleIn" alt="" />
+              </div>
+              <div class="w-100 rounded-1 overflow-hidden mb-25 wow zoomIn d-inline-block">
+                <img src="/images/misc/s3.webp" class="w-100 wow scaleIn" alt="" />
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="w-100 rounded-1 overflow-hidden mb-25 wow zoomIn d-inline-block">
+                <img src="/images/misc/p3.webp" class="w-100 wow scaleIn" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

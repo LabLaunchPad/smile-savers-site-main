@@ -1,0 +1,318 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export const prerender = true;
+
+interface Comment {
+  avatar: string;
+  name: string;
+  date: string;
+  text: string;
+  replies?: Comment[];
+}
+
+const comments: Comment[] = [
+  {
+    avatar: '/images/testimonial/1.webp',
+    name: 'Merrill Rayos',
+    date: '2 days ago',
+    text: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
+    replies: [
+      {
+        avatar: '/images/testimonial/2.webp',
+        name: 'Jackqueline Sprang',
+        date: '2 days ago',
+        text: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
+      },
+    ],
+  },
+  {
+    avatar: '/images/testimonial/3.webp',
+    name: 'Sanford Crowley',
+    date: '2 days ago',
+    text: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
+    replies: [
+      {
+        avatar: '/images/testimonial/4.webp',
+        name: 'Lyndon Pocekay',
+        date: '2 days ago',
+        text: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
+      },
+    ],
+  },
+  {
+    avatar: '/images/testimonial/5.webp',
+    name: 'Aleen Crigger',
+    date: '2 days ago',
+    text: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
+  },
+];
+
+const popularPosts = [
+  {
+    img: '/images/blog-thumbnail/1.webp',
+    title: 'Sustainable Waste Management Strategies for a Cleaner, Greener, and Healthier Planet',
+    date: 'January 15, 2023',
+  },
+  {
+    img: '/images/blog-thumbnail/2.webp',
+    title: 'Innovative Waste Management Solutions to Reduce Pollution and Promote Sustainability',
+    date: 'January 15, 2023',
+  },
+  {
+    img: '/images/blog-thumbnail/3.webp',
+    title: 'Community Engagement in Waste Management: Empowering Citizens for a Cleaner Future',
+    date: 'January 15, 2023',
+  },
+  {
+    img: '/images/blog-thumbnail/4.webp',
+    title: 'The Role of Technology in Modern Waste Management Systems and Operations',
+    date: 'January 15, 2023',
+  },
+];
+
+const tags = [
+  'Art',
+  'Application',
+  'Design',
+  'Entertainment',
+  'Internet',
+  'Marketing',
+  'Multipurpose',
+  'Music',
+  'Print',
+  'Programming',
+  'Responsive',
+  'Website',
+];
+
+const tips: { h: string; p: string }[] = [
+  {
+    h: 'Brush Twice a Day—Properly',
+    p: 'Brushing your teeth in the morning and before bed is essential. Use a soft-bristled toothbrush and fluoride toothpaste. Take at least two minutes, making sure to clean all surfaces of your teeth gently but thoroughly.',
+  },
+  {
+    h: 'Don’t Forget to Floss',
+    p: 'Flossing removes plaque and food particles between teeth that brushing alone can’t reach. Daily flossing helps prevent gum disease and cavities, especially in those hard-to-reach spots.',
+  },
+  {
+    h: 'Use Mouthwash for Extra Protection',
+    p: 'An antimicrobial or fluoride mouthwash can help reduce plaque, fight bad breath, and strengthen enamel. Use it as a finishing touch to your brushing and flossing routine.',
+  },
+  {
+    h: 'Limit Sugary and Acidic Foods',
+    p: 'Sugar feeds harmful bacteria in your mouth, while acidic foods and drinks can erode enamel. Reduce consumption of soda, candy, and citrus fruits, and rinse your mouth with water afterward if you do indulge.',
+  },
+  {
+    h: 'Stay Hydrated',
+    p: 'Drinking plenty of water helps wash away food debris and bacteria. It also promotes saliva production, which naturally protects your teeth and gums.',
+  },
+  {
+    h: 'Eat a Tooth-Friendly Diet',
+    p: 'Include crunchy fruits and vegetables like apples and carrots, which naturally clean your teeth. Dairy products are rich in calcium and phosphates that help strengthen enamel.',
+  },
+  {
+    h: 'Avoid Tobacco Products',
+    p: 'Smoking and chewing tobacco stain teeth and increase the risk of gum disease and oral cancer. Quitting is one of the best things you can do for your overall and oral health.',
+  },
+  {
+    h: 'Visit Your Dentist Regularly',
+    p: 'Don’t skip your biannual dental check-ups. Professional cleanings remove tartar buildup and your dentist can spot early signs of decay or gum disease before they become serious problems.',
+  },
+  {
+    h: 'Whiten Safely',
+    p: 'If you’re looking for a brighter smile, consult your dentist before using whitening products. Some over-the-counter options can cause sensitivity or damage enamel if not used correctly.',
+  },
+  {
+    h: 'Protect Your Teeth',
+    p: 'If you grind your teeth at night or play contact sports, use a mouthguard. This protects against unnecessary wear or injury that can affect the look and health of your smile.',
+  },
+];
+---
+
+<Layout
+  title="Discover 10 Easy Tips — Smile Savers Dental Blog"
+  headerClass="transparent header-light"
+>
+  <section id="subheader" class="bg-color-op-1 text-center">
+    <div class="container relative z-2">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <h2 class="wow fadeInUp">
+            Discover 10 Easy Tips to Maintain a Healthier and Brighter Smile Today
+          </h2>
+          <div class="border-bottom my-3"></div>
+          <ul class="crumb wow fadeInDown">
+            <li>
+              <a href="/">Home</a>
+            </li>
+            <li class="active">Blog</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row gx-5">
+        <div class="col-lg-8">
+          <div class="blog-read">
+            <div class="post-text">
+              <p>
+                A bright, confident smile isn’t just about looks—it’s a sign of good oral health and
+                self-care. Whether you’re trying to maintain pearly whites or improve your dental
+                routine, small daily habits can make a big difference. Here are 10 easy tips to help
+                you keep your smile healthy and radiant.
+              </p>
+
+              <img src="/images/misc/l6.webp" class="w-100 mb-4 rounded-1" alt="" />
+
+              <ol class="ol-style-1">
+                {tips.map((t) => (
+                  <li>
+                    <h5>{t.h}</h5>
+                    {t.p}
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+
+          <div class="spacer-single"></div>
+
+          <div id="blog-comment">
+            <h4>Comments (5)</h4>
+
+            <div class="spacer-half"></div>
+
+            <ol>
+              {comments.map((c) => (
+                <li>
+                  <div class="avatar">
+                    <img src={c.avatar} alt="" />
+                  </div>
+                  <div class="comment-info">
+                    <span class="c_name">{c.name}</span>
+                    <span class="c_date id-color">{c.date}</span>
+                    <span class="c_reply">
+                      <a href="#">Reply</a>
+                    </span>
+                    <div class="clearfix"></div>
+                  </div>
+
+                  <div class="comment">{c.text}</div>
+                  {c.replies && (
+                    <ol>
+                      {c.replies.map((r) => (
+                        <li>
+                          <div class="avatar">
+                            <img src={r.avatar} alt="" />
+                          </div>
+                          <div class="comment-info">
+                            <span class="c_name">{r.name}</span>
+                            <span class="c_date id-color">{r.date}</span>
+                            <span class="c_reply">
+                              <a href="#">Reply</a>
+                            </span>
+                            <div class="clearfix"></div>
+                          </div>
+                          <div class="comment">{r.text}</div>
+                        </li>
+                      ))}
+                    </ol>
+                  )}
+                </li>
+              ))}
+            </ol>
+
+            <div class="spacer-single"></div>
+
+            <div id="comment-form-wrapper">
+              <h4>Leave a Comment</h4>
+              <div class="comment_form_holder">
+                <form id="contact_form" name="form1" class="form-border" method="post" action="#">
+                  <label>Name</label>
+                  <input type="text" name="name" id="name" class="form-control" />
+
+                  <label>
+                    Email <span class="req">*</span>
+                  </label>
+                  <input type="text" name="email" id="email" class="form-control" />
+                  <div id="error_email" class="error">
+                    Please check your email
+                  </div>
+
+                  <label>
+                    Message <span class="req">*</span>
+                  </label>
+                  <textarea
+                    cols="10"
+                    rows="10"
+                    name="message"
+                    id="message"
+                    class="form-control"
+                  ></textarea>
+                  <div id="error_message" class="error">
+                    Please check your message
+                  </div>
+                  <div id="mail_success" class="success">
+                    Thank you. Your message has been sent.
+                  </div>
+                  <div id="mail_failed" class="error">
+                    Error, email not sent
+                  </div>
+
+                  <p id="btnsubmit">
+                    <input type="submit" id="send" value="Send" class="btn-main" />
+                  </p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="widget widget-post">
+            <h4>Popular Posts</h4>
+            <ul class="de-bloglist-type-1">
+              {popularPosts.map((p) => (
+                <li>
+                  <div class="d-image">
+                    <img src={p.img} alt="" />
+                  </div>
+                  <div class="d-content">
+                    <a href="/blog/single">
+                      <h4>{p.title}</h4>
+                    </a>
+                    <div class="d-date">{p.date}</div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="widget widget-text">
+            <h4>About Us</h4>
+            <p>
+              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+              laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
+              architecto beatae vitae dicta sunt explicabo.
+            </p>
+          </div>
+
+          <div class="widget widget_tags">
+            <h4>Tags</h4>
+            <ul>
+              {tags.map((t) => (
+                <li>
+                  <a href="#link">{t}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

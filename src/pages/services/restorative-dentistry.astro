@@ -1,0 +1,223 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export const prerender = true;
+
+const treatments = [
+  { h: 'Single Tooth Implants', p: 'Replace one missing tooth with a permanent implant.' },
+  { h: 'Implant-Supported Bridges', p: 'Replace multiple adjacent teeth with implant support.' },
+  { h: 'All-on-4', p: 'Full-arch restoration with just four implants.' },
+  {
+    h: 'CEREC Same-Day Crowns',
+    p: 'Designed, milled and fitted in a single visit. No temporary needed.',
+  },
+  { h: 'Root Canal Therapy', p: 'Pain-free treatment to save infected teeth.' },
+  { h: 'Tooth-Colored Fillings', p: 'Natural-looking restorations for cavities.' },
+];
+
+const whyUs = [
+  {
+    h: 'Patient-Centered Care',
+    p: 'We prioritize your comfort and goals, ensuring every treatment plan is tailored specifically to your needs.',
+  },
+  {
+    h: 'Experienced Specialists',
+    p: 'Our team includes highly skilled restorative dentists dedicated to delivering long-lasting, natural-looking results.',
+  },
+  {
+    h: 'Comprehensive Services',
+    p: 'We offer a full range of restorative treatments, from simple fillings to complex full-mouth reconstructions.',
+  },
+  {
+    h: 'Modern Technology',
+    p: 'We utilize the latest dental technology, ensuring accurate diagnoses, efficient treatments, and optimal outcomes.',
+  },
+  {
+    h: 'Emergency Care',
+    p: 'We provide emergency dental care for unexpected issues, ensuring you receive prompt treatment when needed most.',
+  },
+  {
+    h: 'Convenient Scheduling',
+    p: 'We offer flexible hours to fit your busy schedule, including early morning and evening appointments.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'Am I a candidate for dental implants?',
+    a: "Most adults with good general health are candidates. We'll evaluate your bone density, gum health, and overall health to determine if implants are right for you.",
+    id: 'accordion-a1',
+  },
+  {
+    q: 'How long do dental implants last?',
+    a: 'With proper care, dental implants can last a lifetime. The crown may need replacement after 10-15 years due to normal wear.',
+    id: 'accordion-a2',
+  },
+  {
+    q: 'What is CEREC technology?',
+    a: 'CEREC (Chairside Economical Restoration of Esthetic Ceramics) uses 3D digital scanning and computer-aided design/manufacturing to create custom crowns in our office while you wait.',
+    id: 'accordion-a3',
+  },
+  {
+    q: 'How long do CEREC crowns last?',
+    a: 'CEREC crowns are made from durable ceramic and can last 10-15 years or longer with proper care, comparable to traditional lab-made crowns.',
+    id: 'accordion-a4',
+  },
+  {
+    q: 'Are root canals painful?',
+    a: 'Modern root canal treatment is virtually painless. With advanced anesthesia and techniques, most patients report the procedure feels similar to getting a filling.',
+    id: 'accordion-a5',
+  },
+];
+---
+
+<Layout
+  title="Restorative Dentistry — Smile Savers Dental"
+  description="Restorative dentistry in Woodside, NY: crowns, implants and dentures. Smile Savers Dental, (718) 956-8400."
+  headerClass="transparent header-light"
+>
+  <section id="subheader" class="bg-color-op-1 text-center">
+    <div class="container relative z-2">
+      <div class="row align-items-center">
+        <div class="col-lg-12">
+          <h1 class="wow fadeInUp">Restorative Dentistry</h1>
+          <div class="border-bottom my-3"></div>
+          <ul class="crumb wow fadeInDown">
+            <li>
+              <a href="/">Home</a>
+            </li>
+            <li>
+              <a href="/services">Services</a>
+            </li>
+            <li class="active">Restorative Dentistry</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row g-4 align-items-center">
+        <div class="col-lg-6">
+          <div class="pe-lg-3">
+            <div class="subtitle id-color wow fadeInUp" data-wow-delay=".2s">
+              Restorative Dentistry
+            </div>
+            <h2 class="wow fadeInUp" data-wow-delay=".4s">
+              Restore Your Smile with Confidence
+            </h2>
+            <p class="mb-0 wow fadeInUp" data-wow-delay=".6s">
+              Permanent, natural-looking tooth replacement and same-day crowns. ICOI Diplomate
+              expertise for lasting smiles.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="row align-items-center">
+            <div class="col-6">
+              <img src="/images/misc/l3.webp" class="w-100 rounded-1 mb-4" alt="" />
+              <img src="/images/misc/l2.webp" class="w-100 rounded-1" alt="" />
+            </div>
+            <div class="col-6">
+              <img src="/images/misc/l5.webp" class="w-100 rounded-1" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="spacer-double"></div>
+
+      <div class="row g-4">
+        {treatments.map((t) => (
+          <div class="col-lg-4 col-md-6">
+            <div class="border-gray p-40 h-100 rounded-1">
+              <div class="relative wow fadeInUp">
+                <h4>{t.h}</h4>
+                <p class="mb-0">{t.p}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-color-op-1">
+    <div class="container">
+      <div class="row g-4 mb-2 justify-content-center">
+        <div class="col-lg-5 text-center">
+          <div class="subtitle s2 wow fadeInUp mb-2">Top Reasons</div>
+          <h2 class="wow fadeInUp" data-wow-delay=".2s">
+            Why Choose Us
+          </h2>
+        </div>
+      </div>
+      <div class="row g-4">
+        {whyUs.map((w) => (
+          <div class="col-lg-4 col-md-6 wow fadeInUp">
+            <div class="relative">
+              <i class="abs fs-40 p-4 bg-color text-light icon_check rounded-1"></i>
+              <div class="ps-100 ms-4">
+                <h4>{w.h}</h4>
+                <p>{w.p}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="subtitle id-color wow fadeInUp" data-wow-delay=".0s">
+            Everything You Need to Know
+          </div>
+          <h2 class="wow fadeInUp" data-wow-delay=".2s">
+            Frequently Asked Questions
+          </h2>
+        </div>
+
+        <div class="col-lg-7">
+          <div class="accordion s2 wow fadeInUp">
+            <div class="accordion-section">
+              {faqs.map((f) => (
+                <>
+                  <div class="accordion-section-title" data-tab={'#' + f.id}>
+                    {f.q}
+                  </div>
+                  <div class="accordion-section-content" id={f.id}>
+                    {f.a}
+                  </div>
+                </>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-color text-light pt-50 pb-50">
+    <div class="container">
+      <div class="row g-4 align-items-center">
+        <div class="col-md-9">
+          <h3 class="mb-0 fs-32">Ready to Book Your Appointment?</h3>
+          <p class="mb-0">
+            Contact us today to schedule your visit and take the first step toward a healthier
+            smile.
+          </p>
+        </div>
+        <div class="col-lg-3 text-lg-end">
+          <a class="btn-main fx-slide btn-line" href="/booking">
+            <span>Book Appointment</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
