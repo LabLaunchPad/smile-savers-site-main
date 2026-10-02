@@ -611,6 +611,14 @@ test('sections: PageHeader + BookingCTA own the repeated blocks', () => {
   }
 });
 
+test('fonts: swap display + preloaded woff2 (no invisible text)', () => {
+  const css = src('src/styles/globals.css');
+  assert.ok(css.includes('font-display'), 'globals.css must redeclare font-display');
+  assert.ok(!css.includes('font-display: block'), 'must not use block (invisible text)');
+  const layout = src('src/layouts/Layout.astro');
+  assert.ok(layout.includes('rel="preload"') && layout.includes('.woff2'), 'critical woff2 must be preloaded');
+});
+
 test('nav: every header href resolves to a real route', () => {
   const header = src('src/components/site/MainNav.astro') + src('src/components/site/HeaderActions.astro');
   const hrefs = [...header.matchAll(/href="(\/[^"]*)"/g)].map((m) => m[1]);

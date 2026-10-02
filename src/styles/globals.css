@@ -252,3 +252,43 @@ button#menu-btn {
     max-width: calc(100vw - 48px);
   }
 }
+
+/* perf: icon/body fonts swap — later @font-face wins, vendor css untouched.
+   Families + woff2 paths match public/css/style.css @imports verbatim
+   (IcoFont / FA4 / FA6-Brands / FA6-Free-900 / ElegantIcons-woff-only);
+   remote Google fonts (Inter/Urbanist) already carry display=swap in-URL. */
+@font-face {
+  font-family: 'IcoFont';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/icofont/fonts/icofont.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'FontAwesome';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/fontawesome4/fonts/fontawesome-webfont.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Font Awesome 6 Brands';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/fontawesome6/webfonts/fa-brands-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Font Awesome 6 Free';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('/fonts/fontawesome6/webfonts/fa-solid-900.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'ElegantIcons';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/elegant_font/HTML_CSS/fonts/ElegantIcons.woff') format('woff');
+}

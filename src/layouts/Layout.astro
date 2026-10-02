@@ -42,6 +42,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://dentalsmile
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <title>{title}</title>
+    {/* perf: above-the-fold icon fonts — hero stars (FA6 solid) + header icons (IcoFont) */}
+    <link rel="preload" href="/fonts/icofont/fonts/icofont.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/fontawesome6/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin />
     <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="bootstrap" />
     <link href="/css/plugins.css" rel="stylesheet" type="text/css" />
     <link href="/css/swiper.css" rel="stylesheet" type="text/css" />
