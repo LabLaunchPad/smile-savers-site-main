@@ -2,7 +2,7 @@
 // Prose-embedded sentences stay inline in pages; only the formatters below are shared.
 export const practice = {
   name: 'Smile Savers Dental',
-  tagline: 'Affordable Family Dentistry in Woodside, NYC',
+  tagline: 'Affordable Family Dentistry in Woodside',
   phone: { display: '(718) 956-8400', href: 'tel:+17189568400' },
   email: { address: 'dentalsmilesavers@gmail.com', href: 'mailto:dentalsmilesavers@gmail.com' },
   address: {

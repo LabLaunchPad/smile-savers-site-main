@@ -514,7 +514,8 @@ test('content: hero carries a static Google badge linked to the GBP', () => {
 
 test('content: hero eyebrow is the affordable positioning line', () => {
   const home = src('src/pages/index.astro');
-  assert.ok(home.includes('Affordable Family Dentistry in Woodside, NYC'), 'hero eyebrow must read Affordable Family Dentistry in Woodside, NYC');
+  assert.ok(home.includes('Affordable Family Dentistry in Woodside</div>'), 'hero eyebrow must read Affordable Family Dentistry in Woodside');
+  assert.ok(!home.includes('Woodside, NYC'), 'hero eyebrow must not carry the NYC suffix');
   assert.ok(!home.includes('Pain-Free Family Dentistry'), 'old pain-free eyebrow must be gone from the hero');
 });
 
