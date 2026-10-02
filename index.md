@@ -7,7 +7,7 @@
 - T1 — `src/layouts/Layout.astro` (shell: CSS/JS load, header/footer/overlay) · `src/scripts/site-init.ts` (all client motion) · `src/types/globals.d.ts` (legacy window surface)
 - T2 — page under edit (`src/pages/…`) + its components (`src/components/…`)
 - T3 — `public/css/style.css` (12k+ lines: spacing §7553, motion §6842, header §247) — grep selectors, never full-read
-- T4 — `public/js/{plugins,on3step,swiper,custom-marquee}.js` (minified vendor) — `Select-String` for hook names only
+- T4 — `public/js/{plugins,lablaunchpad,swiper,custom-marquee}.js` (minified vendor) — `Select-String` for hook names only
 
 ## File roles
 | Path | Role | Touch? |
@@ -15,7 +15,7 @@
 | `src/pages/index.astro` | Homepage (canonical) | yes — copy/sections |
 | `src/pages/about|contact|booking.astro` | Prefilled brand pages | yes — copy/NAP |
 | `src/pages/services[6]|dentists|testimonials|faq|gallery|blog*.astro` | Template copy, fictional content | only if asked |
-| `src/pages/homepage-6.astro` | Orphaned variant, unlinked | no |
+| `src/pages/homepage-6.astro` | Deleted variant (see AGENTS.md §2); `index.astro` is the only homepage | no |
 | `src/components/Header|Footer|Preloader.astro` | Chrome (NAP lives here) | yes — text only |
 | `src/components/BookingForm|ContactForm|GalleryGrid.tsx` | React islands | forms: labels/roles only; gallery: owner-asked only |
 | `src/styles/globals.css` | Light-only base tokens + menu fixes | tokens: no dark mode ever |

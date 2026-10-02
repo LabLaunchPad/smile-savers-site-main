@@ -191,9 +191,9 @@ function initAccordion(): void {
 
   // Template scripts also bind these nodes directly; clear those first so only one handler toggles.
   $('.accordion-section-title').off('click');
-  $(document).off('click.accordionDentia', '.accordion-section-title');
+  $(document).off('click.accordionSmile', '.accordion-section-title');
   $(document).on(
-    'click.accordionDentia',
+    'click.accordionSmile',
     '.accordion-section-title',
     function (this: HTMLElement, e) {
       const currentAttrvalue = $(this).data('tab') as string;
@@ -266,7 +266,7 @@ function stabilizeMobileMenu(): void {
   if (!$ || !$.fn) return;
 
   // OWNERSHIP: submenu arrows — stabilizeMobileMenu OWNS injection + mobile toggle.
-  // on3step.menu_arrow also injects spans; both must stay consistent, never add a third.
+  // LabLaunchPad.menu_arrow also injects spans; both must stay consistent, never add a third.
   // NEVER change: selector '#mainmenu li > span', classes 'has-child/menu-item-has-children/active'.
   $('#mainmenu li > span').remove();
   $('#mainmenu li').removeClass('has-child menu-item-has-children');
@@ -281,8 +281,8 @@ function stabilizeMobileMenu(): void {
       }
     });
 
-  $(document).off('click.mobileDentiaMenu', '#mainmenu a');
-  $(document).off('click.mobileDentiaMenuArrow', '#mainmenu li > span');
+  $(document).off('click.mobileSmileMenu', '#mainmenu a');
+  $(document).off('click.mobileSmileMenuArrow', '#mainmenu li > span');
 
   const closeMenu = (): void => {
     if (window.innerWidth > 992) return;
@@ -294,10 +294,10 @@ function stabilizeMobileMenu(): void {
     // Remove existing handlers to prevent conflicts (fix "3 actions")
     $('#menu-btn').off('click');
     $(document).off('click', '#menu-btn');
-    $(document).off('click.mobileDentiaMenuBtn', '#menu-btn');
+    $(document).off('click.mobileSmileMenuBtn', '#menu-btn');
 
     // Attach new handler via delegation (robust to re-renders)
-    $(document).on('click.mobileDentiaMenuBtn', '#menu-btn', function (this: HTMLElement, e) {
+    $(document).on('click.mobileSmileMenuBtn', '#menu-btn', function (this: HTMLElement, e) {
       if (window.innerWidth > 992) return;
       e.preventDefault();
       e.stopPropagation();
@@ -319,12 +319,12 @@ function stabilizeMobileMenu(): void {
 
   bindMenuButton();
 
-  $(document).on('click.mobileDentiaMenu', '#mainmenu a', () => {
+  $(document).on('click.mobileSmileMenu', '#mainmenu a', () => {
     closeMenu();
   });
 
   $(document).on(
-    'click.mobileDentiaMenuArrow',
+    'click.mobileSmileMenuArrow',
     '#mainmenu li > span',
     function (this: HTMLElement, e) {
       if (window.innerWidth > 992) return;
@@ -355,7 +355,7 @@ let initialized = false;
 
 function releaseTemplateBoundIslandControls($: JQueryStatic): void {
   // OWNERSHIP: #filters clicks — GalleryGrid (React) OWNS filtering; this OWNS releasing template binds.
-  // on3step.filter_gallery/masonry must never own #filters on React pages; runs at init + window load.
+  // LabLaunchPad.filter_gallery/masonry must never own #filters on React pages; runs at init + window load.
   // NEVER change: '#filters a' selector, '.selected' class, or remove the .off('click') calls.
   $('#filters a').off('click');
 }

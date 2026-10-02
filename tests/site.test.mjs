@@ -174,9 +174,6 @@ test('merge plumbing: redirects, functions, offline route', () => {
   assert.ok(contactFn.includes('Fri: 9 AM – 5 PM'), 'auto-reply must carry canon Fri hours');
   assert.ok(!contactFn.includes('Fri: 9 AM - 1 PM'), 'auto-reply must not carry wrong Fri hours');
   assert.ok(contactFn.includes('32-02 53rd Pl'), 'auto-reply must carry canon address');
-  const offline = src('src/pages/offline.astro');
-  assert.ok(offline.includes('practice.phone.href'), 'offline page needs the emergency call link');
-  assert.ok(offline.includes('location.reload()'), 'offline page needs a retry path');
 });
 
 test('brand assets: every /images/* + /favicon referenced in src/ exists in public/', () => {
@@ -214,4 +211,133 @@ test('forms POST to /api/contact with mailto fallback, no EmailJS', () => {
   const pkg = JSON.parse(src('package.json'));
   const allDeps = { ...pkg.dependencies, ...pkg.devDependencies };
   assert.ok(!('@emailjs/browser' in allDeps), '@emailjs/browser must be uninstalled');
+});
+
+test('cleanup: no dead public weight, no PWA corpse', () => {
+  const dead = [
+    'public/admin/.gitignore',
+    'public/manifest.json',
+    'public/sw.js',
+    'public/icons/icon-192.png',
+    'src/pages/offline.astro',
+    'public/aff1.png',
+    'public/aff5-300x68.png',
+    'public/aff6.png',
+    'public/images/clinic-interior.jpg',
+    'public/images/hero-dental-office.jpg',
+    'public/images/doctors/dr-bhagat.jpg',
+    'public/logo.svg',
+    'public/logoold.svg',
+    'public/logosq.svg',
+    'public/images/team/Dr. Deepak Bhagat.png',
+    'src/assets/team/dr.jpg',
+    'src/entrypoint.js',
+    'public/images/background/1.webp',
+    'public/images/blog-thumbnail/5.webp',
+    'public/images/misc/c1.webp',
+    'public/images/icon.webp',
+    'public/images/icons/tooth-5.png',
+    'public/images/testimonial/6.webp',
+    'public/css/bootstrap.rtl.min.css',
+    'public/css/datepicker.css',
+    'public/images/logo/1.png',
+  ];
+  for (const p of dead) {
+    assert.ok(!existsSync(p), `${p} is dead weight and must be deleted`);
+  }
+});
+
+test('branding: no Dentia/template strings in shipped code', () => {
+  const files = [];
+  const walk = (dir) => {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      const p = `${dir}/${e.name}`;
+      if (e.isDirectory()) walk(p);
+      else if (/\.(astro|tsx|ts|css)$/.test(e.name)) files.push(p);
+    }
+  };
+  walk('src');
+  files.push('public/css/style.css', 'public/js/lablaunchpad.js');
+  const srcFiles = files.filter((f) => f.startsWith('src/'));
+  // Owner decision 2026-10-02: zero on3step anywhere — Lab LaunchPad instead.
+  assert.ok(!existsSync('public/js/on3step.js'), 'public/js/on3step.js must be renamed');
+  assert.ok(existsSync('public/js/lablaunchpad.js'), 'public/js/lablaunchpad.js must exist');
+  assert.ok(
+    src('src/layouts/Layout.astro').includes('/js/lablaunchpad.js'),
+    'Layout must load /js/lablaunchpad.js'
+  );
+  for (const f of files) {
+    const t = src(f);
+    assert.ok(!/dentia/i.test(t), `${f} must not contain Dentia branding`);
+    assert.ok(!/on3step/i.test(t), `${f} must not contain on3step (Lab LaunchPad instead)`);
+  }
+  // Owner decision 2026-10-02: the homepage logo marquee (index.astro) is an
+  // intentional prefill slot for verified partner logos — exempt from the ban.
+  const MARQUEE_PREFILL = new Set(['src/pages/index.astro']);
+  for (const f of srcFiles) {
+    const t = src(f);
+    if (MARQUEE_PREFILL.has(f)) continue;
+    assert.ok(!t.includes('100+ Companies'), `${f} must not contain 100+ Companies`);
+    assert.ok(!/logoipsum/i.test(t), `${f} must not contain logoipsum`);
+  }
+});
+
+test('config hygiene: own name, no dead env, no Tina residue', () => {
+  const pkg = JSON.parse(src('package.json'));
+  assert.equal(pkg.name, 'smile-savers-site', 'package.json name must be smile-savers-site');
+  const env = src('src/env.d.ts');
+  assert.ok(!env.includes('defineEnv'), 'src/env.d.ts must not contain defineEnv');
+  assert.ok(!env.includes('PUBLIC_PRACTICE'), 'src/env.d.ts must not contain PUBLIC_PRACTICE');
+  const deploy = src('.github/workflows/deploy.yml');
+  assert.ok(!deploy.includes('TINA_'), '.github/workflows/deploy.yml must not contain TINA_');
+});
+
+test('brand assets: every file under public/images is referenced', () => {
+  const refs = [];
+  const walkSrc = (dir) => {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      const p = `${dir}/${e.name}`;
+      if (e.isDirectory()) walkSrc(p);
+      else if (/\.(astro|tsx|ts)$/.test(e.name)) {
+        for (const m of src(p).matchAll(/\/images\/[^\s`"'()\]{?#]*/g)) refs.push(m[0]);
+      }
+    }
+  };
+  walkSrc('src');
+  for (const dir of ['public/css', 'public/js']) {
+    if (!existsSync(dir)) continue;
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      if (e.isDirectory()) continue;
+      if (!/\.(css|js)$/.test(e.name)) continue;
+      const p = `${dir}/${e.name}`;
+      for (const m of src(p).matchAll(/\/images\/[^\s`"'()\]{?#]*/g)) refs.push(m[0]);
+    }
+  }
+  const files = [];
+  const walkImg = (dir) => {
+    for (const e of readdirSync(dir, { withFileTypes: true })) {
+      const p = `${dir}/${e.name}`;
+      if (e.isDirectory()) walkImg(p);
+      else files.push(p);
+    }
+  };
+  walkImg('public/images');
+  const basename = (s) => s.slice(s.lastIndexOf('/') + 1);
+  // Owner decision 2026-10-02: public/images/logo/ is the intentional prefill
+  // slot for verified partner logos (homepage marquee) — exempt from the ban.
+  const PREFILL_DIRS = ['public/images/logo/'];
+  const unreferenced = files.filter((f) => {
+    if (PREFILL_DIRS.some((d) => f.startsWith(d))) return false;
+    const rel = `/images/${f.slice('public/images/'.length)}`;
+    const base = basename(rel);
+    return !refs.some((r) => {
+      if (r.includes('${')) {
+        const prefix = r.slice(0, r.indexOf('${'));
+        return rel.startsWith(prefix);
+      }
+      if (r === rel) return true;
+      return r.startsWith('/images/') && basename(r) === base;
+    });
+  });
+  assert.deepEqual(unreferenced, [], `public/images files unreferenced in src/css/js: ${unreferenced.join(', ')}`);
 });

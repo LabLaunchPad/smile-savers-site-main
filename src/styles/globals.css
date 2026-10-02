@@ -95,7 +95,7 @@ body.no-scroll {
   align-self: flex-start;
 }
 /* ponytail: review grid cards have no h-100 at all — fill the column.
-   (Grid must NOT reuse id="gallery": on3step runs isotope on #gallery,
+   (Grid must NOT reuse id="gallery": Lab LaunchPad runs isotope on #gallery,
    which absolute-positions items and defeats flex stretch.) */
 .row > .item > div[class*='p-40'] {
   display: flex;
