@@ -400,6 +400,20 @@ footer .widget h2.h5-size {
   .row.gx-5 {
     --bs-gutter-x: 1.5rem;
   }
+  /* mobile-ui-booking pass (390px audit BLOCKER): the hours overlay card
+     (abs start-10 bottom-10) offset its own width to right:420 and the
+     hours line got clipped. Pin it inside its column on mobile. */
+  .bg-blur {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0 0.75rem;
+  }
+  /* hours text was flex-item min-width:auto → one long line clipped. */
+  .bg-blur .ms-3 {
+    min-width: 0;
+    white-space: normal;
+  }
 }
 /* task-9 (a11y): btn contrast 4.11 -> 4.83 (white on #4471BE, needs 4.5:1).
    Solid buttons only; .btn-line keeps its transparent outline look except on
