@@ -619,6 +619,11 @@ test('fonts: swap display + preloaded woff2 (no invisible text)', () => {
   assert.ok(layout.includes('rel="preload"') && layout.includes('.woff2'), 'critical woff2 must be preloaded');
 });
 
+test('hero LCP image is preloaded (lcp-discovery)', () => {
+  const layout = src('src/layouts/Layout.astro');
+  assert.ok(layout.includes('as="image"') && layout.includes('slider/1.jpg'), 'slide 1 must be preloaded as image');
+});
+
 test('nav: every header href resolves to a real route', () => {
   const header = src('src/components/site/MainNav.astro') + src('src/components/site/HeaderActions.astro');
   const hrefs = [...header.matchAll(/href="(\/[^"]*)"/g)].map((m) => m[1]);

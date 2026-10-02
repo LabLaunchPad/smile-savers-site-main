@@ -45,6 +45,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://dentalsmile
     {/* perf: above-the-fold icon fonts — hero stars (FA6 solid) + header icons (IcoFont) */}
     <link rel="preload" href="/fonts/icofont/fonts/icofont.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/fontawesome6/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin />
+    {/* perf: hero LCP (slide 1) — homepage only; other pages lack /images/slider/1.jpg */}
+    {Astro.url.pathname === '/' && <link rel="preload" as="image" href="/images/slider/1.jpg" fetchpriority="high" />}
     <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" id="bootstrap" />
     <link href="/css/plugins.css" rel="stylesheet" type="text/css" />
     <link href="/css/swiper.css" rel="stylesheet" type="text/css" />
