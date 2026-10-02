@@ -641,6 +641,19 @@ test('image payload budget (10.6MB baseline)', () => {
   }
 });
 
+test('content images sized + lazy (no CLS), informative alts', () => {
+  const pages = ['src/pages/index.astro', 'src/pages/about.astro', 'src/pages/dentists.astro', 'src/pages/blog.astro'];
+  for (const f of pages) {
+    const imgs = [...src(f).matchAll(/<img[^>]*>/g)].map((m) => m[0]);
+    for (const img of imgs) {
+      if (img.includes('testimonial/') || img.includes('logo/')) continue; // decorative, keep alt=""
+      assert.ok(/width=/.test(img) && /height=/.test(img), `${f}: unsized ${img.slice(0, 60)}`);
+      assert.ok(img.includes('loading="lazy"') || img.includes('fetchpriority'), `${f}: eager ${img.slice(0, 60)}`);
+    }
+  }
+  assert.ok(src('src/pages/about.astro').includes('alt="Dr. Deepak Bhagat'), 'team lead photo needs descriptive alt');
+});
+
 test('nav: every header href resolves to a real route', () => {
   const header = src('src/components/site/MainNav.astro') + src('src/components/site/HeaderActions.astro');
   const hrefs = [...header.matchAll(/href="(\/[^"]*)"/g)].map((m) => m[1]);

@@ -8,7 +8,8 @@ interface Post {
   img: string;
   day: string;
   month: string;
-  title: string;
+title: string;
+  alt: string;
   author: string;
   tag: string;
 }
@@ -19,6 +20,7 @@ const posts: Post[] = [
     day: '20',
     month: 'Jun',
     title: 'Discover 10 Easy Tips to Maintain a Healthier and Brighter Smile Today',
+    alt: 'Dentist examining a patient with dental tools',
     author: 'Brunilda Doniger',
     tag: 'Health Care',
   },
@@ -27,6 +29,7 @@ const posts: Post[] = [
     day: '20',
     month: 'Jun',
     title: 'Is Teeth Whitening Safe and Effective? Here’s What You Need to Know',
+    alt: 'Two masked dentists working over a patient',
     author: 'Brunilda Doniger',
     tag: 'Health Care',
   },
@@ -35,6 +38,7 @@ const posts: Post[] = [
     day: '20',
     month: 'Jun',
     title: 'Braces vs. Clear Aligners: Which Orthodontic Option Fits You Best?',
+    alt: 'Smiling woman holding a toothbrush and floss',
     author: 'Brunilda Doniger',
     tag: 'Health Care',
   },
@@ -43,6 +47,7 @@ const posts: Post[] = [
     day: '20',
     month: 'Jun',
     title: 'What to Expect During Your First Visit to the Dentist’s Office',
+    alt: 'Dentist examining a patient under a dental light',
     author: 'Brunilda Doniger',
     tag: 'Health Care',
   },
@@ -51,6 +56,7 @@ const posts: Post[] = [
     day: '20',
     month: 'Jun',
     title: '5 Warning Signs You May Need a Root Canal and Why It’s Not So Bad',
+    alt: 'Two dental staff standing in a treatment room',
     author: 'Brunilda Doniger',
     tag: 'Health Care',
   },
@@ -59,6 +65,7 @@ const posts: Post[] = [
     day: '20',
     month: 'Jun',
     title: 'How to Protect Your Child’s Teeth and Prevent Cavities Early On',
+    alt: 'Dentist showing a clear dental tray to a patient',
     author: 'Brunilda Doniger',
     tag: 'Health Care',
   },
@@ -83,7 +90,15 @@ const posts: Post[] = [
                   <h4 class="fs-36 mb-0 lh-1">{p.day}</h4>
                   <span>{p.month}</span>
                 </div>
-                <img src={p.img} class="rounded-1 w-100" alt="" />
+                <img
+                  src={p.img}
+                  class="rounded-1 w-100"
+                  width="1380"
+                  height="877"
+                  loading="lazy"
+                  decoding="async"
+                  alt={p.alt}
+                />
               </div>
 
               <div class="pt-4">
@@ -91,7 +106,15 @@ const posts: Post[] = [
                   <h4 class="mb-3">{p.title}</h4>
                 </a>
                 <div>
-                  <img src="/images/testimonial/1.webp" class="w-20px me-2 circle" alt="" />
+                  <img
+                    src="/images/testimonial/1.webp"
+                    class="w-20px me-2 circle"
+                    width="100"
+                    height="100"
+                    loading="lazy"
+                    decoding="async"
+                    alt=""
+                  />
                   <div class="d-inline fs-14 me-3">{p.author}</div>
                   <div class="d-inline fs-14">
                     <i class="icofont-tags id-color me-2"></i>

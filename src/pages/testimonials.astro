@@ -73,7 +73,15 @@ const testimonials: Testimonial[] = [
               </div>
               <p>{t.text}</p>
               <div class="relative">
-                <img class="circle absolute w-40px" alt="" src={t.img} />
+                <img
+                  class="circle absolute w-40px"
+                  alt=""
+                  src={t.img}
+                  width="100"
+                  height="100"
+                  loading="lazy"
+                  decoding="async"
+                />
                 <div class="ms-60px">
                   <h4 class="mb-0 fs-16 lh-1">{t.name}</h4>
                   <span class="fs-14">{t.treatment}</span>

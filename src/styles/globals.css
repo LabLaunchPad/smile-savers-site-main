@@ -39,6 +39,14 @@ footer {
   flex-shrink: 0;
 }
 
+/* width/height attrs on <img> map to a presentational height that would beat
+   `width:100%` utilities and render intrinsic-height boxes (1350px tall).
+   height:auto keeps the attr ratio as the reserved aspect ratio (no CLS). */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;

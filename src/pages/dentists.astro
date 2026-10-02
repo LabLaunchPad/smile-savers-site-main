@@ -9,6 +9,9 @@ interface Dentist {
   name: string;
   role: string;
   img: string;
+  // Intrinsic px of `img` (sharp-verified) so cards reserve space before load.
+  w: number;
+  h: number;
   qual: string;
   certs: string[];
   awards: string[];
@@ -20,6 +23,8 @@ const dentists: Dentist[] = [
     name: 'Dr. Deepak Bhagat',
     role: 'Lead Dentist',
     img: '/images/team/bhagat.webp',
+    w: 740,
+    h: 1000,
     qual: 'Doctor of Dental Surgery (DDS), New York University College of Dentistry (1987)',
     certs: [
       'Diplomate, International Congress of Oral Implantologists (ICOI)',
@@ -37,6 +42,8 @@ const dentists: Dentist[] = [
     name: 'Dr. Julie Islam',
     role: 'General Dentist',
     img: '/images/team/2.webp',
+    w: 1000,
+    h: 1350,
     qual: 'Doctor of Medicine in Dentistry (DMD), New York University College of Dentistry (2015)',
     certs: ['Certified Implant Specialist', 'Preventive & Pediatric Care'],
     awards: ['General Dentistry', 'Preventive Care', 'Cosmetic Dentistry', 'Pediatric Dentistry'],
@@ -46,6 +53,8 @@ const dentists: Dentist[] = [
     name: 'Dr. Dorothy Li',
     role: 'Restorative Dentist',
     img: '/images/team/3.webp',
+    w: 1000,
+    h: 1350,
     qual: 'Doctor of Dental Surgery (DDS), Stony Brook University School of Dental Medicine (2018)',
     certs: ['Certified Implant Specialist', 'Emergency Dental Care'],
     awards: ['Restorative Procedures', 'Root Canal Therapy', 'Extractions', 'General Dentistry'],
@@ -55,6 +64,8 @@ const dentists: Dentist[] = [
     name: 'Dr. Sarha Avendaño',
     role: 'General Dentist',
     img: '/images/team/avendano.webp',
+    w: 1103,
+    h: 1426,
     qual: 'Doctor of Dental Surgery (DDS), New York University College of Dentistry (2019); General Practice Residency, New York Presbyterian – Queens (2020)',
     certs: ['Certified Implant Specialist', 'General Practice Residency (NYP Queens)'],
     awards: ['Preventive Care', 'Restorative Procedures', 'Patient Education', 'General Dentistry'],
@@ -78,7 +89,15 @@ const dentists: Dentist[] = [
               <div class="abs end-0 bottom-0 p-5 fs-150 fw-bold op-1 lh-1 id-color">{d.n}</div>
               <div class="row g-0 align-items-center">
                 <div class="col-md-4">
-                  <img src={d.img} class="w-100 rounded" alt={d.name} />
+                  <img
+                    src={d.img}
+                    class="w-100 rounded"
+                    width={d.w}
+                    height={d.h}
+                    loading="lazy"
+                    decoding="async"
+                    alt={`${d.name}, ${d.role} at Smile Savers Dental`}
+                  />
                 </div>
                 <div class="col-md-8">
                   <div class="h-100 p-40">
