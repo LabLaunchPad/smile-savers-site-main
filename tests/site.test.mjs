@@ -625,7 +625,7 @@ test('hero LCP image is preloaded (lcp-discovery)', () => {
 });
 
 test('no dead font-vendor weight ships (demo/sources/dups)', () => {
-  for (const dead of ['public/fonts/icofont/demo.html', 'public/fonts/elegant_font/index.html']) {
+  for (const dead of ['public/fonts/icofont/demo.html', 'public/fonts/elegant_font/HTML_CSS/index.html']) {
     assert.ok(!existsSync(dead), `${dead} must not ship`);
   }
   const layout = src('src/layouts/Layout.astro');
